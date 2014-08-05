@@ -1,0 +1,11 @@
+/**
+ * Stylesheet for Utexas Profile
+ */
+
+body.maintenance-page #logo {
+  background:transparent url(utexas-wordmark.png) no-repeat top left;
+  height:0;
+  overflow:hidden;
+  padding-top: 99px; /* height of logo  */
+  width: 180px; /* width of logo  */
+}

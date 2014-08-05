@@ -1,0 +1,71 @@
+name = Utexas
+description = Install the University of Texas distribution.
+version = "7.x-1.0-alpha1"
+core = 7.x
+php = 5.3
+
+; The distribution_name property is used in the installer and other places as
+; a label for the software being installed.
+distribution_name = Utexas
+
+; The exclusive flag auto-selects the profile during installation, if there
+; are no other exclusive ones.
+exclusive = TRUE
+
+; Required modules (Core)
+; Copy/pasted from standard.info
+dependencies[] = block
+dependencies[] = color
+dependencies[] = comment
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = taxonomy
+dependencies[] = dblog
+dependencies[] = search
+dependencies[] = shortcut
+dependencies[] = toolbar
+dependencies[] = overlay
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = rdf
+
+; Required modules (Contrib)
+dependencies[] = ckeditor
+dependencies[] = ckeditor_link
+dependencies[] = ckeditor_link_file
+dependencies[] = ckeditor_link_user
+dependencies[] = ctools
+dependencies[] = date
+dependencies[] = entity
+dependencies[] = entity
+dependencies[] = entityreference
+dependencies[] = field_collection
+dependencies[] = file_entity
+dependencies[] = imce
+dependencies[] = imce_mkdir
+dependencies[] = jquery_update
+dependencies[] = libraries
+dependencies[] = link
+dependencies[] = media
+dependencies[] = media_vimeo
+dependencies[] = media_youtube
+dependencies[] = module_filter
+dependencies[] = pathauto
+dependencies[] = redirect
+dependencies[] = security_review
+dependencies[] = token
+dependencies[] = views
+dependencies[] = views_ui
+
+; Required projects (Utexas)
+
+
+
+
