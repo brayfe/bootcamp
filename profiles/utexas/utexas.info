@@ -64,7 +64,6 @@ dependencies[] = token
 dependencies[] = views
 dependencies[] = views_ui
 
-; Required projects (Utexas)
 
 
 
