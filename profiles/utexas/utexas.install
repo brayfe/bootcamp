@@ -11,12 +11,66 @@
  *
  * @see system_install()
  */
+ 
 function utexas_install() {
   // Run the standard install	
   include_once DRUPAL_ROOT . '/profiles/standard/standard.install';
   standard_install();
   // Enable the Utexas theme
-  // When one is available
+  // when one is available
   // theme_enable(array('utexas'));
   // variable_set('theme_default', 'utexas');
+}
+
+function utexas_install_tasks_alter(&$tasks, $install_state) {
+  // Configure install tasks
+  $tasks['install_select_profile']['display'] = FALSE;
+  $tasks['install_select_locale']['display'] = FALSE;
+  $tasks['install_select_locale']['run'] = INSTALL_TASK_SKIP;
+  
+  // The new "Welcome" screen/task needs to come after the first two steps
+  // (profile and language selection), despite the fact that they are disabled.
+  $new_task['install_utexas_welcome'] = array(
+    'display' => TRUE, 
+    'display_name' => st('Welcome'), 
+    'type' => 'form', 
+    'run' => isset($install_state['parameters']['welcome']) ? INSTALL_TASK_SKIP : INSTALL_TASK_RUN_IF_REACHED,
+	'function' => 'install_utexas_welcome'
+  );
+  $old_tasks = $tasks;
+  $tasks = array_slice($old_tasks, 0, 1) + $new_task + array_slice($old_tasks, 1);
+  return $tasks;
+}
+
+function install_utexas_welcome($form, &$form_state, &$install_state) {
+  // Set up the "Welcome" message.
+  // TODO: We need to come up with the actual content.
+  drupal_set_title(st('Welcome to the University of Texas at Austin\'s Drupal Distribution'));
+  $message = st('Thank you for choosing the UT DDP!') . '<br />';
+  $message .= '<p>' . st('TLorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pellentesque volutpat nisi, vel iaculis eros eleifend eget. Ut gravida sem ac lacinia commodo.') . '</p>';
+  $message .= '<p>' . st('Learn more about installing the UTLogin Module at ' . l('UT Login Documentation', 'http://www.utexas.edu/its/utlogin/') .
+    '. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pellentesque volutpat nisi, vel iaculis eros eleifend eget. Ut gravida sem ac lacinia commodo.') . '</p>';
+  
+  // The rest of the task (form).
+  $form = array();
+  $form['welcome_message'] = array(
+    '#markup' => $message,
+  );
+  $form['actions'] = array(
+    '#type' => 'actions',
+  );
+  $form['actions']['submit'] = array(
+    '#type' => 'submit', 
+    '#value' => st("Install the DDP!"), 
+    '#weight' => 10,
+  );
+  return $form;
+}
+
+function install_utexas_welcome_submit($form, &$form_state) {
+  global $install_state;
+  // Form submission.
+  $install_state['parameters']['welcome'] = 'done';
+  // Since we skipped the language selection (locale), need to set value here.
+  $install_state['parameters']['locale'] = 'en';
 }
