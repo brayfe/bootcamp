@@ -44,7 +44,6 @@ dependencies[] = ckeditor_link_user
 dependencies[] = ctools
 dependencies[] = date
 dependencies[] = entity
-dependencies[] = entity
 dependencies[] = entityreference
 dependencies[] = field_collection
 dependencies[] = file_entity
