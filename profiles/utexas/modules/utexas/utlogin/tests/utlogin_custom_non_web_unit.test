@@ -1,0 +1,375 @@
+<?php
+
+class UtloginNonWebUnitTest extends DrupalUnitTestCase {
+
+  /**
+   * Provides a description of the tests to be shown on the Testing page.
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'UTLogin - Custom Non-Web Unit Tests',
+      'description' => 'A suite of non-web unit tests.',
+      'group' => 'UTLogin',
+    );
+  }
+
+  /**
+   * Sets up each test case independently.
+   */
+  public function setUp() {
+    parent::setUp();
+
+    if (array_key_exists(UTLOGIN_COOKIE_NAME, $_COOKIE)) {
+      unset($_COOKIE[UTLOGIN_COOKIE_NAME]);
+    }
+  }
+
+  /**
+   * Performs tests to show behavior of utlogin_get_utlogin_headers().
+   */
+  public function testUtloginGetUtloginHeaders() {
+    // Assert the UTLogin cookie is not present by default.
+    $has_cookie = isset($_COOKIE[UTLOGIN_COOKIE_NAME]);
+    $message = format_string('Cookie @cookie_name is not present by default.', array('@cookie_name' => UTLOGIN_COOKIE_NAME));
+    $this->assertFalse($has_cookie, $message);
+
+    // Assert the UTLogin headers are not present by default.
+    $accepted_keys = array(
+      'HTTP_UTLOGIN_AFFILIATIONCODE',
+      'HTTP_UTLOGIN_EID',
+      'HTTP_UTLOGIN_EIDCLASS',
+      'HTTP_UTLOGIN_EMAIL',
+      'HTTP_UTLOGIN_ENTITLEMENTCODE',
+      'HTTP_UTLOGIN_NAME',
+      'HTTP_UTLOGIN_UIN',
+    );
+    $has_headers = count(array_intersect_key($_SERVER, array_flip($accepted_keys))) > 0;
+    $message = 'UTLogin headers are not present in $_SERVER by default.';
+    $this->assertFalse($has_headers, $message);
+
+    // Assert utlogin_get_utlogin_headers() with no UTLogin cookie returns no
+    // headers.
+    $result = count(utlogin_get_utlogin_headers()) === 0;
+    $message = format_string('UTLogin headers cannot be retrieved, because cookie @cookie_name is not present.', array('@cookie_name' => UTLOGIN_COOKIE_NAME));
+    $this->assertTrue($result, $message);
+
+    // Assert the cookie is now present.
+    $_COOKIE[UTLOGIN_COOKIE_NAME] = '';
+    $has_cookie = isset($_COOKIE[UTLOGIN_COOKIE_NAME]);
+    $message = format_string('Cookie @cookie_name is present.', array('@cookie_name' => UTLOGIN_COOKIE_NAME));
+    $this->assertTrue($has_cookie, $message);
+
+    // Assert utlogin_get_utlogin_headers() with a UTLogin cookie still returns
+    // no headers, because they are not currently on $_SERVER.
+    $result = count(utlogin_get_utlogin_headers()) === 0;
+    $message = 'UTLogin headers are now retrievable, but they are currently not present on $_SERVER.';
+    $this->assertTrue($result, $message);
+
+    // Set the UTLogin headers on $_SERVER.
+    $_SERVER['HTTP_UTLOGIN_AFFILIATIONCODE'] = $this->randomString();
+    $_SERVER['HTTP_UTLOGIN_EID'] = $this->randomString();
+    $_SERVER['HTTP_UTLOGIN_EIDCLASS'] = $this->randomString();
+    $_SERVER['HTTP_UTLOGIN_EMAIL'] = $this->randomString();
+    $_SERVER['HTTP_UTLOGIN_ENTITLEMENTCODE'] = $this->randomString();
+    $_SERVER['HTTP_UTLOGIN_NAME'] = $this->randomString();
+    $_SERVER['HTTP_UTLOGIN_UIN'] = $this->randomString();
+
+    // Assert utlogin_get_utlogin_headers() now returns headers.
+    $result = count(utlogin_get_utlogin_headers()) === count($accepted_keys);
+    $message = 'Populated UTLogin headers on $_SERVER are retrievable.';
+    $this->assertTrue($result, $message);
+
+    // Attempt to populate a bogus UTLogin header on $_SERVER.
+    $_SERVER['HTTP_UTLOGIN_BOGUS'] = $this->randomString();
+
+    // Assert utlogin_get_utlogin_headers() only returns accepted headers.
+    $result = count(utlogin_get_utlogin_headers()) === count($accepted_keys);
+    $message = 'Only accepted UTLogin headers on $_SERVER are retrieved.';
+    $this->assertTrue($result, $message);
+  }
+
+  /**
+   * Performs tests to show behavior of utlogin_is_valid_goto().
+   */
+  public function testUtloginIsValidGoto() {
+    global $base_root;
+    global $base_path;
+
+    // Assert an empty string is not a valid goto.
+    $url = '';
+    $result = utlogin_is_valid_goto($url);
+    $message = format_string('"@url" is not a valid goto URL, because it is empty.', array('@url' => $url));
+    $this->assertFalse($result, $message);
+
+    // Assert http://:80 (unparseable by parse_url()) is not a valid goto.
+    $url = 'http://:80';
+    $result = utlogin_is_valid_goto($url);
+    $message = format_string('"@url" is not a valid goto URL, because it cannot be parsed by parse_url().', array('@url' => $url));
+    $this->assertFalse($result || parse_url($url), $message);
+
+    // Assert a schemeless URL is not a valid goto.
+    $base = $base_root . $base_path;
+    $url = str_ireplace(array('http://', 'https://'), array('', ''), $base);
+    $result = utlogin_is_valid_goto($url);
+    $message = format_string('"@url" is not a valid goto URL, because it is does not contain the http or https scheme.', array('@url' => $url));
+    $this->assertFalse($result, $message);
+
+    // Assert a URL with scheme ftp is not a valid goto.
+    $base = $base_root . $base_path;
+    $url = str_ireplace(array('http://', 'https://'), array('ftp://', 'ftp://'), $base);
+    $result = utlogin_is_valid_goto($url);
+    $message = format_string('"@url" is not a valid goto URL, because it is does not contain the http or https scheme.', array('@url' => $url));
+    $this->assertFalse($result, $message);
+
+    // Assert a non-internal URL is not a valid goto.
+    $url = $base_root;
+    $result = utlogin_is_valid_goto($url);
+    $message = format_string('"@url" is not a valid goto URL, because it is not internal to the site.', array('@url' => $url));
+    $this->assertFalse($result, $message);
+
+    // Assert a non-internal URL is not a valid goto.
+    $url = 'http://www.google.com';
+    $result = utlogin_is_valid_goto($url);
+    $message = format_string('"@url" is not a valid goto URL, because it is not internal to the site.', array('@url' => $url));
+    $this->assertFalse($result, $message);
+
+    // Assert an internal URL is a valid goto.
+    $url = $base_root . $base_path;
+    $result = utlogin_is_valid_goto($url);
+    $message = format_string('"@url" is a valid goto URL.', array('@url' => $url));
+    $this->assertTrue($result, $message);
+
+    // Assert an internal URL is a valid goto (case insensitive).
+    $url = strtoupper($base_root) . $base_path;
+    $result = utlogin_is_valid_goto($url);
+    $message = format_string('"@url" is a valid goto URL.', array('@url' => $url));
+    $this->assertTrue($result, $message);
+  }
+
+  /**
+   * Performs tests to show behavior of utlogin_set_skip_parameter().
+   *
+   * The test cases within use variations on the concatenation of globals
+   * $base_root and $base_path as the URL to set the skip parameter on.
+   */
+  public function testUtloginSetSkipParameter() {
+    global $base_root;
+    global $base_path;
+
+    // Assert the skip parameter is not present by default.
+    $url = $base_root . $base_path;
+    $result = $url;
+    $query_string = parse_url($url, PHP_URL_QUERY);
+    $query_parameters = array();
+    parse_str($query_string, $query_parameters);
+    $has_skip_parameter = array_key_exists(UTLOGIN_SKIP_PARAMETER, $query_parameters);
+    $message = format_string('The skip parameter is not present by default (@result).', array('@result' => $result));
+    $this->assertFalse($has_skip_parameter, $message);
+
+    // Assert the skip parameter is set (no adjustments to URL).
+    $url = $base_root . $base_path;
+    $result = utlogin_set_skip_parameter($url);
+    $query_string = parse_url($result, PHP_URL_QUERY);
+    $query_parameters = array();
+    parse_str($query_string, $query_parameters);
+    $has_skip_parameter = array_key_exists(UTLOGIN_SKIP_PARAMETER, $query_parameters);
+    $message = format_string('The skip parameter can be set in URL @url (@result).', array('@url' => $url, '@result' => $result));
+    $this->assertTrue($has_skip_parameter, $message);
+
+    // Assert the skip parameter is set correctly when the URL has a trailing '?'.
+    $url = $base_root . $base_path . '?';
+    $result = utlogin_set_skip_parameter($url);
+    $query_string = parse_url($result, PHP_URL_QUERY);
+    $query_parameters = array();
+    parse_str($query_string, $query_parameters);
+    $has_skip_parameter = array_key_exists(UTLOGIN_SKIP_PARAMETER, $query_parameters);
+    $message = format_string('The skip parameter can be set in URL @url (@result).', array('@url' => $url, '@result' => $result));
+    $this->assertTrue($has_skip_parameter, $message);
+
+    // Assert the skip parameter is set correctly when the URL contains a random
+    // query string parameter.
+    $url = $base_root . $base_path . '?' . $this->randomName();
+    $result = utlogin_set_skip_parameter($url);
+    $query_string = parse_url($result, PHP_URL_QUERY);
+    $query_parameters = array();
+    parse_str($query_string, $query_parameters);
+    $has_skip_parameter = array_key_exists(UTLOGIN_SKIP_PARAMETER, $query_parameters);
+    $message = format_string('The skip parameter can be set in URL @url (@result).', array('@url' => $url, '@result' => $result));
+    $this->assertTrue($has_skip_parameter, $message);
+
+    // Assert the skip parameter is set correctly when the URL contains a random
+    // query string parameter and has a trailing '?'.
+    $url = $base_root . $base_path . '?' . $this->randomName() . '&';
+    $result = utlogin_set_skip_parameter($url);
+    $query_string = parse_url($result, PHP_URL_QUERY);
+    $query_parameters = array();
+    parse_str($query_string, $query_parameters);
+    $has_skip_parameter = array_key_exists(UTLOGIN_SKIP_PARAMETER, $query_parameters);
+    $message = format_string('The skip parameter can be set in URL @url (@result).', array('@url' => $url, '@result' => $result));
+    $this->assertTrue($has_skip_parameter, $message);
+
+    // Assert the skip parameter is set correctly when the URL contains multiple
+    // random query string parameters, one of which has a value.
+    $url = $base_root . $base_path . '?' . $this->randomName() . '&' . $this->randomName() . '=' . $this->randomName();
+    $result = utlogin_set_skip_parameter($url);
+    $query_string = parse_url($result, PHP_URL_QUERY);
+    $query_parameters = array();
+    parse_str($query_string, $query_parameters);
+    $has_skip_parameter = array_key_exists(UTLOGIN_SKIP_PARAMETER, $query_parameters);
+    $message = format_string('The skip parameter can be set in URL @url (@result).', array('@url' => $url, '@result' => $result));
+    $this->assertTrue($has_skip_parameter, $message);
+
+    // Assert the skip parameter is only set once despite multiple invocations
+    // of utlogin_set_skip_parameter().
+    $url = $base_root . $base_path;
+    $result = utlogin_set_skip_parameter(utlogin_set_skip_parameter($url));
+    $query_string = parse_url($result, PHP_URL_QUERY);
+    $query_parameters = array();
+    parse_str($query_string, $query_parameters);
+    $has_skip_parameter = array_key_exists(UTLOGIN_SKIP_PARAMETER, $query_parameters);
+    $message = format_string('The skip parameter will only be set once in URL @url (@result).', array('@url' => $url, '@result' => $result));
+    $this->assertTrue($has_skip_parameter, $message);
+
+    // Assert the skip parameter is set correctly when the URL contains a random
+    // query string parameter and a random fragment.
+    $url = $base_root . $base_path . '?' . $this->randomName() . '#' . $this->randomName();
+    $result = utlogin_set_skip_parameter($url);
+    $query_string = parse_url($result, PHP_URL_QUERY);
+    $query_parameters = array();
+    parse_str($query_string, $query_parameters);
+    $has_skip_parameter = array_key_exists(UTLOGIN_SKIP_PARAMETER, $query_parameters);
+    $message = format_string('The skip parameter can be set in URL @url (@result).', array('@url' => $url, '@result' => $result));
+    $this->assertTrue($has_skip_parameter, $message);
+  }
+
+  /**
+   * Performs tests to show behavior of utlogin_get_skip_parameter().
+   */
+  public function testUtloginGetSkipParameter() {
+    // Assert utlogin_get_skip_parameter() returns FALSE when the skip parameter
+    // is not present.
+    if (array_key_exists(UTLOGIN_SKIP_PARAMETER, $_GET)) {
+      unset($_GET[UTLOGIN_SKIP_PARAMETER]);
+    }
+    $has_skip_parameter = utlogin_get_skip_parameter();
+    $message = 'The skip parameter is not present by default (checking utlogin_get_skip_parameter()).';
+    $this->assertFalse($has_skip_parameter, $message);
+
+    // Assert utlogin_get_skip_parameter() returns TRUE when the skip parameter
+    // is present with a value of '1'.
+    $_GET[UTLOGIN_SKIP_PARAMETER] = '1';
+    $has_skip_parameter = utlogin_get_skip_parameteR();
+    $message = 'The skip parameter is present with expected value \'1\'.';
+    $this->assertTrue($has_skip_parameter, $message);
+
+    // Assert utlogin_get_skip_parameter() returns TRUE when the skip parameter
+    // is present with a value of NULL.
+    $_GET[UTLOGIN_SKIP_PARAMETER] = NULL;
+    $has_skip_parameter = utlogin_get_skip_parameter();
+    $message = 'The skip parameter is present with value NULL.';
+    $this->assertTrue($has_skip_parameter, $message);
+
+    // Assert utlogin_get_skip_parameter() returns TRUE when the skip parameter
+    // is present with a value of FALSE.
+    $_GET[UTLOGIN_SKIP_PARAMETER] = FALSE;
+    $has_skip_parameter = utlogin_get_skip_parameter();
+    $message = 'The skip parameter is present with value FALSE.';
+    $this->assertTrue($has_skip_parameter, $message);
+
+    // Assert utlogin_get_skip_parameter() returns TRUE when the skip parameter
+    // is present with a value of '' (empty string).
+    $_GET[UTLOGIN_SKIP_PARAMETER] = '';
+    $has_skip_parameter = utlogin_get_skip_parameter();
+    $message = 'The skip parameter is present with value \'\' (empty string).';
+    $this->assertTrue($has_skip_parameter, $message);
+
+    // Assert utlogin_get_skip_parameter() returns TRUE when the skip parameter
+    // is present with a random string as its value.
+    $random_value = $this->randomString();
+    $_GET[UTLOGIN_SKIP_PARAMETER] = $random_value;
+    $has_skip_parameter = utlogin_get_skip_parameter();
+    $message = format_string('The skip parameter is present with random value $value.', array('@value' => $random_value));
+    $this->assertTrue($has_skip_parameter, $message);
+  }
+
+  /**
+   * Performs tests to show behavior of utlogin_user_validate_name().
+   */
+  public function testUtloginUserValidateName() {
+    // Assert utlogin_user_validate_name() returns an error message for an empty
+    // string.
+    $name = '';
+    $result = utlogin_user_validate_name($name);
+    $matches = $result == t('You must enter a UT EID.');
+    $message = format_string('Name %name (empty string) is not valid.', array('%name' => $name));
+    $this->assertTrue($matches, $message);
+
+    // Assert utlogin_user_validate_name() returns an error message for a string
+    // containing an invalid character (!).
+    $name = '!';
+    $result = utlogin_user_validate_name($name);
+    $matches = $result == t('The entered UT EID is not valid.');
+    $message = format_string('Name %name is not valid.', array('%name' => $name));
+    $this->assertTrue($matches, $message);
+
+    // Assert utlogin_user_validate_name() returns an error message for a string
+    // of 9 valid characters.
+    $name = '123456789';
+    $result = utlogin_user_validate_name($name);
+    $matches = $result == t('The entered UT EID is not valid.');
+    $message = format_string('Name %name is not valid.', array('%name' => $name));
+    $this->assertTrue($matches, $message);
+
+    // Assert utlogin_user_validate_name() returns an error message for a string
+    // containing an invalid character (?).
+    $name = 'a?';
+    $result = utlogin_user_validate_name($name);
+    $matches = $result == t('The entered UT EID is not valid.');
+    $message = format_string('Name %name is not valid.', array('%name' => $name));
+    $this->assertTrue($matches, $message);
+
+    // Assert utlogin_user_validate_name() returns an error message for a string
+    // containing an invalid character (space).
+    $name = 'a 1';
+    $result = utlogin_user_validate_name($name);
+    $matches = $result == t('The entered UT EID is not valid.');
+    $message = format_string('Name %name is not valid.', array('%name' => $name));
+    $this->assertTrue($matches, $message);
+
+    // Assert utlogin_user_validate_name() returns NULL for a valid string.
+    $name = 'a';
+    $result = utlogin_user_validate_name($name);
+    $message = format_string('Name %name is valid.', array('%name' => $name));
+    $this->assertNull($result, $message);
+
+    // Assert utlogin_user_validate_name() returns NULL for a valid string.
+    $name = '1';
+    $result = utlogin_user_validate_name($name);
+    $message = format_string('Name %name is valid.', array('%name' => $name));
+    $this->assertNull($result, $message);
+
+    // Assert utlogin_user_validate_name() returns NULL for a valid string.
+    $name = '_';
+    $result = utlogin_user_validate_name($name);
+    $message = format_string('Name %name is valid.', array('%name' => $name));
+    $this->assertNull($result, $message);
+
+    // Assert utlogin_user_validate_name() returns NULL for a valid string.
+    $name = '-';
+    $result = utlogin_user_validate_name($name);
+    $message = format_string('Name %name is valid.', array('%name' => $name));
+    $this->assertNull($result, $message);
+
+    // Assert utlogin_user_validate_name() returns NULL for a valid string.
+    $name = '.';
+    $result = utlogin_user_validate_name($name);
+    $message = format_string('Name %name is valid.', array('%name' => $name));
+    $this->assertNull($result, $message);
+
+    // Assert utlogin_user_validate_name() returns NULL for a valid string.
+    $name = '12345678';
+    $result = utlogin_user_validate_name($name);
+    $message = format_string('Name %name is valid.', array('%name' => $name));
+    $this->assertNull($result, $message);
+  }
+}

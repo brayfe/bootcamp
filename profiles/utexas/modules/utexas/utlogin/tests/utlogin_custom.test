@@ -1,0 +1,71 @@
+<?php
+
+class UtloginCustomTest extends UtloginWebTestBase {
+
+  /**
+   * Provides a description of the tests to be shown on the Testing page.
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'UTLogin - Custom Tests',
+      'description' => 'A suite of custom tests.',
+      'group' => 'UTLogin',
+    );
+  }
+
+  /**
+   * Sets up each test case independently.
+   */
+  public function setUp() {
+    parent::setUp();
+    $this->setUser1();
+  }
+
+  /**
+   * Performs tests to show behavior of EID-name conflicts with user1.
+   */
+  public function testUser1Eid() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      // Set user1's name as a non-existing UTLogin user's EID.
+      $edit = array();
+      $edit['name'] = $this->utlogin_users[$utlogin_user_key]['name'];
+      $this->user1 = user_save($this->user1, $edit);
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+
+      $this->drupalGet('');
+      $this->assertText(t('Attempt to automatically log in using UTLogin credentials for @name failed, because a non-UTLogin account with that name already exists.', array('@name' => $this->utlogin_users[$utlogin_user_key]['name'])));
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show behavior of EID-name conflicts with unconverted users.
+   */
+  public function testUnconvertedUserEid() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $unconverted_user = $this->drupalCreateUser();
+      $edit = array();
+      $edit['name'] = $this->utlogin_users[$utlogin_user_key]['name'];
+      $unconverted_user = user_save($unconverted_user, $edit);
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+
+      $this->drupalGet('');
+      $this->assertText(t('Attempt to automatically log in using UTLogin credentials for @name failed, because a non-UTLogin account with that name already exists.', array('@name' => $this->utlogin_users[$utlogin_user_key]['name'])));
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+}

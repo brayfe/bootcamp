@@ -1,0 +1,527 @@
+<?php
+
+class FunctionalAuthenticationSsoTest extends UtloginWebTestBase {
+
+  /**
+   * Provides a description of the tests to be shown on the Testing page.
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'UTLogin - Functional tests for authentication/SSO',
+      'description' => 'A suite of tests to cover the defined functional tests in DFP Test Cases 3.2.',
+      'group' => 'UTLogin',
+    );
+  }
+
+  /**
+   * Sets up each test case independently.
+   */
+  public function setUp() {
+    parent::setUp();
+  }
+
+  /**
+   * Performs tests to show a protected resource requires UTLogin authentication.
+   *
+   * Implementation is based on DFP Test Cases 3.2.1.
+   *
+   * Requests are made to the designated protected resource (path user/utlogin/login).
+   */
+  public function testProtectedResourceAndAuthentication() {
+    $this->additionalCurlOptions[CURLOPT_COOKIE] = '';
+    $this->drupalGet('user/utlogin/login');
+    $message = 'Request to path user/utlogin/login without an authenticated UTLogin session (no UTLogin cookie) is routed to the external UTLogin login resource.';
+    $this->assertLink('I forgot my UT EID or password.', 0, $message);
+
+    $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=';
+    $this->drupalGet('user/utlogin/login');
+    $message = 'Request to path user/utlogin/login without an authenticated UTLogin session (empty UTLogin cookie) is routed to the external UTLogin login resource.';
+    $this->assertLink('I forgot my UT EID or password.', 0, $message);
+  }
+
+  /**
+   * Performs tests to show an unprotected resource does not require UTLogin authentication.
+   *
+   * Implementation is based on DFP Test Cases 3.2.2.
+   *
+   * Requests are made to unprotected resources:
+   * - <front>
+   * - user
+   */
+  public function testUnprotectedResourceAndAuthentication() {
+    $this->additionalCurlOptions[CURLOPT_COOKIE] = '';
+
+    $this->drupalGet('');
+    $message = 'Request to <front> was not routed to the external UTLogin login resource (i.e., resource is accessible).';
+    $this->assertUrl('', array(), $message);
+    $message = 'Login link found (user is not logged in).';
+    $this->assertText(t('Log in with UT EID'), $message);
+
+    $this->drupalGet('user');
+    $message = 'Request to path user was not routed to the external UTLogin login resource (i.e., resource is accessible).';
+    $this->assertUrl('user', array(), $message);
+    $message = 'Login link found (user is not logged in).';
+    $this->assertText(t('Log in with UT EID'), $message);
+  }
+
+  /**
+   * Performs tests to show a blocked/inactive UTLogin user cannot log in.
+   *
+   * Implementation is based on DFP Test Cases 3.2.4.
+   */
+  public function testBlockedUtloginUser() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $drupal_user = user_save(drupal_anonymous_user(), array('name' => $this->utlogin_users[$utlogin_user_key]['name'], 'status' => 0));
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+
+      $this->drupalGet('');
+      $message = format_string('User %name is not logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertLink(t('Log in with UT EID'), 0, $message);
+      $site_mail = variable_get('site_mail');
+      $site_mail_link = "<a href=\"mailto:{$site_mail}\">{$site_mail}</a>";
+      $this->assertRaw(t('Attempt to automatically log in using UTLogin credentials for %name failed, because that account has not been activated or is blocked on this site. Please contact !site_mail_link for assistance.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name'], '!site_mail_link' => $site_mail_link)));
+
+      $this->drupalGet('user/utlogin/login');
+      $message = format_string('User %name is not logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertLink(t('Log in with UT EID'), 0, $message);
+      $site_mail = variable_get('site_mail');
+      $site_mail_link = "<a href=\"mailto:{$site_mail}\">{$site_mail}</a>";
+      $this->assertRaw(t('Attempt to automatically log in using UTLogin credentials for %name failed, because that account has not been activated or is blocked on this site. Please contact !site_mail_link for assistance.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name'], '!site_mail_link' => $site_mail_link)));
+      $this->assertRaw(t('The username %name has not been activated or is blocked.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name'])));
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show UTLogin SSO (Single Sign-On).
+   *
+   * Implementation is based on DFP Test Cases 3.2.5.
+   */
+  public function testUtloginSso_1() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $drupal_user = user_save(drupal_anonymous_user(), array('name' => $this->utlogin_users[$utlogin_user_key]['name'], 'status' => 1));
+
+      // Assert the webuser is not already logged in with UTLogin.
+      $this->curlClose();
+      $this->drupalGet(UTLOGIN_LOGIN_URL);
+      $message = format_string('Request to @url without an authenticated UTLogin session (no UTLogin cookie) presents the external UTLogin login resource.', array('@url' => UTLOGIN_LOGIN_URL));
+      $this->assertLink('I forgot my UT EID or password.', 0, $message);
+
+      // Assert the webuser is not already logged in with Drupal.
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/login');
+      $message = format_string('User %name is not logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertLink('I forgot my UT EID or password.', 0, $message);
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+
+      // Assert the webuser is logged in with UTLogin.
+      $this->curlClose();
+      $this->drupalGet(UTLOGIN_LOGIN_URL);
+      $message = format_string('Request to @url with an authenticated UTLogin session is routed to the UT homepage.', array('@url' => UTLOGIN_LOGIN_URL));
+      $this->assertUrl('https://www.utexas.edu', array(), $message);
+
+      // Assert the webuser is logged in with Drupal.
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/login');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key]['name'])), $message);
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show UTLogin SSO (Single Sign-On).
+   *
+   * Implementation is based on DFP Test Cases 3.2.6.
+   */
+  public function testUtloginSso_2() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $drupal_user = user_save(drupal_anonymous_user(), array('name' => $this->utlogin_users[$utlogin_user_key]['name'], 'status' => 1));
+
+      // Assert the webuser is not already logged in with Drupal.
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/login');
+      $message = format_string('User %name is not logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertLink('I forgot my UT EID or password.', 0, $message);
+
+      // Assert the webuser is not already logged in with UTLogin.
+      $this->curlClose();
+      $this->drupalGet(UTLOGIN_LOGIN_URL);
+      $message = format_string('Request to @url without an authenticated UTLogin session (de-authenticated UTLogin cookie) presents the external UTLogin login resource.', array('@url' => UTLOGIN_LOGIN_URL));
+      $this->assertLink('I forgot my UT EID or password.', 0, $message);
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+
+      // Assert the webuser is logged in with Drupal.
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/login');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key]['name'])), $message);
+
+      // Assert the webuser is logged in with UTLogin.
+      $this->curlClose();
+      $this->drupalGet(UTLOGIN_LOGIN_URL);
+      $message = format_string('Request to @url with an authenticated UTLogin session is routed to the UT homepage.', array('@url' => UTLOGIN_LOGIN_URL));
+      $this->assertUrl('https://www.utexas.edu', array(), $message);
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show Drupal authentication.
+   *
+   * Implementation is based on DFP Tests Cases 3.2.7.
+   */
+  public function testDrupalLogin() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $drupal_user = user_save(drupal_anonymous_user(), array('name' => $this->utlogin_users[$utlogin_user_key]['name'], 'status' => 1));
+
+      // Assert the webuser is not already logged in with Drupal.
+      $this->drupalGet('');
+      $message = format_string('User %name is not logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertLink(t('Log in with UT EID'), 0, $message);
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+
+      // Assert the webuser is logged in with Drupal.
+      $this->drupalGet('');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key]['name'])), $message);
+
+      // Assert the webuser is still logged in with Drupal (another resource).
+      $this->drupalGet('user');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key]['name'])), $message);
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show Drupal de-authentication.
+   *
+   * Implementation is based on DFP Test Cases 3.2.8.
+   */
+  public function testDrupalLogout() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $drupal_user = user_save(drupal_anonymous_user(), array('name' => $this->utlogin_users[$utlogin_user_key]['name'], 'status' => 1));
+
+      $this->additionalCurlOptions[CURLOPT_COOKIEJAR] = $this->cookieFile;
+      $this->additionalCurlOptions[CURLOPT_COOKIEFILE] = $this->cookieFile;
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+
+      $this->drupalGet('');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key]['name'])), $message);
+
+      $this->curlClose();
+      $this->drupalGet('user/logout');
+      $message = format_string('User %name is not logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertLink(t('Log in with UT EID'), 0, $message);
+
+      sleep(1);
+      $this->drupalGet('');
+      $message = format_string('User %name is not logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertLink(t('Log in with UT EID'), 0, $message);
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show post-logout redirection to the default destination.
+   *
+   * Implementation is based on DFP Test Cases 3.2.9.
+   */
+  public function testLogoutGotoDefault() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $drupal_user = user_save(drupal_anonymous_user(), array('name' => $this->utlogin_users[$utlogin_user_key]['name'], 'status' => 1));
+
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/logout');
+      $message = format_string('Request to path user/utlogin/logout ends up at the default logout destination (@path) with the skip parameter in the query string.', array('@path' => '<front>'));
+      $this->assertUrl('<front>', array('query' => array(UTLOGIN_SKIP_PARAMETER => '1')), $message);
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/login');
+      $this->drupalGet('user/logout');
+      $message = format_string('Request to path user/logout ends up at the default logout destination (@path) with the skip parameter in the query string.', array('@path' => '<front>'));
+      $this->assertUrl('<front>', array('query' => array(UTLOGIN_SKIP_PARAMETER => '1')), $message);
+
+      $internal_destination = 'user';
+      variable_set('utlogin_logout_goto', $internal_destination);
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/logout');
+      $message = format_string('Logout with an internal path as the default logout destination (@destination) ends up at the default logout destination with the skip parameter in the query string.', array('@destination' => $internal_destination));
+      $this->assertUrl($internal_destination, array('query' => array(UTLOGIN_SKIP_PARAMETER => '1')), $message);
+
+      $internal_destination = $this->randomName();
+      variable_set('utlogin_logout_goto', $internal_destination);
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/logout');
+      $message = format_string('Logout with a random internal path as the default logout destination (@destination) ends up at the default logout destination with the skip parameter in the query string.', array('@destination' => $internal_destination));
+      $this->assertUrl($internal_destination, array('query' => array(UTLOGIN_SKIP_PARAMETER => '1')), $message);
+
+      $nonwhitelisted_destination = 'http://www.google.com';
+      variable_set('utlogin_logout_goto', $nonwhitelisted_destination);
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/logout');
+      $message = format_string('Logout with a non-whitelisted default logout destination (@destination) ends up at @url.', array('@destination' => $nonwhitelisted_destination, '@url' => 'https://www.utexas.edu'));
+      $this->assertUrl('https://www.utexas.edu', array(), $message);
+
+      $malformed_destination = 'ftp://' . $this->randomName();
+      variable_set('utlogin_logout_goto', $malformed_destination);
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/logout');
+      $message = format_string('Logout with a malformed default logout destination (@destination) ends up at @url.', array('@destination' => $malformed_destination, '@url' => 'https://www.utexas.edu'));
+      $this->assertUrl('https://www.utexas.edu', array(), $message);
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show post-logout redirection to a specified destination.
+   *
+   * Implementation is based on DFP Test Cases 3.2.10.
+   */
+  public function testLogoutGotoSpecific() {
+    $destination = url('', array('absolute' => TRUE));
+    $this->curlClose();
+    $this->drupalGet('user/utlogin/logout', array('query' => array('goto' => $destination)));
+    $message = format_string('Logout with an internal path as the specified logout destination (@destination) ends up at the specified logout destination with the skip parameter in the query string.', array('@destination' => $destination));
+    $this->assertUrl('', array('query' => array(UTLOGIN_SKIP_PARAMETER => '1')), $message);
+
+    $destination = url('user', array('absolute' => TRUE));
+    $this->curlClose();
+    $this->drupalGet('user/utlogin/logout', array('query' => array('goto' => $destination)));
+    $message = format_string('Logout with an internal path as the specified logout destination (@destination) ends up at the specified logout destination with the skip parameter in the query string.', array('@destination' => $destination));
+    $this->assertUrl('user', array('query' => array(UTLOGIN_SKIP_PARAMETER => '1')), $message);
+
+    $random_path = $this->randomName();
+    $destination = url($random_path, array('absolute' => TRUE));
+    $this->curlClose();
+    $this->drupalGet('user/utlogin/logout', array('query' => array('goto' => $destination)));
+    $message = format_string('Logout with a random internal path as the specified logout destination (@destination) ends up at the specified logout destination with the skip parameter in the query string.', array('@destination' => $destination));
+    $this->assertUrl($random_path, array('query' => array(UTLOGIN_SKIP_PARAMETER => '1')), $message);
+
+    $nonwhitelisted_destination = 'http://www.google.com';
+    $this->curlClose();
+    $this->drupalGet('user/utlogin/logout', array('query' => array('goto' => $nonwhitelisted_destination)));
+    $message = format_string('Logout with a non-whitelisted specified logout destination (@destination) ends up at @url with the skip parameter in the query string.', array('@destination' => $nonwhitelisted_destination, '@url' => url(NULL, array('absolute' => TRUE))));
+    $this->assertUrl(NULL, array('query' => array(UTLOGIN_SKIP_PARAMETER => '1')), $message);
+
+    $malformed_destination = 'ftp://' . $this->randomName();
+    $this->curlClose();
+    $this->drupalGet('user/utlogin/logout', array('query' => array('goto' => $malformed_destination)));
+    $message = format_string('Logout with a malformed specified logout destination (@destination) ends up at @url with the skip parameter in the query string.', array('@destination' => $malformed_destination, '@url' => url(NULL, array('absolute' => TRUE))));
+    $this->assertUrl(NULL, array('query' => array(UTLOGIN_SKIP_PARAMETER => '1')), $message);
+  }
+
+  /**
+   * Performs tests to show UTLogin SLO (Single Log-Out).
+   *
+   * Implementation is based on DFP Test Cases 3.2.11.
+   */
+  public function testUtloginSlo_1() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $drupal_user = user_save(drupal_anonymous_user(), array('name' => $this->utlogin_users[$utlogin_user_key]['name'], 'status' => 1));
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+
+      // Assert the webuser is logged in with UTLogin.
+      $this->curlClose();
+      $this->drupalGet(UTLOGIN_LOGIN_URL);
+      $message = format_string('Request to @url with an authenticated UTLogin session is routed to the UT homepage.', array('@url' => UTLOGIN_LOGIN_URL));
+      $this->assertUrl('https://www.utexas.edu', array(), $message);
+
+      // Assert the webuser is logged in with Drupal.
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/login');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key]['name'])), $message);
+
+      // De-authenticate the webuser from UTLogin.
+      $this->utloginLogout($this->utlogin_users[$utlogin_user_key]);
+
+      // Assert the webuser is not logged in with UTLogin.
+      $this->curlClose();
+      $this->drupalGet(UTLOGIN_LOGIN_URL);
+      $message = format_string('Request to @url without an authenticated UTLogin session (de-authenticated UTLogin cookie) presents the external UTLogin login resource.', array('@url' => UTLOGIN_LOGIN_URL));
+      $this->assertLink('I forgot my UT EID or password.', 0, $message);
+
+      // Assert the webuser is not logged in with Drupal.
+      sleep(1);
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/login');
+      $message = format_string('Request to protected resource @path without an authenticated UTLogin session (de-authenticated UTLogin cookie) is routed to the external UTLogin login resource.', array('@path' => 'user/utlogin/login'));
+      $this->assertLink('I forgot my UT EID or password.', 0, $message);
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show UTLogin SLO (Single Log-Out).
+   *
+   * Implementation is based on DFP Test Cases 3.3.12.
+   */
+  public function testUtloginSlo_2() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $drupal_user = user_save(drupal_anonymous_user(), array('name' => $this->utlogin_users[$utlogin_user_key]['name'], 'status' => 1));
+
+      $this->additionalCurlOptions[CURLOPT_COOKIEJAR] = $this->cookieFile;
+      $this->additionalCurlOptions[CURLOPT_COOKIEFILE] = $this->cookieFile;
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+
+      // Assert the webuser is logged in with Drupal.
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/login');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key]['name'])), $message);
+
+      // Assert the webuser is logged in with UTLogin.
+      $this->curlClose();
+      $this->drupalGet(UTLOGIN_LOGIN_URL);
+      $message = format_string('Request to @url with an authenticated UTLogin session is routed to the UT homepage.', array('@url' => UTLOGIN_LOGIN_URL));
+      $this->assertUrl('https://www.utexas.edu', array(), $message);
+
+      // De-authenticate the webuser from Drupal.
+      $this->drupalGet('user/logout');
+
+      // Assert the webuser is not logged in with UTLogin.
+      $this->curlClose();
+      $this->drupalGet(UTLOGIN_LOGIN_URL);
+      $message = format_string('Request to @url without an authenticated UTLogin session (de-authenticated UTLogin cookie) presents the external UTLogin login resource.', array('@url' => UTLOGIN_LOGIN_URL));
+      $this->assertLink('I forgot my UT EID or password.', 0, $message);
+
+      // Assert the webuser is not logged in with Drupal.
+      sleep(1);
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/login');
+      $message = format_string('Request to protected resource @path without an authenticated UTLogin session (de-authenticated UTLogin cookie) is routed to the external UTLogin login resource.', array('@path' => 'user/utlogin/login'));
+      $this->assertLink('I forgot my UT EID or password.', 0, $message);
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show switching between different UTLogin users.
+   *
+   * Implementation is based on DFP Test Cases 3.3.13.
+   */
+  public function testUtloginUserSwitch() {
+    $utlogin_user_key_1 = 'portalb';
+    $utlogin_user_key_2 = 'portalc';
+    if (array_key_exists($utlogin_user_key_1, $this->utlogin_users) && array_key_exists($utlogin_user_key_2, $this->utlogin_users)) {
+      $drupal_user_1 = user_save(drupal_anonymous_user(), array('name' => $this->utlogin_users[$utlogin_user_key_1]['name'], 'status' => 1));
+      $drupal_user_2 = user_save(drupal_anonymous_user(), array('name' => $this->utlogin_users[$utlogin_user_key_2]['name'], 'status' => 1));
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key_1]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key_1]);
+
+      $this->drupalGet('user');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key_1]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key_1]['name'])), $message);
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key_2]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key_2]);
+
+      $this->drupalGet('user');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key_2]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key_2]['name'])), $message);
+
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key_1]);
+      $this->drupalGet('user');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key_1]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key_1]['name'])), $message);
+    }
+    else {
+      $message = format_string('At least one of the UTLogin users specified by keys %key1 and %key2 does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key1' => $utlogin_user_key_1, '%key2' => $utlogin_user_key_2, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show logging out adds the skip parameter upon return.
+   *
+   * Implementation is based on DFP Test Cases 3.3.14.
+   */
+  public function testLogoutSkipParameter() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $drupal_user = user_save(drupal_anonymous_user(), array('name' => $this->utlogin_users[$utlogin_user_key]['name'], 'status' => 1));
+
+      // Add the UTLogin cookie to requests to emulate a UTLogin webuser.
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/login');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key]['name'])), $message);
+
+      variable_set('utlogin_logout_goto', '<front>');
+      $this->curlClose();
+      $this->drupalGet('user/utlogin/logout');
+      $message = format_string('Request to path user/utlogin/logout ends up at the default logout destination (@path) with the skip parameter in the query string.', array('@path' => '<front>'));
+      $this->assertUrl('<front>', array('query' => array(UTLOGIN_SKIP_PARAMETER => '1')), $message);
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+}
