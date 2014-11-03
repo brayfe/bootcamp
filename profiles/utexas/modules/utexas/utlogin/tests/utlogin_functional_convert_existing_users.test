@@ -1,0 +1,360 @@
+<?php
+
+class FunctionalConvertExistingUsersTest extends UtloginWebTestBase {
+
+  /**
+   * Provides a description of the tests to be shown on the Testing page.
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'UTLogin - Functional tests for the conversion of existing users',
+      'description' => 'A suite of tests to cover the defined functional tests in DFP Test Cases 3.8.',
+      'group' => 'UTLogin',
+    );
+  }
+
+  /**
+   * Sets up each test case independently.
+   */
+  public function setUp() {
+    DrupalWebTestCase::setUp();
+
+    $this->cookie_cache = array();
+    $this->cookieFile = $this->public_files_directory . '/cookie.jar';
+    $this->user1 = user_load(1, TRUE);
+    $this->user1->pass_raw = NULL;
+
+    $this->utlogin_users_file_path = DRUPAL_ROOT . '/' . drupal_get_path('module', 'utlogin') . '/tests/includes/utlogin_users.inc';
+    $this->loadUtloginUsers();
+  }
+
+  /**
+   * Enables the UTLogin module and sets up the utlogin_authentication block.
+   */
+  protected function enableUtloginModule() {
+    $modules = array('utlogin');
+    $success = module_enable($modules, TRUE);
+    $this->assertTrue($success, t('Enabled modules: %modules', array('%modules' => implode(', ', $modules))));
+    $this->resetAll();
+
+    // Set the UTLogin login/logout block on the page, so assertions can be run
+    // on its text.
+    db_merge('block')
+      ->key(array('theme' => 'bartik', 'delta' => 'utlogin_authentication', 'module' => 'utlogin'))
+      ->fields(array(
+        'region' => 'sidebar_first',
+        'pages' => '',
+        'status' => 1,
+        'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+      ))
+      ->execute();
+  }
+
+  /**
+   * Disables the UTLogin module.
+   */
+  protected function disableUtloginModule() {
+    $modules = array('utlogin');
+    module_disable($modules, TRUE);
+    $this->resetAll();
+  }
+
+  /**
+   * Performs tests to show programmatic enabling of the UTLogin module.
+   *
+   * @see FunctionalConvertExistingUsersTest::enableUtloginModule()
+   */
+  public function testEnableModule() {
+    $this->drupalGet('');
+    $this->assertFieldByName('form_id', 'user_login_block');
+
+    $this->enableUtloginModule();
+    $this->drupalGet('');
+    $this->assertNoFieldByName('form_id', 'user_login_block');
+    $this->assertLink(t('Log in with UT EID'), 0);
+  }
+
+  /**
+   * Performs tests to show programmatic disabling of the UTLogin module.
+   *
+   * @see FunctionalConvertExistingUsersTest::disableUtloginModule()
+   */
+  public function testDisableModule() {
+    $this->enableUtloginModule();
+    $this->drupalGet('');
+    $this->assertNoFieldByName('form_id', 'user_login_block');
+    $this->assertLink(t('Log in with UT EID'), 0);
+
+    $this->disableUtloginModule();
+    $this->drupalGet('');
+    $this->assertFieldByName('form_id', 'user_login_block');
+    $this->assertNoLink(t('Log in with UT EID'));
+  }
+
+  /**
+   * Performs tests to show behavior of local login with the UTLogin module disabled.
+   *
+   * Implementation is based on DFP Test Cases 3.8.1.
+   */
+  public function testDisabledModuleDrupalLogin_1() {
+    $this->disableUtloginModule();
+    $added_user = $this->drupalCreateUser();
+
+    $edit = array();
+    $edit['name'] = $added_user->name;
+    $edit['pass'] = $added_user->pass_raw;
+    $this->drupalPost('user', $edit, t('Log in'));
+    $this->assertText(t('Log out'));
+  }
+
+  /**
+   * Performs tests to show behavior of local login with the UTLogin module disabled.
+   *
+   * Implementation is based on DFP Test Cases 3.8.2.
+   */
+  public function testDisabledModuleDrupalLogin_2() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      // Add a new user.
+      // Note: utlogin_user_insert() will automatically convert the new user to be
+      // a UTLogin user with a random password.
+      $this->enableUtloginModule();
+      $edit = array(
+        'name' => $this->utlogin_users[$utlogin_user_key]['name'],
+        'status' => 1,
+      );
+      $added_user = user_save(drupal_anonymous_user(), $edit);
+
+      // Disable UTLogin module and try to log in with the UTLogin user.
+      $this->disableUtloginModule();
+      $edit = array(
+        'name' => $added_user->name,
+        'pass' => $this->utlogin_users[$utlogin_user_key]['password'],
+      );
+      $this->drupalPost('user', $edit, t('Log in'));
+      $this->assertText(t('Sorry, unrecognized username or password.'));
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show user conversion and subsequent behavior.
+   *
+   * Implementation is based on DFP Test Cases 3.8.3, 3.8.4, 3.8.5, and 3.8.6.
+   */
+  public function testConvertUsers() {
+    $utlogin_user_key_1 = 'portalb';
+    $utlogin_user_key_2 = 'portalc';
+    if (array_key_exists($utlogin_user_key_1, $this->utlogin_users) && array_key_exists($utlogin_user_key_2, $this->utlogin_users)) {
+      $this->disableUtloginModule();
+
+      // Set up test users.
+      $this->setUser1();
+      $test_users = array();
+
+      $pass_raw = user_password();
+      $edit = array(
+        'name' => 'portalb_local',
+        'pass' => $pass_raw,
+        'status' => 1,
+      );
+      $test_users['local_1'] = user_save(drupal_anonymous_user(), $edit);
+      $test_users['local_1']->pass_raw = $pass_raw;
+
+      $pass_raw = user_password();
+      $edit = array(
+        'name' => 'zlocal',
+        'pass' => $pass_raw,
+        'status' => 1,
+      );
+      $test_users['local_2'] = user_save(drupal_anonymous_user(), $edit);
+      $test_users['local_2']->pass_raw = $pass_raw;
+
+      $edit = array(
+        'name' => $this->utlogin_users[$utlogin_user_key_1]['name'],
+        'pass' => $this->utlogin_users[$utlogin_user_key_1]['password'],
+        'status' => 1,
+      );
+      $test_users['utlogin_1'] = user_save(drupal_anonymous_user(), $edit);
+      $test_users['utlogin_1']->pass_raw = $this->utlogin_users[$utlogin_user_key_1]['password'];
+
+      $edit = array(
+        'name' => $this->utlogin_users[$utlogin_user_key_2]['name'],
+        'pass' => $this->utlogin_users[$utlogin_user_key_2]['password'],
+        'status' => 1,
+      );
+      $test_users['utlogin_2'] = user_save(drupal_anonymous_user(), $edit);
+      $test_users['utlogin_2']->pass_raw = $this->utlogin_users[$utlogin_user_key_2]['password'];
+
+      $this->enableUtloginModule();
+      $this->drupalLogin($this->user1);
+
+      // Begin 3.8.3.
+      // Assert users utlogin_1, local_1, utlogin_2 can be converted.
+      $edit = array(
+        'operation' => 'action::utlogin_convert_local_to_utlogin_action',
+        'views_bulk_operations[0]' => 4,
+        'views_bulk_operations[1]' => 2,
+        'views_bulk_operations[2]' => 5,
+      );
+      $this->drupalPost('admin/config/people/utlogin/convert-users', $edit, t('Execute'));
+      $this->drupalPost(NULL, array(), t('Confirm'));
+      $this->assertText(t('Performed Convert local users to UTLogin users on 3 items'));
+      // End 3.8.3.
+
+      // Begin 3.8.4.
+      // Assert user utlogin_1 can be logged into with UTLogin.
+      $this->drupalLogout();
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key_1]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key_1]);
+      $this->curlClose();
+      $this->drupalGet('');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key_1]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key_1]['name'])), $message);
+      // End 3.8.4.
+
+      // Begin 3.8.5.
+      // Assert user utlogin_2 can be logged into with UTLogin.
+      $this->drupalLogout();
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key_2]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key_2]);
+      $this->curlClose();
+      $this->drupalGet('');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key_2]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key_2]['name'])), $message);
+      // End 3.8.5.
+
+      // Begin 3.8.6.
+      // Assert user local_2 (not converted) cannot be logged into.
+      $this->drupalLogout();
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = '';
+      $this->curlClose();
+      $edit = array(
+        'name' => $test_users['local_2']->name,
+        'pass' => $test_users['local_2']->pass_raw,
+      );
+      $this->drupalPost('user', $edit, t('Log in'));
+      $this->assertResponse(403);
+      // End 3.8.6.
+    }
+    else {
+      $message = format_string('At least one of the UTLogin users specified by keys %key1 and %key2 does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key1' => $utlogin_user_key_1, '%key2' => $utlogin_user_key_2, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show module uninstallation and subsequent behavior.
+   *
+   * Implementation is based on DFP Test Cases 3.8.7., 3.8.8, 3.8.9, 3.8.10, and
+   * 3.8.11.
+   */
+  public function testUninstallModule() {
+    $utlogin_user_key_1 = 'portalb';
+    $utlogin_user_key_2 = 'portalc';
+    if (array_key_exists($utlogin_user_key_1, $this->utlogin_users) && array_key_exists($utlogin_user_key_2, $this->utlogin_users)) {
+      $this->disableUtloginModule();
+
+      // Set up test users.
+      $this->setUser1();
+      $test_users = array();
+      $test_users['local'] = $this->drupalCreateUser();
+
+      $edit = array(
+        'name' => $this->utlogin_users[$utlogin_user_key_1]['name'],
+        'pass' => $this->utlogin_users[$utlogin_user_key_1]['password'],
+        'status' => 1,
+      );
+      $test_users['utlogin_1'] = user_save(drupal_anonymous_user(), $edit);
+      $test_users['utlogin_1']->pass_raw = $this->utlogin_users[$utlogin_user_key_1]['password'];
+
+      $this->enableUtloginModule();
+
+      $edit = array(
+        'name' => $this->utlogin_users[$utlogin_user_key_2]['name'],
+        'mail' => $this->utlogin_users[$utlogin_user_key_2]['name'] . '@example.com',
+        'status' => 1,
+      );
+      $test_users['utlogin_2'] = user_save(drupal_anonymous_user(), $edit);
+
+      $this->drupalCreateUser();
+      $this->drupalCreateUser();
+      $num_utlogin_authmap = db_query("SELECT count(aid) FROM {authmap} WHERE module = :module", array(':module' => 'utlogin'))->fetchField();
+      $this->assertEqual($num_utlogin_authmap, 3);
+
+      // Begin 3.8.7.
+      // Assert module can be uninstalled, and all "utlogin" authmap records are
+      // removed as part of the uninstallation process.
+      $this->disableUtloginModule();
+      $modules = array('utlogin');
+      $success = drupal_uninstall_modules($modules, TRUE);
+      $this->assertTrue($success, t('Uninstalled modules: %modules', array('%modules' => implode(', ', $modules))));
+      $this->resetAll();
+
+      $num_utlogin_authmap = db_query("SELECT count(aid) FROM {authmap} WHERE module = :module", array(':module' => 'utlogin'))->fetchField();
+      $this->assertEqual($num_utlogin_authmap, 0);
+      // End 3.8.7.
+
+      // Begin 3.8.8.
+      // Assert user local (a local/unconverted user) can be logged into with
+      // Drupal login.
+      $this->drupalLogin($test_users['local']);
+      $this->assertText(t('Log out'));
+      // End 3.8.8.
+
+      // Begin custom1.
+      // Assert user utlogin_1 (a local/unconverted user) can be logged into with
+      // Drupal login.
+      $this->drupalLogout();
+      $this->drupalLogin($test_users['utlogin_1']);
+      $this->assertText(t('Log out'));
+      // End custom1.
+
+      // Begin 3.8.9.
+      // Assert user utlogin_2 (a UTLogin/converted user) cannot be logged into
+      // with UTLogin.
+      $this->drupalLogout();
+      $this->utloginLogin($this->utlogin_users[$utlogin_user_key_2]);
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key_2]);
+      $this->curlClose();
+      $this->drupalGet('');
+      $this->assertNoText(t('Log out'));
+      // End 3.8.9.
+
+      // Begin 3.8.10.
+      // Assert admin can change user utlogin_2's password, and user utlogin_2 can
+      // subsequently log in with Drupal log in using the new password.
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = '';
+      $this->drupalLogout();
+      $this->drupalLogin($this->user1);
+      $new_pass_raw = user_password();
+      $edit = array(
+        'pass[pass1]' => $new_pass_raw,
+        'pass[pass2]' => $new_pass_raw,
+      );
+      $edit_path = format_string('user/@uid/edit', array('@uid' => $test_users['utlogin_2']->uid));
+      $this->drupalPost($edit_path, $edit, t('Save'));
+      $test_users['utlogin_2']->pass_raw = $new_pass_raw;
+      $this->assertText(t('The changes have been saved.'));
+      $this->drupalLogout();
+      $this->drupalLogin($test_users['utlogin_2']);
+      $this->assertText(t('Log out'));
+      // End 3.8.10.
+
+      // Begin 3.8.11.
+      // Assert the password reset resource is accessible.
+      $this->drupalLogout();
+      $edit = array('name' => $test_users['utlogin_2']->name);
+      $this->drupalPost('user/password', $edit, t('E-mail new password'));
+      $this->assertText(t('Further instructions have been sent to your e-mail address.'));
+      // End 3.8.11.
+    }
+    else {
+      $message = format_string('At least one of the UTLogin users specified by keys %key1 and %key2 does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key1' => $utlogin_user_key_1, '%key2' => $utlogin_user_key_2, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+}

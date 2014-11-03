@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the UTLogin module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Delete the following variables used in the UTLogin module:
+ * - utlogin_auto_register
+ * - utlogin_env
+ * - utlogin_logout_goto
+ *
+ * Delete all authmap records where module is "utlogin", effectively converting
+ * all UTLogin users to non-UTLogin users.
+ *
+ */
+function utlogin_uninstall() {
+  variable_del('utlogin_auto_register');
+  variable_del('utlogin_env');
+  variable_del('utlogin_logout_goto');
+
+  db_delete('authmap')->condition('module', 'utlogin')->execute();
+}

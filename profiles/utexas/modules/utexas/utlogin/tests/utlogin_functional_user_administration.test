@@ -1,0 +1,377 @@
+<?php
+
+class FunctionalUserAdministrationTest extends UtloginWebTestBase {
+
+  /**
+   * Provides a description of the tests to be shown on the Testing page.
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'UTLogin - Functional tests for user administration',
+      'description' => 'A suite of tests to cover the defined functional tests in DFP Test Cases 3.6.',
+      'group' => 'UTLogin',
+    );
+  }
+
+  /**
+   * Sets up each test case independently.
+   *
+   * The setup for picture upload testing is an excerpt of code from the User
+   * module's user.test file.
+   *
+   * @see UserPictureTestCase::setUp()
+   */
+  public function setUp() {
+    parent::setUp();
+
+    // The following is an excerpt from the User module's user.test file.
+
+    // Enable user pictures.
+    variable_set('user_pictures', 1);
+
+    // Test if directories specified in settings exist in filesystem.
+    $file_dir = 'public://';
+    $file_check = file_prepare_directory($file_dir, FILE_CREATE_DIRECTORY);
+
+    $picture_dir = variable_get('user_picture_path', 'pictures');
+    $picture_path = $file_dir . $picture_dir;
+
+    $pic_check = file_prepare_directory($picture_path, FILE_CREATE_DIRECTORY);
+    $this->_directory_test = is_writable($picture_path);
+    $this->assertTrue($this->_directory_test, "The directory $picture_path doesn't exist or is not writeable. Further tests will not be made.");
+  }
+
+  /**
+   * Performs tests to show adding an activated UTLogin user through the add user form.
+   *
+   * Implementation is based on DFP Test Cases 3.6.1.
+   */
+  public function testCreateUtloginUser_1() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $this->setUser1();
+      $this->drupalLogin($this->user1);
+
+      $form_values = array(
+        'name' => $this->utlogin_users[$utlogin_user_key]['name'],
+        'status' => 1,
+      );
+      $this->drupalPost('admin/people/create', $form_values, t('Create new account'));
+      $this->assertText(t('Created a new user account for @name. No e-mail has been sent.', array('@name' => $this->utlogin_users[$utlogin_user_key]['name'])));
+
+      $added_user = user_load_by_name($this->utlogin_users[$utlogin_user_key]['name']);
+      $message = format_string('Mail field for user %name is empty.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertTrue(empty($added_user->mail), $message);
+
+      $message = format_string('User %name is active.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertTrue($added_user->status, $message);
+
+      $message = format_string('User %name has the role with rid @rid (authenticated user).', array('%name' => $this->utlogin_users[$utlogin_user_key]['name'], '@rid' => DRUPAL_AUTHENTICATED_RID));
+      $this->assertTrue(array_key_exists(DRUPAL_AUTHENTICATED_RID, $added_user->roles), $message);
+
+      $message = format_string('Password field for user %name is not empty.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertFalse(empty($added_user->pass), $message);
+
+      $user_authmaps = user_get_authmaps($this->utlogin_users[$utlogin_user_key]['name']);
+      $has_utlogin_authmap = array_key_exists('utlogin', $user_authmaps);
+      $message = format_string('User %name has an authmap record with module "utlogin".', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertTrue($has_utlogin_authmap, $message);
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show adding a blocked UTLogin user through the add user form.
+   *
+   * Implementation is based on DFP Test Cases 3.6.3.
+   */
+  public function testCreateUtloginUser_2() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $this->setUser1();
+      $this->drupalLogin($this->user1);
+
+      $form_values = array(
+        'name' => $this->utlogin_users[$utlogin_user_key]['name'],
+        'status' => 0,
+      );
+      $this->drupalPost('admin/people/create', $form_values, t('Create new account'));
+      $this->assertText(t('Created a new user account for @name. No e-mail has been sent.', array('@name' => $this->utlogin_users[$utlogin_user_key]['name'])));
+
+      $added_user = user_load_by_name($this->utlogin_users[$utlogin_user_key]['name']);
+      $message = format_string('Mail field for user %name is empty.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertTrue(empty($added_user->mail), $message);
+
+      $message = format_string('User %name is blocked.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertFalse($added_user->status, $message);
+
+      $message = format_string('User %name has the role with rid @rid (authenticated user).', array('%name' => $this->utlogin_users[$utlogin_user_key]['name'], '@rid' => DRUPAL_AUTHENTICATED_RID));
+      $this->assertTrue(array_key_exists(DRUPAL_AUTHENTICATED_RID, $added_user->roles), $message);
+
+      $message = format_string('Password field for user %name is not empty.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertFalse(empty($added_user->pass), $message);
+
+      $user_authmaps = user_get_authmaps($this->utlogin_users[$utlogin_user_key]['name']);
+      $has_utlogin_authmap = array_key_exists('utlogin', $user_authmaps);
+      $message = format_string('User %name has an authmap record with module "utlogin".', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertTrue($has_utlogin_authmap, $message);
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show UT EID validation for the add user form.
+   *
+   * Implementation is based on DFP Test Cases 3.6.2.
+   */
+  public function testCreateUtloginUser_3() {
+    $this->setUser1();
+    $this->drupalLogin($this->user1);
+
+    $empty_name = '';
+    $form_values = array(
+      'name' => $empty_name,
+      'status' => 0,
+    );
+    $this->drupalPost('admin/people/create', $form_values, t('Create new account'));
+    $message = 'UT EID \'\' (empty string) is not accepted.';
+    $this->assertText(t('UT EID field is required.'), $message);
+
+    $invalid_names = array(
+      'a b',
+      'abcdefghi',
+      'abc!',
+    );
+    foreach ($invalid_names as $invalid_name) {
+      $form_values = array(
+        'name' => $invalid_name,
+        'status' => 0,
+      );
+      $this->drupalPost('admin/people/create', $form_values, t('Create new account'));
+      $message = format_string('UT EID %name is not accepted.', array('%name' => $invalid_name));
+      $this->assertText(t('The entered UT EID is not valid.'), $message);
+    }
+  }
+
+  /**
+   * Performs tests to show a UTLogin user created through the add user form can log in.
+   *
+   * Implementation is based on DFP Test Cases 3.6.4.
+   */
+  public function testCreatedUtloginUserLogin() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $this->setUser1();
+      $this->drupalLogin($this->user1);
+
+      $form_values = array(
+        'name' => $this->utlogin_users[$utlogin_user_key]['name'],
+        'status' => 1,
+      );
+      $this->drupalPost('admin/people/create', $form_values, t('Create new account'));
+      $this->assertText(t('Created a new user account for @name. No e-mail has been sent.', array('@name' => $this->utlogin_users[$utlogin_user_key]['name'])));
+
+      // Log out of user1, otherwise it overrides UTLogin authentication.
+      $this->drupalLogout();
+
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+      $this->drupalGet('');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key]['name'])), $message);
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show behavior of form fields on a UTLogin user's profile.
+   *
+   * Implementation is based on DFP Test Cases 3.6.5 and 3.6.6.
+   *
+   * The implementation for picture upload testing is based on code from the
+   * User module's user.test file.
+   *
+   * @see UserPictureTestCase::testPictureIsValid()
+   * @see UserPictureTestCase::saveUserPicture()
+   */
+  public function testUtloginUserEditProfile() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $this->setUser1();
+      $this->drupalLogin($this->user1);
+
+      $form_values = array(
+        'name' => $this->utlogin_users[$utlogin_user_key]['name'],
+        'status' => 1,
+      );
+      $this->drupalPost('admin/people/create', $form_values, t('Create new account'));
+      $this->assertText(t('Created a new user account for @name. No e-mail has been sent.', array('@name' => $this->utlogin_users[$utlogin_user_key]['name'])));
+
+      $added_user = user_load_by_name($this->utlogin_users[$utlogin_user_key]['name']);
+      $edit_path = format_string('user/@uid/edit', array('@uid' => $added_user->uid));
+      $this->drupalGet($edit_path);
+
+      // Assert the UT EID (name) field's value is the user's name.
+      $message = format_string('UT EID field\'s value is @name.', array('@name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertFieldByName('name', $this->utlogin_users[$utlogin_user_key]['name'], $message);
+
+      // Assert name field is disabled.
+      $pattern = '/<input ([^>]*)disabled="1"([^>]*)name="name"(.*)\/>/';
+      $message = 'UT EID field is disabled.';
+      $this->assertPattern($pattern, $message);
+
+      // Assert the mail field is disabled.
+      $pattern = '/<input ([^>]*)disabled="1"([^>]*)name="mail"(.*)\/>/';
+      $message = 'E-mail address field is disabled.';
+      $this->assertPattern($pattern, $message);
+
+      // Assert none of the password elements are present.
+      $message = 'Current password field is not present.';
+      $this->assertNoFieldByName('current_pass', $message);
+      $message = 'New password field is not present.';
+      $this->assertNoFieldByName('pass[pass1]', $message);
+      $message = 'Confirm new password field is not present.';
+      $this->assertNoFieldByName('pass[pass2]', $message);
+      $message = 'Password reset link is not present.';
+      $this->assertNoLink(t('Request new password'), $message);
+
+      // Assert the status field is editable.
+      $form_values = array(
+        'status' => 0,
+      );
+      $this->drupalPost($edit_path, $form_values, t('Save'));
+      $this->assertText(t('The changes have been saved.'));
+
+      // Assert the timezone field is editable.
+      $form_values = array(
+        'timezone' => 'America/Chihuahua',
+      );
+      $this->drupalPost($edit_path, $form_values, t('Save'));
+      $this->assertText(t('The changes have been saved.'));
+
+      // The following is based on code from the User module's user.test file.
+
+      // Assert the picture field is editable.
+      if ($this->_directory_test) {
+        $image = current($this->drupalGetTestFiles('image'));
+        $info = image_get_info($image->uri);
+
+        // Set new variables: valid dimensions, valid filesize (0 = no limit).
+        $test_dim = ($info['width'] + 10) . 'x' . ($info['height'] + 10);
+        variable_set('user_picture_dimensions', $test_dim);
+        variable_set('user_picture_file_size', 0);
+
+        $form_values = array(
+          'files[picture_upload]' => drupal_realpath($image->uri)
+        );
+        $this->drupalPost($edit_path, $form_values, t('Save'));
+
+        // Load actual user data from database.
+        $added_user = user_load($added_user->uid, TRUE);
+        $pic_path = isset($added_user->picture) ? $added_user->picture->uri : NULL;
+
+        // Check if image is displayed in user's profile page.
+        $view_path = format_string('user/@uid', array('@uid' => $added_user->uid));
+        $this->drupalGet($view_path);
+        $this->assertRaw(file_uri_target($pic_path), "Image is displayed on user's profile page");
+
+        // Check if file is located in proper directory.
+        $this->assertTrue(is_file($pic_path), 'File is located in proper directory');
+
+        // Set new picture dimensions.
+        $test_dim = ($info['width'] + 5) . 'x' . ($info['height'] + 5);
+        variable_set('user_picture_dimensions', $test_dim);
+
+        $form_values = array(
+          'files[picture_upload]' => drupal_realpath($image->uri)
+        );
+        $this->drupalPost($edit_path, $form_values, t('Save'));
+
+        // Load actual user data from database.
+        $added_user = user_load($added_user->uid, TRUE);
+        $pic_path2 = isset($added_user->picture) ? $added_user->picture->uri : NULL;
+
+        $this->assertNotEqual($pic_path, $pic_path2, 'Filename of second picture is different.');
+      }
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+
+  /**
+   * Performs tests to show that the add user form does not have a notify option.
+   *
+   * Implementation is based on DFP Test Cases 3.6.7.
+   */
+  public function testCreateNoNotification() {
+    $this->setUser1();
+    $this->drupalLogin($this->user1);
+    $this->drupalGet('admin/people/create');
+    $message = 'The notify field is not present.';
+    $this->assertNoFieldByName('notify', $message);
+  }
+
+  /**
+   * Performs tests to show that anonymous users cannot self-register.
+   *
+   * Implementation is based on DFP Test Cases 3.6.8.
+   */
+  public function testSelfRegisterDenied() {
+    $this->drupalLogout();
+    $this->drupalGet('user/register');
+    $this->assertResponse(403);
+  }
+
+  /**
+   * Performs tests to show that a UTLogin user's mail field is updated on login.
+   *
+   * Implementation is based on DFP Test Cases 3.6.9.
+   */
+  public function testUtloginUserMailUpdateOnLogin() {
+    $utlogin_user_key = 'portalb';
+    if (array_key_exists($utlogin_user_key, $this->utlogin_users)) {
+      $this->setUser1();
+      $this->drupalLogin($this->user1);
+
+      $form_values = array(
+        'name' => $this->utlogin_users[$utlogin_user_key]['name'],
+        'status' => 1,
+      );
+      $this->drupalPost('admin/people/create', $form_values, t('Create new account'));
+      $this->assertText(t('Created a new user account for @name. No e-mail has been sent.', array('@name' => $this->utlogin_users[$utlogin_user_key]['name'])));
+
+      $added_user = user_load_by_name($this->utlogin_users[$utlogin_user_key]['name']);
+      $message = format_string('Mail field for user %name is empty.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertTrue(empty($added_user->mail), $message);
+
+      // Log out of user1, otherwise it overrides UTLogin authentication.
+      $this->drupalLogout();
+
+      $this->additionalCurlOptions[CURLOPT_COOKIE] = UTLOGIN_COOKIE_NAME . '=' . $this->getUtloginCookieValue($this->utlogin_users[$utlogin_user_key]);
+      $this->drupalGet('');
+      $message = format_string('User %name is logged in.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertText(t('Logged in as: @username', array('@username' => $this->utlogin_users[$utlogin_user_key]['name'])), $message);
+
+      // Assert the added UTLogin user's mail field is now populated.
+      // Note: make sure the UTLogin user used for testing has an e-mail address,
+      // otherwise this assertion will fail.
+      $added_user = user_load($added_user->uid, TRUE);
+      $message = format_string('Mail field for user %name is not empty.', array('%name' => $this->utlogin_users[$utlogin_user_key]['name']));
+      $this->assertFalse(empty($added_user->mail), $message);
+    }
+    else {
+      $message = format_string('UTLogin user specified by key %key does not exist (ensure utlogin_simpletest_utlogin_users is set properly in file @path). Halting subsequent tests.', array('%key' => $utlogin_user_key, '@path' => $this->utlogin_users_file_path));
+      $this->fail($message);
+    }
+  }
+}
