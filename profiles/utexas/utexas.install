@@ -59,7 +59,7 @@ function install_utexas_welcome($form, &$form_state, &$install_state) {
   );
   $form['actions']['submit'] = array(
     '#type' => 'submit', 
-    '#value' => st("Install the DDP!"), 
+    '#value' => st("Install the UT Drupal Distribution!"), 
     '#weight' => 10,
   );
   return $form;
