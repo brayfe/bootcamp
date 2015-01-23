@@ -1,6 +1,6 @@
 name = Utexas
 description = Install the University of Texas distribution.
-version = "7.x-1.0-alpha1"
+version = "7.x-1.0"
 core = 7.x
 php = 5.3
 
