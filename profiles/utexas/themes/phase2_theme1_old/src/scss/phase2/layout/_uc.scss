@@ -1,0 +1,297 @@
+.uc-example{
+	
+	/// UC About Us Person Directory - Based off of Promo List
+	.field_utexas_promo_list_collection{
+		$large-img-width: 85px;
+		$large-img-height: 85px;
+
+		$medium-img-width: $large-img-width * .80;
+		$medium-img-height: $large-img-height * .80;
+
+		$small-img-width: $medium-img-width * .94;
+		$small-img-height: $medium-img-height * .94; 
+
+		margin-bottom: 20px;
+		@include respond(medium){
+			margin-bottom: 40px;
+		}
+		.promo-list{ 
+			padding: 0 5px;
+
+			@include respond(large){
+				padding: 0 10px;
+			}
+
+			h3.post-headline{
+				border-bottom: 2px solid #3C87A3;
+				padding-bottom: 7px;
+				margin: 0 0 20px 0;
+			}
+
+			h4{
+				font-size: rem-calc(17);
+				margin-bottom: 0px;
+			}
+
+			.title{
+				padding-top: 0;
+				margin: 0 0 5px 0;
+				font-style: italic;
+				display: block;
+				line-height: rem-calc(20);
+			}
+
+			ul{
+				margin: 0;
+				padding: 0;
+
+				@include respond(medium){
+					padding: 0 5px;
+				}
+
+				@include respond(large){
+					padding: 0 20px;
+				}
+
+			}
+			ul, li{
+				list-style-type: none;
+				display: block;
+				overflow: hidden;
+			}
+
+			li{
+				padding-bottom: 20px;
+			}
+
+			li + li{
+				border-top: 0px;
+				padding-top: 0px;
+			}
+			img{
+				float: left;
+				display: inline-block;
+				width: $small-img-width;
+				height: $small-img-height;
+				margin-right: 12px;
+				margin-bottom: 10px;
+				
+				@include respond(medium){
+					width: $medium-img-width;
+					height: $medium-img-height;
+					margin-right: 15px;
+					margin-bottom: 0px;
+				}
+				@include respond(large){
+					width: $large-img-width;
+					height: $large-img-height;
+					margin-right: 20px;
+					margin-bottom: 0px;
+				}
+
+				@include respond(medium){
+					margin-top: 5px;
+				}
+			}
+			p{
+				font-family: $charis;
+				padding-top: 2px;
+				font-size: rem-calc(16);
+				line-height: rem-calc(24);
+				margin: 0px;
+				@include respond(small-only){
+					margin-top: 2px;
+				}
+			}
+			.content{
+				@include respond(large){
+					margin-left: 105px;
+				}
+			}
+		}
+	}
+
+	/// UC About Us Featured Person - Based off of Promo Unit
+	.field_utexas_promo_units{
+		margin-bottom: 20px;
+		@include respond(medium){
+			margin-bottom: 40px;
+		}
+
+		h3.post-headline{
+			border-bottom: 2px solid #3C87A3;
+			padding-bottom: 7px;
+			margin: 0 0 20px 0;
+		}
+	}
+
+	/// UC About Us Featured Person - Based off of Promo Unit
+	.promo-unit-square{  
+		$large-img-width: 140px;
+		$large-img-height: 140px;
+
+		$medium-img-width: $large-img-width * .80;
+		$medium-img-height: $large-img-height * .80;
+
+		$small-img-width: $medium-img-width * .60;
+		$small-img-height: $medium-img-height * .60;
+
+		display: block;
+		overflow: hidden;
+		padding: 10px;
+		margin: 0px 0 10px 0;
+		background-color: #f8f8f8;
+		border: 1px solid #F3F0E8;
+
+		@include respond(medium){
+			padding: 15px;
+			margin: 0px 0 20px 0;
+		}
+
+		@include respond(large){
+			padding: 20px;
+		}
+
+		img{
+			float: left;
+			border: 1px solid #cbcbcb;
+			width: $small-img-width;
+			height: $small-img-height;
+			margin: 0 10px 0 0;
+
+			@include respond(medium){
+				width: $medium-img-width;
+				height: $medium-img-height;
+				margin: 0 15px 0 0;
+			}
+
+			@include respond(large){
+				width: $large-img-width;
+				height: $large-img-height;
+				margin: 0 20px 0 0;
+			}
+		}
+		h3{
+			font-weight: 600;
+			margin: 0 0 0px 0;
+			font-size: rem-calc(15px);
+			line-height: rem-calc(22px);
+			color: $navy;
+
+			@include respond(medium){
+				margin: 0 0 0px 0;
+				font-size: rem-calc(20px);
+				line-height: rem-calc(26px);
+			}
+		}
+
+		.title{
+			margin: 0 0 8px 0;
+			font-style: italic;
+			display: block;
+		}
+
+		p, .post-cta-link{
+			font-family: $charis;
+			font-size: rem-calc(15);
+			line-height: rem-calc(22);
+			margin: 5px 0 0 0;
+
+			@include respond(medium){
+				font-size: rem-calc(16);
+				padding-left: $medium-img-width + 14px;
+				display: block;
+				margin-top: 0px;
+			}
+
+			@include respond(large){
+				padding-left: $large-img-width + 10px;
+			}
+
+			@include respond(small-only){
+				display: inline;
+			}
+
+			span{
+				display: inline-block;
+
+				@include respond(medium){
+					display: block;
+					padding-top: 5px;
+				}
+			}
+		}
+
+		.post-cta-link {
+			margin-top: 5px;
+		}
+	}
+
+	//Tablet Break UC About Us
+	@media (min-width: 641px) and(max-width: 900px){
+		.force-width{
+			width: 100%;
+
+			img, .caption-copy{
+				display: block;
+				width: 80%;
+				margin: 0 auto;
+			}
+			.caption-copy{
+				float: left;
+			}
+		}	
+	}  
+
+	///// Resources Page - Horizontal View for Flex Content Area
+	.horizontal{
+		display: block;	
+		background-color: #f8f8f8;
+		border: 1px solid #f3f0e8;
+		overflow: hidden;
+		@include respond(large){
+			max-height: 230px;
+		}
+		img{
+			margin-bottom: 0px !important;
+		}
+
+		.content-box{
+			padding: 20px 15px;
+			h3{
+				margin-bottom: 10px;
+			}
+			@media (min-width: 641px) and(max-width: 900px){
+				padding-left: 30px;
+			}
+			@include respond(small-only){
+				height: auto !important;
+			}
+		}
+
+		.medium-6{
+			@media (min-width: 641px) and(max-width: 901px){
+				width: 100%;
+				height: auto !important;
+				img{
+					width: 100%;
+				}
+			}
+		}
+	}
+	
+	// Image wrapper for horizontal view
+	.img-wrap{
+		overflow: hidden;
+		img{
+			width: 100%;
+			@media (min-width: 900px) and(max-width: 1024px){
+				max-width: 400px !important;
+				width: 400px !important;
+			}
+			@include respond(small-only){
+				width: 100%;
+			}
+		}
+	}
+}

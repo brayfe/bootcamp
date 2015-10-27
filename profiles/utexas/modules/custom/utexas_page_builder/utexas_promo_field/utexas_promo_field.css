@@ -1,0 +1,20 @@
+.utexas-promo-field.utexas-promo-unit {
+  display: block;
+  overflow: hidden;
+}
+
+.utexas-promo-field .promo-utexas-image-link {
+  display: block;
+}
+
+.utexas-promo-field .promo-headline {
+  margin: 0;
+  font-weight: 700;
+}
+
+.field_utexas_promo_units .post-headline {
+  border-bottom: 2px solid #3c87a3;
+  font-weight: 700;
+  margin: 0 0 20px;
+  padding-bottom: 7px;
+}

@@ -1,0 +1,28 @@
+.field_wysiwyg_a, .field_wysiwyg_b{
+	margin: 0 0 20px 0;
+
+	@include respond(medium){
+		margin: 0 0 40px 0;
+	}
+
+	@include respond(small-only){
+		padding: 0 5px;
+	}
+
+	li, ol{
+		color: $bodyCopy;
+		font-family: $charis;
+		font-size: rem-calc(16);
+		line-height: rem-calc(24);
+		margin: 0;
+		@include respond(medium){
+			font-size: rem-calc(18);
+			line-height: rem-calc(28);
+		}
+	}
+
+	.flex-video{
+		margin: 20px 0 20px 0;
+	}
+}
+

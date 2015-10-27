@@ -1,0 +1,53 @@
+name        = Phase 2 hybrid theme
+description = theme for the University of Texas at Austin site.theme for the University of Texas at Austin site.
+core        = 7.x
+php         = DRUPAL_MINIMUM_PHP
+
+
+stylesheets[all][] = css/base.css
+stylesheets[all][] = css/phase2_pages.css
+stylesheets[all][] = css/phase2_theme1.css
+
+
+scripts[] = js/custom.js
+
+; core required regions - Page Top and Bottom are hidden and reserved for Drupal Core and contributed modules
+regions[page_top]    = Page Top
+regions[content]     = Content
+regions[page_bottom] = Page Bottom
+
+; core default regions
+regions[header]         = Header
+regions[highlighted]    = Highlighted
+regions[help]           = Help
+regions[sidebar_first]  = Left sidebar
+regions[sidebar_second] = Right sidebar
+regions[footer]         = Footer
+
+; custom regions
+regions[homepage_hero]         = Homepage Hero
+regions[homepage_alert]        = Homepage Alert
+regions[homepage_bottom_left]  = Homepage Bottom Left
+regions[homepage_bottom_right] = Homepage Bottom Right
+regions[content_top]           = Content Top
+regions[content_top_left]      = Content Top Left
+regions[content_top_right]     = Content Top Right
+regions[content_highlighted]   = Content Highlighted
+regions[content_bottom]        = Content Bottom
+regions[footer_firstcolumn]    = Footer First
+regions[footer_connect]        = Footer Connect
+regions[footer_secondcolumn]   = Footer Second
+
+; features
+features[] = logo
+features[] = name
+features[] = slogan
+features[] = favicon
+features[] = main_menu
+features[] = secondary_menu
+
+settings[secondary_menu] = 'social_links' 
+settings[main_menu_font] = 'charissilw'
+settings[choose_secondary_logo] = 'large_horizontal_logo'
+settings['display_social_icons'] = '1'
+settings['newsletter_exists'] = '0'

@@ -1,0 +1,17 @@
+default:
+- 'dev'
+- 'watch'
+
+dev:
+- 'clean'
+- 'sass:dev'
+- 'autoprefixer:dist'
+
+dist:
+- 'clean'
+- 'sass:dist'
+- 'autoprefixer:dist'
+
+build:
+- 'dist'
+- 'concurrent:copy-build'

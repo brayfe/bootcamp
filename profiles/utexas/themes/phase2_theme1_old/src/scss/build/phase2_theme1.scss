@@ -1,0 +1,9 @@
+// Import local options.
+@import "../settings";
+@import "../variables";
+@import "../mixins/responsive";
+@import "../mixins/icons";	
+@import	"foundation/components/inline-lists";
+	// Theme 1
+	@import "../phase2/home1";
+	@import "../phase2/footer2";

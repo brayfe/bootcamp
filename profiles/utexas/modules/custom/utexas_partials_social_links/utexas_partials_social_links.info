@@ -1,0 +1,6 @@
+name = Partials Social Links
+description = Provides a header and footer social links block
+core = 7.x
+package = UTexas
+version = 7.x-1.0
+configure = admin/config/utexas

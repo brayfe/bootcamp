@@ -1,0 +1,43 @@
+// featured highlight field relies on highlight.scss styles
+.field_utexas_featured_highlight{
+	@include respond(medium){
+		margin-bottom: 20px;
+	}
+
+	// Color Themes
+	.dark{
+		background-color: #6a6361;
+		color: #efefef;
+		h2, p{
+			color: inherit;
+		}
+		.cta-link{
+			color: #efefef;
+		}
+	}
+
+	.light{
+		background-color: #d6d2c4;
+		color: $burntGrey;
+		h2, p{
+			color: inherit;
+		}
+		.cta-link{
+			color: $burntGrey;
+		}
+	}
+}
+.container-highlight .highlight-image {
+    border: 1px solid #6a6a6a;
+    float: left;
+    height: 95px;
+    margin: 0 12px 10px 0;
+    overflow: hidden;
+    width: 95px;
+    @include respond(medium){
+		height: auto;
+	    margin: 0 20px 0 0;
+	    overflow: visible;
+	    width: 24%;
+	}
+}

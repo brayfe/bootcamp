@@ -1,0 +1,90 @@
+.field_bio_block{
+	img{
+		padding-right: 10px;
+		width: 100%;
+		height: auto;
+		display: block;
+
+		@include respond(small-only){
+			display: block;
+			width: 80%;
+			margin: 0 auto 20px auto;
+		}
+	}
+
+	.bio-top{
+		padding: 0 5px 10px 5px;
+		@include respond(medium){
+			padding: 0 0 10px 0;
+		}
+	}
+
+	.bio-bottom{
+		padding: 0 5px 10px 5px;
+		display: block;
+		overflow: hidden;
+		height: auto;
+		border-top: 2px solid #D6D6D6;
+
+		@include respond(medium){
+			margin-top: 20px;
+			padding: 0 0 20px 0;
+		}
+	}
+
+	.name{
+		margin: 0 0 8px 0;
+	}
+
+	.title{
+		font-weight: 200;
+		font-size: rem-calc(15);
+		line-height: rem-calc(22);
+		color: $lightGreyText;
+		margin-top: 0px;
+	}
+
+	.bio-details p{
+		font-family: $charis;
+		font-size: rem-calc(18);
+		line-height: rem-calc(24);
+		margin: 0 0 rem-calc(20) 0;
+		color: $bodyCopy;
+	}
+
+	.additional-info{
+		margin-top: 30px;
+		h3{
+			font-size: rem-calc(18);
+			line-height: rem-calc(24);
+			font-weight: 600;
+			margin: 0 0 8px 0;
+		}
+		ul{
+			margin: 0;
+			padding: 0;
+		}
+		li{
+			color: $lightGreyText;
+			list-style-type: none;
+			font-size: rem-calc(15);
+			line-height: rem-calc(22);
+		}
+
+		.small-12{
+			@include respond(small-only){
+				margin-bottom: 15px;
+			}
+		}
+	}
+
+	.field_wysiwyg_a{
+		margin-top: 20px;
+	}
+}
+
+.related-links-override{
+	@include respond(small-only){
+		padding: 10px 10px 0 10px !important;
+	}
+}

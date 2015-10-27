@@ -1,0 +1,11 @@
+name = UTexas Admin
+description = Provides an interface for all UT site admin modules
+core = 7.x
+version = 7.x-1.0
+package = UTexas
+
+configure = admin/config/utexas
+
+dependencies[] = menu
+dependencies[] = smartcrop
+dependencies[] = utexas_beacon

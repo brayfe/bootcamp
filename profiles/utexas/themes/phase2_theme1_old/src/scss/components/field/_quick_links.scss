@@ -1,0 +1,75 @@
+.field_utexas_quick_links, .field_utexas_quick_links_b {
+	padding: 15px;
+	//margin-top: 10px;
+	background-color: #fff;
+	border: 1px solid $light-grey-border;
+	margin-bottom:20px;
+	@include respond(medium){
+		padding: 20px;
+		margin-top: 0px;
+		margin-bottom: 40px;
+	}
+
+	h2{
+		margin: 0px 0 10px 0;
+		font-size: rem-calc(22);
+		line-height: rem-calc(26);
+		color: $burntGrey;
+		font-weight: 500;
+		letter-spacing: rem-calc(-1);
+		@include respond(medium){
+			font-size: rem-calc(25);
+			line-height: rem-calc(28);
+		}
+		@include respond(large){
+			font-size: rem-calc(28);
+			line-height: rem-calc(36);
+		}
+	}
+	ul{
+		list-style-type: none;
+		margin: 0px 0px;
+		padding: 0px;
+	}
+	li {
+		padding-bottom: 10px;
+		font-size: rem-calc(14);
+		line-height: rem-calc(18);
+		font-weight: 500;
+
+
+		@include respond(large){
+			font-size: rem-calc(16);
+			line-height: rem-calc(22);
+		}
+	}
+}
+
+.sidebar-content {
+	.field_utexas_quick_links, .field_utexas_quick_links_b {
+		padding: 0px;
+		border: 0px;
+		background-color: inherit;
+		margin-bottom: 0;
+		li{
+			padding: 10px 10px 0 10px;
+			font-weight: 100;
+			@include respond(medium) {
+				padding: 10px 15px 0 15px;
+			}
+		}
+
+		.body-copy {
+			padding: 10px 10px 0 10px;
+			margin-bottom: 5px;
+			@include respond(medium){
+				padding: 10px 15px 0 15px;
+				margin-bottom: 10px;
+			}
+		}
+
+		h2 {
+			color: $burntGrey;
+		}
+	}
+}

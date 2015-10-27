@@ -1,0 +1,65 @@
+///// Imports & Styles For Phase 2
+
+	// Functions and Mixins
+	@import "../settings";
+	@import "../variables";
+	@import "foundation/components/global";
+	@import "../mixins/responsive";
+	@import "../mixins/icons";
+	@import	"foundation/components/inline-lists";
+	@import "../sidebar-tabs";
+
+	// Fields and components
+	@import "../components/field/call_to_action";
+	@import "../components/field/contact_info";
+	@import "../components/field/core_flex_content_area";
+	@import "../components/field/core_promo_list";
+	@import "../components/field/core_promo_units";
+	@import "../components/field/featured_highlight";
+	@import "../components/field/hero_photo";
+	@import "../components/field/photo_content_area";
+	@import "../components/field/gift_link";
+	@import "../components/field/quick_links";
+	@import "../components/field/social_links";
+	@import "../components/field/timely_announcement";
+	@import "../components/field/wysiwyg";
+	@import "../components/content-types/last-updated";
+	@import "../components/content-types/sidebar-events";
+	@import "../components/content-types/sidebar-news";
+	@import "../components/content-types/sign-up";
+	@import "../components/content-types/twitter-feed";
+	@import "../components/highlight";
+	
+	// Global Header and Footer
+	@import "../layout/header";
+	@import "../layout/footer";
+
+	// Phase 2 Layout
+	@import "../phase2/layout/phase2_general";
+	@import "../phase2/layout/topnav";
+	@import "../phase2/layout/logo";
+	@import "../phase2/layout/nav";
+
+	// Phase 2 New Fields
+	@import "../phase2/field/media_library";
+	@import "../phase2/field/course_listing_block";
+	@import "../phase2/field/course_info_block";
+	@import "../phase2/field/bio_block";
+	@import "../phase2/field/calendar";
+	@import "../phase2/field/event_details";
+	@import "../phase2/field/table_of_contents";
+
+	// Phase 2 New Components
+	@import "../components/subnav";
+	@import "../components/tablesaw";
+
+	//UC Example(Not a theme)
+	@import "../phase2/layout/uc";
+
+// Core specific components
+@import "../components/highlight";
+@import "../components/tweets";
+
+// Drupal override
+@import "../drupal-overrides";
+

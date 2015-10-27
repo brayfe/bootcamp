@@ -1,0 +1,7 @@
+name = UTexas Tablesaw Filter
+description = Makes WYSIWYG tables responsive
+package = "Input filters"
+
+dependencies[] = filter
+dependencies[] = libraries
+core = 7.x

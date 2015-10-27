@@ -3,9 +3,19 @@
  */
 
 body.maintenance-page #logo {
-  background:transparent url(utexas-wordmark.png) no-repeat top left;
-  height:0;
-  overflow:hidden;
-  padding-top: 99px; /* height of logo  */
-  width: 180px; /* width of logo  */
+  background: transparent url('themes/forty_acres/img/general/logo.png') no-repeat top left;
+  height: 0;
+  overflow: hidden;
+  padding-top: 60px; /* height of logo  */
+  width: 170px; /* width of logo  */
+  background-size: 170px;
+
+}
+
+body.maintenance-page p {
+    margin-top: 0;
+}
+
+body.in-maintenance #logo {
+    margin-bottom: 0!important;
 }

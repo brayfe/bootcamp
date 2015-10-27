@@ -41,6 +41,7 @@ define('CKEDITOR_FORCE_SIMPLE_TOOLBAR_NAME', 'DrupalBasic');
 define('CKEDITOR_ENTERMODE_P', 1);
 define('CKEDITOR_ENTERMODE_BR', 2);
 define('CKEDITOR_ENTERMODE_DIV', 3);
+define('CKEDITOR_LATEST', '4.5.4');
 
 global $_ckeditor_configuration;
 global $_ckeditor_ids;
@@ -49,6 +50,21 @@ module_load_include('inc', 'ckeditor', 'includes/ckeditor.user');
 
 $_ckeditor_configuration = array();
 $_ckeditor_ids = array();
+
+/**
+ * Implements hook_hook_info().
+ */
+function ckeditor_hook_info() {
+  $hooks = array(
+    'ckeditor_plugin',
+    'ckeditor_plugin_alter',
+    'ckeditor_security_filter',
+    'ckeditor_security_filter_alter',
+    'ckeditor_settings_alter',
+  );
+
+  return array_fill_keys($hooks, array('group' => 'ckeditor'));
+}
 
 /**
  * Implementation of hook_menu().
@@ -601,11 +617,11 @@ function ckeditor_features_api() {
  * CKEditor does not implement any kind of potection on private files.
  */
 function ckeditor_file_download($uri) {
+  $result = db_query("SELECT f.* FROM {file_managed} f WHERE uri = :uri", array(':uri' => $uri));
+  foreach ($result as $record) {
+    return NULL;
+  }
   if ($path = file_create_url($uri)) {
-    $result = db_query("SELECT f.* FROM {file_managed} f WHERE uri = :uri", array(':uri' => $uri));
-    foreach ($result as $record) {
-      return NULL;
-    }
     //No info in DB? Probably a file uploaded with FCKeditor / CKFinder
     $global_profile = ckeditor_profile_load("CKEditor Global Profile");
     //Assume that files inside of ckeditor directory belong to the CKEditor. If private directory is set, let the decision about protection to the user.

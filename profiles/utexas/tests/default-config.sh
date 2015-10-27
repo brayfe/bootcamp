@@ -1,0 +1,1 @@
+export BEHAT_PARAMS='{"extensions":{"Behat\\MinkExtension":{"selenium2":{"wd_host":"http://localhost:4444/wd/hub/"},"base_url":"http://mc.local"},"Drupal\\DrupalExtension":{"drush":{"alias":"mc-local"},"drupal":{"drupal_root":"/Applications/MAMP/htdocs/mc"}}}}'
