@@ -1,5 +1,5 @@
 .UT-header {
-	position: relative;
+	position: relative; 
 	z-index: $headerZindex;
 	border-bottom: 1px solid $nav-Bkg-desktop;
 
@@ -80,7 +80,7 @@
 	}
 }
 
-.UT-page {
+.UT-page {	
 	transform: translateX(0);
 	transform: translate3d(0%,0,0);
 	transition: $nav-transition;
@@ -107,7 +107,7 @@
 }
 
 ///// Navigation Options
-// Aligns nav items left instead of justifying full width at large breakpoint (example in UC files)
+// Aligns nav items left instead of justifying full width at large breakpoint (example in UC files)	
 .no-justify{
 	@include respond(large){
 		margin-left: -10px !important;

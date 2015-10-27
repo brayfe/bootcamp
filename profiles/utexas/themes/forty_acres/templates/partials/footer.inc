@@ -82,7 +82,6 @@ endif;
 
         <div class="row">
           <br/>
-          <br/>
           <div class="copyright">&copy; The University of Texas at Austin <?php echo date("Y"); ?></div>
         </div>
     </div><!--container-footer-->

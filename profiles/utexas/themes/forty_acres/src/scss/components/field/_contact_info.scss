@@ -21,7 +21,6 @@
 
 	p{
 		color: #474541;
-		font-family: $charis;
 		font-size: rem-calc(15);
 		line-height: rem-calc(22);
 	}
@@ -37,11 +36,10 @@
 		}
 		.label{
 			color: $burntOrange;
-			font-family: $opensans;
 			font-size: rem-calc(14);
 			line-height: rem-calc(19);
 			font-style: normal;
-			font-weight: 500;
+			font-weight: 600;
 			margin-bottom: 2px;
 		}
 	}

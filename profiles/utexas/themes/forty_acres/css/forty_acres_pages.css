@@ -1,5 +1,5 @@
 meta.foundation-version {
-	font-family: "/5.2.3/";
+	font-family: "/5.4.7/";
 }
 
 meta.foundation-mq-small {
@@ -55,9 +55,9 @@ body {
 	font-family: open_sans, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 	font-weight: normal;
 	font-style: normal;
-	line-height: 1;
+	line-height: 1.5;
 	position: relative;
-	cursor: default;
+	cursor: auto;
 }
 
 a:hover {
@@ -101,7 +101,12 @@ img {
 }
 
 .hide {
-	display: none;
+	display: none !important;
+	visibility: hidden;
+}
+
+.invisible {
+	visibility: hidden;
 }
 
 .antialiased {
@@ -141,10 +146,6 @@ select {
 
 .inline-list > li > * {
 	display: block;
-}
-
-.field_utexas_call_to_action {
-	margin-bottom: 20px; /* Landscape phones and down */
 }
 
 .field_utexas_call_to_action a.cta {
@@ -188,7 +189,6 @@ select {
 
 .field_contact_info p {
 	color: #474541;
-	font-family: CharisSILW, serif;
 	font-size: 0.9375rem;
 	line-height: 1.375rem;
 }
@@ -208,20 +208,14 @@ select {
 
 .field_contact_info .address .label {
 	color: #BF5700;
-	font-family: open_sans, sans-serif;
 	font-size: 0.875rem;
 	line-height: 1.1875rem;
 	font-style: normal;
-	font-weight: 500;
+	font-weight: 600;
 	margin-bottom: 2px;
 }
 
 .utexas-flex-content { /* Landscape phones and down */
-}
-
-.field_utexas_flex_content_area_a,
-.field_utexas_flex_content_area_b {
-	margin-bottom: 10px; /* Landscape phones and down */
 }
 
 .field_utexas_flex_content_area_a .two-up + .two-up,
@@ -247,13 +241,12 @@ select {
 	font-size: 1.0625rem;
 	line-height: 1.375rem;
 	margin: 0 0 8px;
-	font-weight: 600;
+	font-weight: 700;
 	padding: 0 5px; /* Landscape phones and down */ /* Landscape phones and down */
 }
 
 .field_utexas_flex_content_area_a .utexas-flex-content .utexas-flex-content-area-copy,
 .field_utexas_flex_content_area_b .utexas-flex-content .utexas-flex-content-area-copy {
-	font-family: CharisSILW, serif;
 	font-size: 0.9375rem;
 	line-height: 1.375rem;
 	margin: 0 0 12px;
@@ -310,16 +303,11 @@ select {
 	display: none;
 }
 
-.sidebar-content .field_utexas_flex_content_area_a .utexas-flex-content,
-.sidebar-content .field_utexas_flex_content_area_b .utexas-flex-content {
-	margin-bottom: 40px; /* Landscape phones and down */
-}
-
 .sidebar-content .field_utexas_flex_content_area_a .utexas-flex-content .utexas-flex-content-area-headline a,
 .sidebar-content .field_utexas_flex_content_area_b .utexas-flex-content .utexas-flex-content-area-headline a {
 	color: #474747;
 	font-size: 1.0625rem;
-	font-weight: 600;
+	font-weight: 700;
 }
 
 .sidebar-content .field_utexas_flex_content_area_a .utexas-flex-content .utexas-flex-content-area-copy p,
@@ -370,12 +358,11 @@ select {
 	background-color: #f5f4f0;
 	font-size: 16px;
 	line-height: 18px;
-	font-weight: 600;
+	font-weight: 700;
 	width: 100%;
 	margin: 0 0 0 0;
 	padding: 10px 10px;
-	color: #333F48;
-	font-family: open_sans, sans-serif; /* Landscape phones and down */ /* Landscape phones and down */
+	color: #333F48; /* Landscape phones and down */ /* Landscape phones and down */
 }
 
 .region.region-content-top-four-pillars .fieldblock_field_utexas_flex_content_area_a .utexas-flex-content ul,
@@ -401,7 +388,6 @@ select {
 .region.region-content-top-four-pillars .fieldblock_field_utexas_flex_content_area_a .utexas-flex-content .cta-link,
 .region.region-content-top-four-pillars .fieldblock_field_utexas_flex_content_area_b .utexas-flex-content .cta-link {
 	line-height: 1rem;
-	font-family: open_sans, sans-serif;
 	font-style: normal; /* Landscape phones and down */
 }
 
@@ -410,7 +396,7 @@ select {
 	font-family: open_sans;
 	font-size: 1.125rem;
 	line-height: 1.5rem;
-	font-weight: 600;
+	font-weight: 700;
 	letter-spacing: 0.01rem;
 	margin-bottom: 8px; /* Landscape phones and down */ /* Landscape phones and down */
 }
@@ -438,7 +424,7 @@ select {
 	border-bottom: 2px solid #3c87a3;
 	margin: 0 0 20px;
 	padding-bottom: 7px;
-	font-weight: 600;
+	font-weight: 700;
 }
 
 .field_utexas_promo_list .utexas-promo-list-wrapper ul {
@@ -493,7 +479,6 @@ select {
 	font-size: 1.125rem;
 	font-weight: normal;
 	line-height: 1.25rem;
-	font-family: CharisSILW, serif;
 }
 
 .utexas-promo-field.utexas-promo-list .promo-headline .cta-link,
@@ -518,10 +503,6 @@ select {
 	margin: 0;
 	font-size: inherit;
 	line-height: inherit;
-}
-
-.utexas-promo-field .promo-copy {
-	font-family: CharisSILW, serif;
 }
 
 .field_utexas_promo_list .two-column .promo-list-li:nth-child(even) .utexas-promo-field.utexas-promo-list { /* Landscape phones and down */
@@ -574,10 +555,6 @@ select {
 	padding-right: 5px !important; /* Landscape phones and down */
 }
 
-.field_utexas_promo_units {
-	margin-bottom: 20px; /* Landscape phones and down */
-}
-
 .field_utexas_promo_units .cta-wrapper .cta-link {
 	padding: 0;
 }
@@ -627,10 +604,6 @@ select {
 	font-size: 0.9375rem;
 	line-height: 1.375rem;
 	margin: 0 0 4px; /* Landscape phones and down */
-}
-
-.utexas-promo-field .promo-copy {
-	font-family: CharisSILW, serif;
 }
 
 .utexas-promo-field .promo-copy p {
@@ -691,9 +664,6 @@ select {
 }
 
 .sidebar-module.sidebar-default-style .utexas-promo-field.utexas-promo-unit .promo-image { /* Landscape phones and down */
-}
-
-.field_utexas_featured_highlight { /* Landscape phones and down */
 }
 
 .field_utexas_featured_highlight .dark {
@@ -761,8 +731,7 @@ select {
 	padding-bottom: 45.5%; /* Landscape phones and down */
 }
 
-.field_utexas_hero_photo .hero-caption {
-	font-family: CharisSILW, serif; /* Landscape phones and down */
+.field_utexas_hero_photo .hero-caption { /* Landscape phones and down */
 }
 
 .field_utexas_hero_photo .hero-caption p {
@@ -783,14 +752,22 @@ select {
 	margin-bottom: 10px;
 }
 
-.field_utexas_hero_photo {
-	margin-bottom: 20px; /* Landscape phones and down */
+.container.container-bottom.accent .field.field_utexas_hero_photo {
+	position: relative;
+}
+
+.container.container-bottom.accent .field.field_utexas_hero_photo .hero-caption {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	margin-bottom: 0;
+	padding-left: 20px;
+	background-color: rgba(255, 255, 255, 0.9);
 }
 
 .field_utexas_photo_content_area {
 	border-top: 1px solid #F3F0E8;
-	padding: 20px 0 0 0;
-	margin-bottom: 20px; /* Landscape phones and down */ /* Landscape phones and down */
+	padding: 20px 0 0 0; /* Landscape phones and down */ /* Landscape phones and down */
 }
 
 .field_utexas_photo_content_area .links h3 {
@@ -798,7 +775,6 @@ select {
 }
 
 .field_utexas_photo_content_area .links p {
-	font-family: CharisSILW, serif;
 	font-size: 1rem;
 	line-height: 1.5rem;
 	margin: 0 0 10px 0;
@@ -835,8 +811,7 @@ select {
 .field_utexas_quick_links {
 	padding: 15px;
 	background-color: #fff;
-	border: 1px solid #e1ddd2;
-	margin-bottom: 20px; /* Landscape phones and down */
+	border: 1px solid #e1ddd2; /* Landscape phones and down */
 }
 
 .field_utexas_quick_links h2 {
@@ -844,7 +819,7 @@ select {
 	font-size: 1.375rem;
 	line-height: 1.625rem;
 	color: #2d2a28;
-	font-weight: 500;
+	font-weight: 600;
 	letter-spacing: -0.0625rem; /* Landscape phones and down */ /* Landscape phones and down */
 }
 
@@ -858,7 +833,7 @@ select {
 	padding-bottom: 10px;
 	font-size: 0.875rem;
 	line-height: 1.125rem;
-	font-weight: 500; /* Landscape phones and down */
+	font-weight: 600; /* Landscape phones and down */
 }
 
 .sidebar-content .field_utexas_quick_links {
@@ -908,7 +883,7 @@ select {
 	background-color: #d6d2c4;
 	color: #333f48;
 	font-family: open_sans, sans-serif;
-	font-weight: 600;
+	font-weight: 700;
 	padding: 20px 10px;
 	width: 100%;
 	text-align: center; /* Landscape phones and down */
@@ -942,7 +917,6 @@ select {
 
 .container-bottom .main-content .fieldblock_field_utexas_quick_links h3.sidebar-headline,
 .container-top .main-content .fieldblock_field_utexas_quick_links h3.sidebar-headline {
-	font-family: CharisSILW, serif;
 	color: #2d2a28;
 	font-weight: 200;
 	font-size: 1.75rem;
@@ -957,11 +931,6 @@ select {
 	padding-bottom: 20px;
 	font-size: 1.0625rem;
 	line-height: 1.375rem; /* Landscape phones and down */
-}
-
-.container-bottom .main-content .fieldblock_field_utexas_quick_links ul.three-column-grid li a,
-.container-top .main-content .fieldblock_field_utexas_quick_links ul.three-column-grid li a {
-	font-family: CharisSILW, serif;
 }
 
 .container-bottom .main-content .fieldblock_field_utexas_quick_links .body-copy p,
@@ -1026,8 +995,7 @@ select {
 }
 
 .field_wysiwyg_a,
-.field_wysiwyg_b {
-	margin: 0 0 20px 0; /* Landscape phones and down */ /* Landscape phones and down */
+.field_wysiwyg_b { /* Landscape phones and down */
 }
 
 .field_wysiwyg_a li,
@@ -1035,7 +1003,6 @@ select {
 .field_wysiwyg_b li,
 .field_wysiwyg_b ol {
 	color: #282828;
-	font-family: CharisSILW, serif;
 	font-size: 1rem;
 	line-height: 1.5rem;
 	margin: 0; /* Landscape phones and down */
@@ -1051,6 +1018,22 @@ select {
 	padding: 20px;
 }
 
+.sidebar-content .field_wysiwyg_a ol,
+.sidebar-content .field_wysiwyg_a ul,
+.sidebar-content .field_wysiwyg_a li,
+.sidebar-content .field_wysiwyg_b ol,
+.sidebar-content .field_wysiwyg_b ul,
+.sidebar-content .field_wysiwyg_b li {
+	color: #474541;
+	font-size: 0.9375rem;
+	line-height: 1.375rem;
+}
+
+.container.container-bottom.accent .field_wysiwyg_a a,
+.container.container-bottom.accent .field_wysiwyg_b a {
+	color: #A04400;
+}
+
 .field_utexas_hero_photo img {
 	width: 100%;
 }
@@ -1060,7 +1043,6 @@ select {
 }
 
 .field_utexas_hero_photo .container.container-hero.hero-style-1 .hero-callout {
-	font-family: CharisSILW, serif;
 	position: absolute;
 	bottom: 30px;
 	right: 0px;
@@ -1073,11 +1055,12 @@ select {
 	line-height: 1.625rem;
 	background-color: #BF5700;
 	color: #FFF;
-	font-weight: 600;
+	font-weight: 700;
 	padding: 10px 20px;
 	text-align: right;
 	opacity: 0.96;
-	display: inline-block; /* Landscape phones and down */ /* Landscape phones and down */ /* Landscape phones and down */
+	display: inline-block;
+	border-radius: 4px; /* Landscape phones and down */ /* Landscape phones and down */ /* Landscape phones and down */
 }
 
 .field_utexas_hero_photo .container.container-hero.hero-style-1 .hero-cta {
@@ -1113,13 +1096,13 @@ select {
 	font-size: 1.125rem;
 	line-height: 1.5rem;
 	background-color: #f8f8f8;
-	font-family: open_sans, sans-serif;
 	color: #2d2a28;
-	font-weight: 600;
+	font-weight: 700;
 	padding: 10px 20px;
 	opacity: 0.96;
 	display: block;
-	overflow: hidden; /* Landscape phones and down */ /* Landscape phones and down */
+	overflow: hidden;
+	border-radius: 4px; /* Landscape phones and down */ /* Landscape phones and down */
 }
 
 .field_utexas_hero_photo .container.container-hero.hero-style-2 .hero-cta {
@@ -1176,13 +1159,11 @@ select {
 
 .field_utexas_hero_photo .container.container-hero.hero-style-3 .headline {
 	color: #2d2a28;
-	font-family: CharisSILW, serif;
 	font-weight: 200;
 	padding-bottom: 5px; /* Landscape phones and down */ /* Landscape phones and down */
 }
 
 .field_utexas_hero_photo .container.container-hero.hero-style-3 .subhead {
-	font-family: open_sans, sans-serif;
 	font-size: 0.8125rem;
 	line-height: 1.1875rem; /* Landscape phones and down */
 }
@@ -1194,7 +1175,6 @@ select {
 	padding: 15px 25px;
 	background-color: #BF5700;
 	color: white;
-	font-family: open_sans, sans-serif;
 }
 
 .field_utexas_hero_photo .container.container-hero.hero-style-4 {
@@ -1219,7 +1199,6 @@ select {
 
 .field_utexas_hero_photo .container.container-hero.hero-style-4 .headline {
 	color: #fff;
-	font-family: CharisSILW, serif;
 	font-weight: 200;
 	padding-bottom: 5px;
 	font-size: 1.125rem;
@@ -1274,9 +1253,8 @@ select {
 .field_utexas_hero_photo .container.container-hero.hero-style-5 .hero-headline {
 	font-size: 1.25rem;
 	line-height: 1.625rem;
-	font-family: CharisSILW, serif;
 	color: #333F48;
-	font-weight: 600;
+	font-weight: 700;
 	opacity: 0.96;
 	margin-bottom: 4px;
 	background: none;
@@ -1294,8 +1272,7 @@ select {
 .field_utexas_hero_photo .container.container-hero.hero-style-5 .hero-cta {
 	background-color: #BF5700;
 	color: #F5F4F0;
-	font-weight: 600;
-	font-family: CharisSILW, serif;
+	font-weight: 700;
 	font-style: italic;
 	display: block;
 	text-align: center;
@@ -1379,17 +1356,8 @@ select {
 
 @media only screen and (min-width:40.063em) {
 
-.field_utexas_call_to_action {
-	margin-bottom: 40px;
-}
-
 .field_contact_info {
 	padding: 10px;
-}
-
-.field_utexas_flex_content_area_a,
-.field_utexas_flex_content_area_b {
-	margin-bottom: 40px;
 }
 
 .field_utexas_flex_content_area_a .two-up + .two-up,
@@ -1431,11 +1399,6 @@ select {
 .field_utexas_flex_content_area_a .utexas-flex-content .utexas-flex-content-cta,
 .field_utexas_flex_content_area_b .utexas-flex-content .utexas-flex-content-cta {
 	width: auto;
-}
-
-.sidebar-content .field_utexas_flex_content_area_a .utexas-flex-content,
-.sidebar-content .field_utexas_flex_content_area_b .utexas-flex-content {
-	margin-bottom: 50px;
 }
 
 .region.region-content-top-four-pillars .fieldblock_field_utexas_flex_content_area_a .utexas-flex-content,
@@ -1495,10 +1458,6 @@ select {
 .field_utexas_promo_list .two-column .promo-list-li {
 	padding-left: 20px !important;
 	padding-right: 20px !important;
-}
-
-.field_utexas_promo_units {
-	margin-bottom: 40px;
 }
 
 .utexas-promo-field.utexas-promo-unit {
@@ -1562,10 +1521,6 @@ select {
 	height: auto;
 }
 
-.field_utexas_featured_highlight {
-	margin-bottom: 20px;
-}
-
 .field_utexas_featured_highlight .has_image .featured-highlight-content,
 .field_utexas_featured_highlight .has_image .highlight-date {
 	padding-left: 330px;
@@ -1598,13 +1553,11 @@ select {
 .field_utexas_photo_content_area {
 	padding: 10px 0 0 15px;
 	border: 0px;
-	margin-bottom: 40px;
 }
 
 .field_utexas_quick_links {
 	padding: 20px;
 	margin-top: 0px;
-	margin-bottom: 40px;
 }
 
 .field_utexas_quick_links h2 {
@@ -1646,11 +1599,6 @@ select {
 .container-top .field_utexas_social_links {
 	margin-top: 0px;
 	padding: 20px;
-}
-
-.field_wysiwyg_a,
-.field_wysiwyg_b {
-	margin: 0 0 40px 0;
 }
 
 .field_wysiwyg_a li,
@@ -1746,7 +1694,6 @@ select {
 
 .field_utexas_hero_photo .container.container-hero.hero-style-5 .hero-subhead {
 	color: #2d2a28;
-	font-family: CharisSILW, serif;
 	font-size: 1.625rem;
 	line-height: 2.125rem;
 	font-weight: 400;
@@ -1891,10 +1838,6 @@ select {
 
 .highlight-image.template-highlight {
 	max-width: 330px;
-}
-
-.field_utexas_hero_photo {
-	margin-bottom: 40px;
 }
 
 .field_utexas_photo_content_area .photo-wrap {

@@ -5,16 +5,31 @@
  */
 
 ?>
-  <header class="UT-header theme1">
+  <header class="UT-header theme1 <?php print $logo_height; ?>">
+
+    <div class="hide-for-large-up branded_bar">
+      <div class="container container-p2-topnav">
+        <div class="row">
+          <div class="column small-12">
+            <div class="topnav knockout_logo">
+              <div class="parent-banner-links">
+                <a href="http://www.utexas.edu" class="logo-link"><span class="hiddenText">UTexas Home</span>
+                  <h2 class="UT-knockout-logo"></h2>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="container container-logo-p2">
       <div class="row">
         <div class="column small-12">
-<?php
-if ($logo) :
-  ?>
-            <div class="p2-logo">
-              <a href="<?php print $base_path; ?>" class="main-logo"><span class="hiddenText"><?php print $site_name; ?></span><img class="main_logo" src="<?php print $logo; ?>" alt="main_logo">
-              </a>
+          <?php if ($logo) : ?>
+             <div class="p2-logo">
+               <a href="<?php print $base_path; ?>" class="main-logo"><span class="hiddenText"><?php print $site_name; ?></span><img class="main_logo" src="<?php print $logo; ?>" alt="main_logo">
+               </a>
             </div>
   <?php
 endif;
@@ -30,26 +45,24 @@ endif;
       <div class="container container-topnav">
         <div class="row">
           <div class="column small-12">
-            <div class="topnav <?php print $branded_logo_class; ?>">
-
+            <div class="topnav knockout_logo">
               <div class="parent-banner-links">
-                <h2 class="UT-secondary-logo">
+                <h2 class="UT-knockout-logo">
                   <a href="http://www.utexas.edu" class="logo-link"><span class="hiddenText">UTexas Home</span></a>
                 </h2>
-<?php
-if ($tertiary_logo != FALSE) :
-  echo $tertiary_logo;
+                <?php if($parent_entity) : ?>
+                  <h2 class="UT-parent-link">
+                    <?php print $parent_entity; ?>
+                  </h2>
+  <?php
 endif;
   ?>
               </div>
-
               <div class="hide-for-large-up">
                 <div class="parent-links" id="parents">
                   <a href="http://www.utexas.edu">The University of Texas at Austin</a>
-  <?php
-if ($tertiary_logo_title != FALSE) :
-  ?>
-                    <a href="<?php print $tertiary_logo_link; ?>"><?php echo $tertiary_logo_title; ?></a>
+                  <?php if($parent_entity) : ?>
+                      <?php print $parent_entity; ?>
   <?php
 endif;
   ?>
@@ -69,7 +82,7 @@ endif;
               </div>
 
               <div class="nav-item-search show-for-large-up">
-<?php
+  <?php
 if ($display_header_menu == 'header_menu') {
   print render($page['menus']['header']);
 }
@@ -79,19 +92,21 @@ else {
   $output = $render_array['utexas_partials_social_links_social_links_block']["content"]["#markup"];
   print $output;
 }
+  ?>
+<?php
 if (isset($header_search_cse)) :
   print render($header_search_cse);
 endif;
-  ?>
+?>
               </div>
 
               <ul class="topnav-links hide-for-large-up">
                 <li class="nav-item nav-item-search">
-  <?php
+<?php
 if (isset($header_search_cse)) :
   print render($header_search_cse);
 endif;
-  ?>
+?>
                 </li>
               </ul>
 

@@ -1,6 +1,5 @@
 .main-content{
 	padding-top: 0px;
-
 	@include respond(medium){
 		padding-bottom: 5px;
 		padding-right: 20px;
@@ -19,23 +18,7 @@
 	@include respond(small-only){
 		height: auto !important;
 	}
-
-	.news-module{
-		border: 1px solid $light-grey-border;
-		margin-top: 20px;
-		margin-bottom: 40px;
-	}
-	.news-module-secondary{
-		box-shadow: none !important;
-		.module-headline{
-			line-height: 44px;
-			font-size: 24px;
-		}
-		.module-cta{
-			line-height: 44px;
-		}
-	}
-
+	
 	.body-copy{
 		margin-left: 1px;
 		font-size: rem-calc(16);

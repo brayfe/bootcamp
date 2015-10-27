@@ -135,7 +135,7 @@
 		top: -4px;
 		padding-left: 20px;
 		color: $burntGrey;
-		font-weight: 600;
+		font-weight: 700;
 		font-size: rem-calc(14);
 		a{
 			font-weight: 100;
@@ -189,53 +189,6 @@
 
 	}
 
-	// University of Texas at Austin Topnav Logo
-	.UT-core-logo {
-		display: none;
-		@include respond(large){
-			display: inline-block;
-			height: 32px;
-			left: 0%;
-			margin: 0;
-			//background: url('../img/general/ut-horizontal-logo.png') no-repeat;
-			background-size: 400px 14px;
-			//min-width should be set to background-width
-			min-width: 400px;
-			background-position: top 8px left;
-			&.no-svg{
-				background: url('../img/general/ut-horizontal-logo.png') no-repeat;
-			}
-		}
-		img {
-			height:18px;
-			margin-top: -25px;
-		}
-	}
-
-	// Secondary Topnav Logo
-	.UT-secondary-logo {
-		display: none;
-		@include respond(large){
-			display: inline-block;
-			height: 32px;
-			margin: 0;
-			width: 100%;
-		}
-	}
-	.UT-tertiary-logo {
-		display:none;
-		@include respond(large){
-			display: inline-block;
-		    float: left;
-            margin: 0;
-            font-size: 1rem;
-            line-height: 1rem;
-            margin-top: 4.4px;
-		    img {
-		    	height: 26px;
-		    }
-		}
-	}
 	.logo-link {
 		display: block;
 		height: 100%;
@@ -245,6 +198,26 @@
 
 	//mobile topnav dropdown
 	.topnav{
+		.UT-parent-link {
+			float: left;
+			margin-bottom: 0;
+			line-height: 1;
+			font-size: 28px;
+			.parent_link {
+				color:white;
+				font-size: 20px;
+				letter-spacing: 0px;
+				font-family: $charis;
+                font-weight: 400;
+				&:hover {
+					text-decoration: none;
+				}
+			}
+			div.parent_link {
+				margin-top: 7px;
+				cursor: default;
+			}
+		}
 		.parent-links{
 			display: none;
 			line-height: 50px;
@@ -271,7 +244,7 @@
 			&.active{
 				background-color: #2d2523;
 				color: $burntOrange;
-				font-weight: 500;
+				font-weight: 600;
 			}
 
 			.name{
@@ -367,7 +340,7 @@
 				color: #2d2a28;
 				display: inline-block;
 				font-size: 0.875rem;
-				font-weight: 600;
+				font-weight: 700;
 				line-height: 12px;
 				padding-left: 20px;
 				position: relative;
@@ -377,7 +350,7 @@
 				color: #2d2a28;
 				display: inline-block;
 				font-size: 0.875rem;
-				font-weight: 600;
+				font-weight: 700;
 				line-height: 12px;
 				padding-left: 20px;
 				position: relative;
@@ -393,43 +366,36 @@
 	}
 }
 
-.container-topnav{
+.container-topnav, .container-p2-topnav{
 	height: 32px;
 	padding: 0;
 	@include respond(large){
-		background:#bf5700;
+		background: $burntOrange;
 	}
-	.topnav.knockout_logo .UT-secondary-logo {
+	.topnav.knockout_logo .UT-knockout-logo {
 	  width: 113.2px;
 	  height: 26px;
 	  margin-top: 4.4px;
       float: right;
+      margin-bottom: 0;
 	}
-	.topnav.knockout_logo .UT-secondary-logo a {
+	.topnav.knockout_logo .UT-knockout-logo a {
 	  background: url("../img/general/knockout_university_informal_horizontal_padded.svg") no-repeat scroll 0 0 / 100% 100%;
 	}
-	.topnav.short_logo .UT-secondary-logo {
-	  width: 93px;
-	  height: 24px;
-	  margin-top: 5px;
-      float: right;
-	}
-	.topnav.short_logo .UT-secondary-logo a {
-	  background: url("../img/general/texas_white.png") no-repeat scroll 0 0 / 100% 100%;
-	}
-	.topnav.long_logo .UT-secondary-logo {
-	  width: 400px;
-	  height: 14px;
-	  margin-top: 9px;
-      float: right;
-	}
-	.topnav.long_logo .UT-secondary-logo a {
-	  background: url("../img/general/ut-horizontal-logo.png") no-repeat scroll 0 0 / 100% 100%;
-	}
 }
-.no-svg .topnav.knockout_logo .UT-secondary-logo a {
+.no-svg .topnav.knockout_logo .UT-knockout-logo-logo a {
     background: url("../img/general/texas_shield.png");
 	background-repeat: no-repeat;
 	background-size:100% 100%;
 	background-position: 0 0;
+}
+
+.container-p2-topnav {
+  background: $burntOrange;
+  .topnav.knockout_logo .UT-knockout-logo {
+    background: url("../img/general/knockout_university_informal_horizontal_padded.svg") no-repeat scroll 0 0 / 100% 100%;
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

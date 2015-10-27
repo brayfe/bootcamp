@@ -5,10 +5,6 @@
 }
 .field_utexas_flex_content_area_a,
 .field_utexas_flex_content_area_b {
-	margin-bottom: 10px;
-	@include respond(medium) {
-		margin-bottom: 40px;
-	}
 	.two-up + .two-up {
 		@include respond(medium) {
 			padding-top: 25px;
@@ -31,7 +27,7 @@
 		font-size:1.0625rem;
 		line-height:1.375rem;
 		margin:0 0 8px;
-		font-weight:600;
+		font-weight:700;
 		padding:0 5px;
 		@include respond(medium) {
 			padding:0;
@@ -45,7 +41,6 @@
 		}
 	}
 	.utexas-flex-content .utexas-flex-content-area-copy {
-		font-family:CharisSILW,serif;
 		font-size:0.9375rem;
 		line-height:1.375rem;
 		margin:0 0 12px;
@@ -109,16 +104,10 @@
 	.field_utexas_flex_content_area_a,
 	.field_utexas_flex_content_area_b {
 		.utexas-flex-content {
-			margin-bottom: 40px;
-
-			@include respond(medium){
-				margin-bottom: 50px;
-			}
-
 			.utexas-flex-content-area-headline a {
 				color: #474747;
 				font-size: rem-calc(17px);
-				font-weight: 600;
+				font-weight: 700;
 			}
 
 			.utexas-flex-content-area-copy p {
@@ -166,12 +155,11 @@
             background-color: #f5f4f0;
             font-size: 16px;
             line-height: 18px;
-            font-weight: 600;
+            font-weight: 700;
             width: 100%;
             margin: 0 0 0 0;
             padding: 10px 10px;
             color: #333F48;
-            font-family: $opensans;
             @include respond(medium){
               padding: 10px 15px;
             }
@@ -214,7 +202,6 @@
         }
         .cta-link{
           line-height: rem-calc(16);
-          font-family: $opensans;
           font-style: normal;
 
           @include respond(small-only){
@@ -236,7 +223,7 @@
         font-family: open_sans;
         font-size: rem-calc(18);
         line-height: rem-calc(24);
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: .01rem;
         margin-bottom: 8px;
 

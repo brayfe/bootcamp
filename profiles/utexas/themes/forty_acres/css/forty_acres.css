@@ -1,5 +1,5 @@
 meta.foundation-version {
-	font-family: "/5.2.3/";
+	font-family: "/5.4.7/";
 }
 
 meta.foundation-mq-small {
@@ -55,9 +55,9 @@ body {
 	font-family: open_sans, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 	font-weight: normal;
 	font-style: normal;
-	line-height: 1;
+	line-height: 1.5;
 	position: relative;
-	cursor: default;
+	cursor: auto;
 }
 
 a:hover {
@@ -101,7 +101,12 @@ img {
 }
 
 .hide {
-	display: none;
+	display: none !important;
+	visibility: hidden;
+}
+
+.invisible {
+	visibility: hidden;
 }
 
 .antialiased {
@@ -190,7 +195,6 @@ select {
 	display: block;
 	background: #efefef;
 	color: #2d2a28;
-	font-family: open_sans, sans-serif;
 	padding: 5px 10px;
 	margin: 0 10px 10px 0;
 	font-size: 0.6875rem;
@@ -257,7 +261,6 @@ select {
 }
 
 .ct--last-updated p {
-	font-family: CharisSILW, serif;
 	font-size: 0.75rem;
 	margin-top: 2px;
 	float: right;
@@ -312,7 +315,7 @@ select {
 
 .ct--sign-up .headline {
 	font-size: 1.125rem;
-	font-weight: 600;
+	font-weight: 700;
 	margin-bottom: 10px;
 }
 
@@ -447,7 +450,6 @@ select {
 	font-size: 0.8125rem;
 	font-style: italic;
 	font-weight: normal;
-	font-family: CharisSILW, serif;
 	margin: 0 0 6px 0;
 	color: inherit; /* Landscape phones and down */
 }
@@ -455,14 +457,13 @@ select {
 .container-highlight .highlight-headline {
 	font-size: 1.1875rem;
 	line-height: 1.3125rem;
-	font-weight: 500;
+	font-weight: 600;
 	margin: 6px 0 15px 0;
 	color: inherit; /* Landscape phones and down */ /* Landscape phones and down */
 }
 
 .container-highlight .highlight-text {
 	clear: left;
-	font-family: CharisSILW, serif;
 	font-size: 0.875rem;
 	line-height: 1.125rem;
 	margin: 0;
@@ -777,28 +778,11 @@ select {
 .container-footer-news .copyright { /* Landscape phones and down */
 }
 
-body {
-	font-family: CharisSILW, serif;
-}
-
 header {
 	background: #fff;
 }
 
-header,
-.pillar-cta,
-.container-nav-forty_acres .nav-link,
-.container-nav-forty_acres .sub-nav-link,
-.field_wysiwyg_a,
-.field_wysiwyg_b,
-.field_bio_block .name,
-.field_bio_block,
-.field_course_info_block h2 {
-	font-family: CharisSILW, serif;
-}
-
 .container-hero {
-	background: url('../img/heros/hero-2.jpg') top center no-repeat;
 	background-size: cover;
 	margin-top: -31px;
 }
@@ -817,7 +801,7 @@ header,
 }
 
 .container-hero .hero-headline-wrapper {
-	max-width: 70%; /* Landscape phones and down */
+	max-width: 70%;
 }
 
 .container-hero .hero-headline {
@@ -827,10 +811,9 @@ header,
 	display: inline;
 	background: white;
 	color: #BF5700;
-	font-family: CharisSILW, serif;
 	font-size: 1.75rem;
 	line-height: 2.0625rem;
-	font-weight: 600;
+	font-weight: 700;
 	letter-spacing: -0.09375rem;
 	box-decoration-break: clone;
 	box-shadow: 10px 0 0 #fff, -10px 0 0 #fff, 10px 1px 0 #fff, -10px 1px 0 #fff; /* Landscape phones and down */
@@ -869,8 +852,7 @@ header,
 .container-hero .hero-cta {
 	position: relative;
 	background-color: white;
-	color: #BF5700;
-	font-family: CharisSILW, serif; /* Landscape phones and down */
+	color: #BF5700; /* Landscape phones and down */
 }
 
 .container-hero .hero-cta .icon-buttons {
@@ -889,9 +871,8 @@ header,
 	margin-bottom: 20px;
 	font-size: 2.5rem;
 	line-height: 1.625rem;
-	font-family: CharisSILW, serif;
 	color: #FFF;
-	font-weight: 600; /* Landscape phones and down */ /* Landscape phones and down */
+	font-weight: 700; /* Landscape phones and down */ /* Landscape phones and down */
 }
 
 .container-hero1-1 .hero-subhead {
@@ -899,16 +880,14 @@ header,
 	font-size: 1.0625rem;
 	line-height: 1.4375rem;
 	font-weight: 200;
-	margin-bottom: 20px;
-	font-family: CharisSILW, serif; /* Landscape phones and down */
+	margin-bottom: 20px; /* Landscape phones and down */
 }
 
 .container-hero1-1 .hero-cta {
 	background-color: #BF5700;
 	color: #fff;
 	float: left;
-	font-weight: 600;
-	font-family: CharisSILW, serif;
+	font-weight: 700;
 	padding: 10px 15px;
 	line-height: 1.125rem; /* Landscape phones and down */
 }
@@ -929,8 +908,7 @@ header,
 	*/
 }
 
-.container-top .promo-unit {
-	font-family: CharisSILW, serif; /* Landscape phones and down */
+.container-top .promo-unit { /* Landscape phones and down */
 }
 
 .container-top .promo-unit .promo-copy {
@@ -938,7 +916,6 @@ header,
 }
 
 .container-top .field_utexas_promo_list_collection {
-	font-family: CharisSILW, serif;
 	margin-bottom: 20px; /* Landscape phones and down */
 }
 
@@ -946,7 +923,7 @@ header,
 	border-bottom: 2px solid #3c87a3;
 	margin: 0 0 20px;
 	padding-bottom: 7px;
-	font-weight: 600;
+	font-weight: 700;
 }
 
 .container-top .field_utexas_promo_list_collection ul {
@@ -961,7 +938,6 @@ header,
 }
 
 .container-top .field_utexas_promo_list_collection .promo-list .content a {
-	font-family: CharisSILW, serif;
 	font-size: 0.9375rem; /* Landscape phones and down */
 }
 
@@ -986,7 +962,7 @@ header,
 
 .container-top .pillar-cta {
 	float: left;
-	font-weight: 600;
+	font-weight: 700;
 	padding: 10px 20px;
 	margin: 0 auto; /* Landscape phones and down */
 }
@@ -1008,7 +984,6 @@ header,
 	line-height: 2.125rem;
 	font-weight: 300;
 	color: #fff;
-	font-family: CharisSILW, serif;
 	font-weight: 400;
 	margin-bottom: 15px; /* Landscape phones and down */
 }
@@ -1023,8 +998,7 @@ header,
 .container-mid .pillar-cta {
 	background-color: #BF5700;
 	color: #fff;
-	font-family: CharisSILW, serif;
-	font-weight: 600;
+	font-weight: 700;
 }
 
 .container-mid .pillar-cta:hover {
@@ -1033,12 +1007,7 @@ header,
 }
 
 .container-highlight {
-	font-family: CharisSILW, serif;
 	text-align: center;
-}
-
-.container-highlight .highlight-headline {
-	font-family: CharisSILW, serif;
 }
 
 .container-highlight .highlight-image {
@@ -1059,7 +1028,6 @@ header,
 }
 
 .container-related .related-block h2 {
-	font-family: CharisSILW, serif;
 	color: #2d2a28;
 	font-weight: 200;
 	font-size: 1.75rem;
@@ -1069,7 +1037,6 @@ header,
 }
 
 .container-related .related-block p {
-	font-family: CharisSILW, serif;
 	margin-bottom: 30px;
 	font-size: 1rem;
 	line-height: 1.375rem;
@@ -1082,8 +1049,7 @@ header,
 }
 
 .container-related .related-block a {
-	font-weight: 500;
-	font-family: CharisSILW, serif;
+	font-weight: 600;
 	font-style: normal;
 	text-decoration: none;
 }
@@ -1107,10 +1073,6 @@ header,
 }
 
 .container-related .sidebar-module { /* Landscape phones and down */
-}
-
-.container.container-bottom.bottom-theme-2 {
-	margin-top: 20px;
 }
 
 .container.container-mid1 {
@@ -1160,7 +1122,7 @@ header,
 	padding-right: 10%;
 	text-transform: uppercase;
 	font-size: 0.8125rem;
-	font-weight: 500; /* Landscape phones and down */
+	font-weight: 600; /* Landscape phones and down */
 }
 
 .footer-theme2 .footer-secondary .helpful-links {
@@ -1174,7 +1136,6 @@ header,
 .footer-theme2 .footer-secondary ul li {
 	list-style-type: none;
 	margin-bottom: 20px;
-	font-family: CharisSILW, serif;
 }
 
 .footer-theme2 .footer-secondary ul {
@@ -1182,7 +1143,6 @@ header,
 }
 
 .footer-theme2 .footer-secondary ul li a {
-	font-family: CharisSILW, serif;
 	color: black;
 }
 
@@ -1289,8 +1249,8 @@ header,
 
 .footer-theme2 .footer-contact {
 	border-left: 1px solid #cdcdcd;
-	margin-top: 25px;
-	margin-bottom: 30px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 	padding-left: 10px;
 }
 
@@ -1302,7 +1262,6 @@ header,
 }
 
 .footer-theme2 .footer-contact a {
-	font-family: open_sans, sans-serif;
 	font-size: 0.875rem;
 	font-style: normal;
 	color: #BF5700;
@@ -1337,8 +1296,7 @@ textarea {
 	resize: none !important;
 }
 
-.breadcrumbs {
-	font-family: open_sans, sans-serif; /* Landscape phones and down */
+.breadcrumbs { /* Landscape phones and down */
 }
 
 .field-collection-container {
@@ -1347,6 +1305,10 @@ textarea {
 
 .utexas-promo-field.utexas-promo-list {
 	width: 100%;
+}
+
+.full-width-content-page .region-content-top {
+	margin-top: 20px; /* Landscape phones and down */
 }
 
 .container-topnav { /* Landscape phones and down */
@@ -1457,7 +1419,7 @@ textarea {
 	top: -4px;
 	padding-left: 20px;
 	color: #2d2a28;
-	font-weight: 600;
+	font-weight: 700;
 	font-size: 0.875rem;
 }
 
@@ -1493,28 +1455,35 @@ textarea {
 	display: none; /* Landscape phones and down */
 }
 
-.container-topnav .UT-core-logo {
-	display: none; /* Landscape phones and down */
-}
-
-.container-topnav .UT-core-logo img {
-	height: 18px;
-	margin-top: -25px;
-}
-
-.container-topnav .UT-secondary-logo {
-	display: none; /* Landscape phones and down */
-}
-
-.container-topnav .UT-tertiary-logo {
-	display: none; /* Landscape phones and down */
-}
-
 .container-topnav .logo-link {
 	display: block;
 	height: 100%;
 	background: transparent;
 	text-decoration: none;
+}
+
+.container-topnav .topnav .UT-parent-link {
+	float: left;
+	margin-bottom: 0;
+	line-height: 1;
+	font-size: 28px;
+}
+
+.container-topnav .topnav .UT-parent-link .parent_link {
+	color: white;
+	font-size: 20px;
+	letter-spacing: 0px;
+	font-family: CharisSILW, serif;
+	font-weight: 400;
+}
+
+.container-topnav .topnav .UT-parent-link .parent_link:hover {
+	text-decoration: none;
+}
+
+.container-topnav .topnav .UT-parent-link div.parent_link {
+	margin-top: 7px;
+	cursor: default;
 }
 
 .container-topnav .topnav .parent-links {
@@ -1546,7 +1515,7 @@ textarea {
 .container-topnav .topnav .current-directory.active {
 	background-color: #2d2523;
 	color: #BF5700;
-	font-weight: 500;
+	font-weight: 600;
 }
 
 .container-topnav .topnav .current-directory .name {
@@ -1644,7 +1613,7 @@ textarea {
 	color: #2d2a28;
 	display: inline-block;
 	font-size: 0.875rem;
-	font-weight: 600;
+	font-weight: 700;
 	line-height: 12px;
 	padding-left: 20px;
 	position: relative;
@@ -1655,7 +1624,7 @@ textarea {
 	color: #2d2a28;
 	display: inline-block;
 	font-size: 0.875rem;
-	font-weight: 600;
+	font-weight: 700;
 	line-height: 12px;
 	padding-left: 20px;
 	position: relative;
@@ -1669,60 +1638,54 @@ textarea {
 	line-height: inherit;
 }
 
-.container-topnav {
+.container-topnav,
+.container-p2-topnav {
 	height: 32px;
 	padding: 0; /* Landscape phones and down */
 }
 
-.container-topnav .topnav.knockout_logo .UT-secondary-logo {
+.container-topnav .topnav.knockout_logo .UT-knockout-logo,
+.container-p2-topnav .topnav.knockout_logo .UT-knockout-logo {
 	width: 113.2px;
 	height: 26px;
 	margin-top: 4.4px;
 	float: right;
+	margin-bottom: 0;
 }
 
-.container-topnav .topnav.knockout_logo .UT-secondary-logo a {
+.container-topnav .topnav.knockout_logo .UT-knockout-logo a,
+.container-p2-topnav .topnav.knockout_logo .UT-knockout-logo a {
 	background: url("../img/general/knockout_university_informal_horizontal_padded.svg") no-repeat scroll 0 0/100% 100%;
 }
 
-.container-topnav .topnav.short_logo .UT-secondary-logo {
-	width: 93px;
-	height: 24px;
-	margin-top: 5px;
-	float: right;
-}
-
-.container-topnav .topnav.short_logo .UT-secondary-logo a {
-	background: url("../img/general/texas_white.png") no-repeat scroll 0 0/100% 100%;
-}
-
-.container-topnav .topnav.long_logo .UT-secondary-logo {
-	width: 400px;
-	height: 14px;
-	margin-top: 9px;
-	float: right;
-}
-
-.container-topnav .topnav.long_logo .UT-secondary-logo a {
-	background: url("../img/general/ut-horizontal-logo.png") no-repeat scroll 0 0/100% 100%;
-}
-
-.no-svg .topnav.knockout_logo .UT-secondary-logo a {
+.no-svg .topnav.knockout_logo .UT-knockout-logo-logo a {
 	background: url("../img/general/texas_shield.png");
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: 0 0;
 }
 
+.container-p2-topnav {
+	background: #BF5700;
+}
+
+.container-p2-topnav .topnav.knockout_logo .UT-knockout-logo {
+	background: url("../img/general/knockout_university_informal_horizontal_padded.svg") no-repeat scroll 0 0/100% 100%;
+	float: none;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .container-logo-p2 {
-	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 50px;
-	background: #FFF;
+	height: 100px;
+	background: #fff;
 	z-index: 1000;
-	transition: 0.2s ease-in-out; /* Landscape phones and down */ /* Landscape phones and down */
+	transition: 0.2s ease-in-out;
+	margin-left: auto;
+	margin-right: auto; /* Landscape phones and down */
 }
 
 .show-nav .container-logo-p2 {
@@ -1740,26 +1703,40 @@ textarea {
 
 .container-logo-p2 .p2-logo {
 	position: absolute;
-	margin: 0;
-	width: 195px;
-	height: 42px;
-	top: 17px; /* Landscape phones and down */ /* Landscape phones and down */
+	height: 100px; /* Landscape phones and down */ /* Landscape phones and down */
 }
 
 .container-logo-p2 .main_logo {
-	margin-top: -6px;
-	max-height: 42px; /* Landscape phones and down */
+	max-height: 60px;
+	margin-top: 0;
+	position: relative;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%); /* Landscape phones and down */
 }
 
 .container-logo-p2 .UT-nav-hamburger {
 	display: block;
-	color: #382E2C;
+	color: #BF5700;
 	text-decoration: none;
 	float: right;
-	height: 50px;
-	line-height: 50px;
+	height: 100px;
+	line-height: 100px;
 	padding: 0 10px;
 	font-size: 1.25rem; /* Landscape phones and down */
+}
+
+.UT-header.theme1.tall_logo .container-logo-p2 .main_logo {
+	max-height: 75px; /* Landscape phones and down */
+}
+
+.UT-header.theme1.tall_logo .container.container-nav.container-nav-phase2 {
+	height: 175px;
+}
+
+.UT-header.theme1.tall_logo .nav-item-search.show-for-large-up {
+	margin-bottom: 50px;
 }
 
 .container-nav-phase2 { /* Landscape phones and down */ /* Landscape phones and down */ /* Landscape phones and down */ /* Landscape phones and down */ /* Landscape phones and down */
@@ -1802,7 +1779,6 @@ textarea {
 	text-decoration: none;
 	text-transform: uppercase;
 	font-size: 0.8125rem;
-	font-family: open_sans, sans-serif;
 	font-weight: bold;
 	position: relative;
 	width: 77%; /* Landscape phones and down */
@@ -1835,7 +1811,6 @@ textarea {
 	text-decoration: none;
 	text-transform: uppercase;
 	font-size: 0.75rem;
-	font-family: open_sans, sans-serif;
 	font-weight: bold;
 	position: relative; /* Landscape phones and down */
 }
@@ -1863,7 +1838,6 @@ textarea {
 }
 
 .container-nav-phase2 .sub-nav-link {
-	font-family: open_sans, sans-serif;
 	font-size: 0.875rem;
 	line-height: 1.125rem;
 	border-top: 1px solid #6A6361;
@@ -1996,7 +1970,6 @@ textarea {
 }
 
 .theme2 header .connect-link .name {
-	font-family: open_sans, sans-serif;
 	font-size: 1rem;
 	margin-left: 10px;
 }
@@ -2041,7 +2014,6 @@ textarea {
 }
 
 .field_bio_block .bio-details p {
-	font-family: CharisSILW, serif;
 	font-size: 1.125rem;
 	line-height: 1.5rem;
 	margin: 0 0 1.25rem 0;
@@ -2055,7 +2027,7 @@ textarea {
 .field_bio_block .additional-info h3 {
 	font-size: 1.125rem;
 	line-height: 1.5rem;
-	font-weight: 600;
+	font-weight: 700;
 	margin: 0 0 8px 0;
 }
 
@@ -2082,7 +2054,6 @@ textarea {
 }
 
 .subnav {
-	font-family: open_sans, sans-serif;
 	margin-top: 10px; /* Landscape phones and down */
 }
 
@@ -2114,7 +2085,7 @@ textarea {
 }
 
 .subnav li a {
-	font-weight: 500;
+	font-weight: 600;
 	font-size: 0.875rem;
 	line-height: 1.25rem;
 	padding: 7px 5px 7px 15px;
@@ -2132,7 +2103,6 @@ textarea {
 .subnav li a a {
 	text-decoration: none;
 	font-style: normal;
-	font-family: open_sans, sans-serif;
 }
 
 .subnav li a:hover {
@@ -2236,7 +2206,6 @@ table.tablesaw thead th,
 table.tablesaw thead td {
 	color: #444;
 	font-size: 0.9em;
-	font-family: open_sans, sans-serif;
 }
 
 .tablesaw th,
@@ -2275,8 +2244,7 @@ table.tablesaw thead td {
 }
 
 .tablesaw thead tr:first-child th {
-	font-weight: 600;
-	font-family: open_sans, sans-serif;
+	font-weight: 700;
 }
 
 /* Table rows have a gray bottom stroke by default */
@@ -2373,7 +2341,6 @@ table.tablesaw thead td {
 
 .tweet .tweet-text {
 	clear: left;
-	font-family: CharisSILW, serif;
 	font-size: 13px;
 	line-height: 17px;
 	margin-bottom: 15px; /* Landscape phones and down */
@@ -2381,7 +2348,6 @@ table.tablesaw thead td {
 
 .tweet .tweet-time {
 	float: left;
-	font-family: CharisSILW, serif;
 	font-size: 11px;
 	font-style: italic; /* Landscape phones and down */
 }
@@ -2447,7 +2413,7 @@ body #skip-link a.element-invisible.element-focusable:active {
 	border-radius: 1rem;
 	box-shadow: 1px 1px 0.125rem #282828;
 	color: #fff;
-	font-weight: 500;
+	font-weight: 600;
 	font-size: 0.75rem;
 	outline: 0;
 	padding: 0.5rem 1rem;
@@ -2461,19 +2427,6 @@ hr {
 	border-top: 1px solid #ccc;
 	margin: 1em 20px;
 	padding: 0;
-}
-
-@media only screen {
-
-.container-logo-p2 {
-	border-bottom: 1px solid #EBE8E2;
-}
-
-.container-logo-p2 .p2-logo {
-	max-height: 31px;
-	margin-top: -7px;
-}
-
 }
 
 @media only all {
@@ -3036,6 +2989,10 @@ body #toolbar {
 	padding-top: 0px;
 }
 
+.full-width-content-page .region-content-top {
+	margin-top: 30px;
+}
+
 .container-topnav.container {
 	padding-left: 10px;
 	padding-right: 10px;
@@ -3119,40 +3076,6 @@ body #toolbar {
 	height: 32px;
 }
 
-.container-topnav .UT-core-logo {
-	display: inline-block;
-	height: 32px;
-	left: 0%;
-	margin: 0;
-	background-size: 400px 14px;
-	min-width: 400px;
-	background-position: top 8px left;
-}
-
-.container-topnav .UT-core-logo.no-svg {
-	background: url('../img/general/ut-horizontal-logo.png') no-repeat;
-}
-
-.container-topnav .UT-secondary-logo {
-	display: inline-block;
-	height: 32px;
-	margin: 0;
-	width: 100%;
-}
-
-.container-topnav .UT-tertiary-logo {
-	display: inline-block;
-	float: left;
-	margin: 0;
-	font-size: 1rem;
-	line-height: 1rem;
-	margin-top: 4.4px;
-}
-
-.container-topnav .UT-tertiary-logo img {
-	height: 26px;
-}
-
 .container-topnav .topnav-links {
 	margin: 0 auto 1.0625rem auto;
 	margin-left: -1.375rem;
@@ -3175,14 +3098,18 @@ body #toolbar {
 	display: block;
 }
 
-.container-topnav {
-	background: #bf5700;
+.container-topnav,
+.container-p2-topnav {
+	background: #BF5700;
 }
 
 .container-logo-p2 {
 	border-bottom: none;
 	position: relative;
 	height: 0;
+	margin-left: inherit;
+	margin-right: inherit;
+	width: 100%;
 }
 
 .container-logo-p2 .row {
@@ -3198,20 +3125,25 @@ body #toolbar {
 }
 
 .container-logo-p2 .p2-logo {
-	margin: 0 0 0 -2.5px;
-	width: 293px;
-	height: 47.5px;
 	top: 52.5px;
-	max-height: 49px;
+	height: auto;
 }
 
 .container-logo-p2 .main_logo {
 	margin-top: -3px;
-	max-height: 60px;
+	top: inherit;
+	-webkit-transform: unset;
+	-ms-transform: unset;
+	transform: unset;
 }
 
 .container-logo-p2 .UT-nav-hamburger {
 	display: none;
+	color: #382E2C;
+}
+
+.UT-header.theme1.tall_logo .container-logo-p2 .main_logo {
+	max-height: 100px;
 }
 
 .container-nav-phase2.container {
@@ -3459,6 +3391,19 @@ body #toolbar {
 
 }
 
+@media (max-width: 500px) {
+
+.container-logo-p2 .p2-logo,
+.container-logo-p2 .main-logo {
+	width: 100%;
+}
+
+.container-logo-p2 .main_logo {
+	max-width: 80%;
+}
+
+}
+
 @media only screen and (max-width: 40em) {
 
 .UT-header .nav-wrapper {
@@ -3516,6 +3461,12 @@ body #toolbar {
 
 .container-topnav .topnav-links .persona-link {
 	display: inline-block !important;
+}
+
+.container-logo-p2 .p2-logo {
+	top: 0;
+	height: 100px;
+	max-width: 100%;
 }
 
 .container-nav-phase2 .nav-active {

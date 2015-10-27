@@ -31,7 +31,6 @@ textarea{
 
 // Adjustment for Theme Navigation margin vs Core
 .breadcrumbs{
-	font-family: $opensans;
 	@include respond(large){
 		padding-top: 0px;
 	}
@@ -44,4 +43,12 @@ textarea{
 // Overrides
 .utexas-promo-field.utexas-promo-list {
 	width: 100%;
+}
+
+// Add space between breadcrumb and content on full width content page
+.full-width-content-page  .region-content-top {
+	margin-top: 20px;
+	@include respond(large) {
+		margin-top: 30px;
+	}
 }

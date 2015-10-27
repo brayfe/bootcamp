@@ -7,7 +7,6 @@
         display: none;
       }
       .hero-callout {
-        font-family: $charis;
         position: absolute;
         bottom: 30px;
         right: 0px;
@@ -23,11 +22,12 @@
         line-height: rem-calc(26);
         background-color: $burntOrange;
         color: #FFF;
-        font-weight: 600;
+        font-weight: 700;
         padding: 10px 20px;
         text-align: right;
         opacity: .96;
         display: inline-block;
+        border-radius: 4px;
         @include respond(medium) {
           padding: 20px 40px;
           font-size: rem-calc(36);
@@ -82,13 +82,13 @@
       font-size: rem-calc(18);
       line-height: rem-calc(24);
       background-color: #f8f8f8;
-      font-family: $opensans;
       color: $burntGrey;
-      font-weight: 600;
+      font-weight: 700;
       padding: 10px 20px;
       opacity: .96;
       display: block;
       overflow: hidden;
+      border-radius: 4px;
       @include respond(medium){
         padding: 15px 30px;
         font-size: rem-calc(28);
@@ -174,7 +174,6 @@
     }
     .headline{
       color: $burntGrey;
-      font-family: $charis;
       font-weight: 200;
       padding-bottom: 5px;
       @include respond(medium){
@@ -188,7 +187,6 @@
       }
     }
     .subhead{
-      font-family: $opensans;
       font-size: rem-calc(13);
       line-height: rem-calc(19);
       @include respond(medium){
@@ -203,7 +201,6 @@
       padding: 15px 25px;
       background-color: $burntOrange;
       color: white;
-      font-family: $opensans;
     }
   }
   .container.container-hero.hero-style-4 {
@@ -230,7 +227,6 @@
     }
     .headline{
       color: #fff;
-      font-family: $charis;
       font-weight: 200;
       padding-bottom: 5px;
       font-size: rem-calc(18);
@@ -320,9 +316,8 @@
     .hero-headline{
       font-size: rem-calc(20);
       line-height: rem-calc(26);
-      font-family: $charis;
       color: $navy;
-      font-weight: 600;
+      font-weight: 700;
       opacity: .96;
       margin-bottom: 4px;
       background: none;
@@ -351,7 +346,6 @@
       margin-bottom: 10px;
       @include respond(medium){
         color: $burntGrey;
-        font-family: $charis;
         font-size: rem-calc(26);
         line-height: rem-calc(34);
         font-weight: 400;
@@ -361,8 +355,7 @@
     .hero-cta{
       background-color: $burntOrange;
       color: #F5F4F0;
-      font-weight: 600;
-      font-family: $charis;
+      font-weight: 700;
       font-style: italic;
       display: block;
       text-align: center;

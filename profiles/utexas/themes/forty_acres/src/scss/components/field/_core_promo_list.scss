@@ -4,7 +4,7 @@
       border-bottom: 2px solid #3c87a3;
       margin: 0 0 20px;
       padding-bottom: 7px;
-      font-weight: 600;
+      font-weight: 700;
     }
     ul {
       margin: 0;
@@ -91,7 +91,6 @@
   font-size: rem-calc(18px);
   font-weight: normal;
   line-height: rem-calc(20px);
-  font-family: $charis;
   .cta-link{
     display: inline;
     font-style: normal;
@@ -116,9 +115,6 @@
   margin: 0;
   font-size: inherit;
   line-height: inherit;
-}
-.utexas-promo-field .promo-copy  {
-  font-family: CharisSILW, serif;
 }
 .field_utexas_promo_list .two-column .promo-list-li:nth-child(even) {
   .utexas-promo-field.utexas-promo-list {

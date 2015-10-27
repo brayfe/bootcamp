@@ -9,48 +9,54 @@
  */
 function forty_acres_form_system_theme_settings_alter(&$form, &$form_state) {
 
+  // Disable the Toggle Display section.
+  unset($form['theme_settings']);
+
   // Main navigation settings.
   $form['utexas_main_nav_theme_settings'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Main navigation bar settings'),
+    '#title' => t('Header settings'),
   );
-  $form['utexas_main_nav_theme_settings']['choose_secondary_logo'] = array(
+  $form['utexas_main_nav_theme_settings']['logo_height'] = array(
     '#type' => 'radios',
-    '#title' => t('Choose secondary logo'),
-    '#description' => t('Select an image to dislay in the right region of the burnt-orange branded bar.  This logo will link to www.utexas.edu.'),
+    '#title' => 'Logo Height',
+    '#description' => 'Set to Tall for logo to display at height of 100px or Short for height of 60px.',
     '#options' => array(
-      'large_horizontal_logo' => t('The University of Texas at Austin'),
-      'small_texas_logo' => t('Texas'),
-      'texas_shield' => t('Texas with shield'),
+      'short_logo' => t('Short'),
+      'tall_logo' => t('Tall'),
     ),
-    '#default_value' => theme_get_setting('choose_secondary_logo'),
+    '#default_value' => theme_get_setting('logo_height'),
   );
-  $form['utexas_main_nav_theme_settings']['tertiary_logo'] = array(
-    '#title' => t('Tertiary logo'),
-    '#description' => t('Upload a logo to display in the left region of the burnt-orange branded bar, above the main image. Ideal for lengthwise wordmarks, as it displays at 25 pixels in height.'),
-    '#type' => 'managed_file',
-    '#upload_location' => 'public://tertiary-logo/',
-    '#upload_validators' => array(
-      'file_validate_extensions' => array('png svg'),
-    ),
-    '#default_value' => theme_get_setting('tertiary_logo'),
-  );
-  $form['utexas_main_nav_theme_settings']['tertiary_logo_link'] = array(
+  $form['utexas_main_nav_theme_settings']['parent_link_title'] = array(
     '#type' => 'textfield',
-    '#title' => t('Tertiary logo link'),
-    '#description' => t('Optionally, set the tertiary logo to link to a URL of your choice.'),
-    '#default_value' => theme_get_setting('tertiary_logo_link'),
+    '#title' => t('Parent Entity Name'),
+    '#description' => t("The site's parental college or office. This will display at the left of the University brand bar."),
+    '#default_value' => theme_get_setting('parent_link_title'),
+  );
+  $form['utexas_main_nav_theme_settings']['parent_link'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Parent Entity Website'),
+    '#description' => t("The link for the site's parental college or office.  A link is required if you have entered a Parent Entity Name."),
+    '#default_value' => theme_get_setting('parent_link'),
     '#maxlength' => 256,
     '#attributes'    => array(
       'placeholder' => t('http://'),
     ),
+    '#element_validate' => array('_forty_acres_parent_link_validate'),
   );
-  $form['utexas_main_nav_theme_settings']['tertiary_logo_title'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Tertiary logo title'),
-    '#description' => t('Enter a title for the tertiary logo if you would like it to appear in the mobile navigation menu. Please note that a logo must be uploaded for the title to appear in the mobile navigation menu.'),
-    '#default_value' => theme_get_setting('tertiary_logo_title'),
-  );
+
+  /**
+   * Helper function to provide validation on Parent Entity Website.
+   */
+  function _forty_acres_parent_link_validate($element, &$form_state) {
+    if ($form_state['values']['parent_link_title'] != '' && empty($element['#value'])) {
+      form_error($element, t('Please enter a link for the Parent Entity Website.  A link is required if you have entered a Parent Entity Name.'));
+    }
+    if ($element['#value'] != '' && filter_var($element['#value'], FILTER_VALIDATE_URL) === FALSE) {
+      form_error($element, t('Please enter a valid link for the Parent Entity Website.'));
+    }
+  }
+
   $form['utexas_main_nav_theme_settings']['main_nav_settings'] = array();
   $form['utexas_main_nav_theme_settings']['secondary_menu'] = array(
     '#type' => 'radios',
@@ -60,15 +66,6 @@ function forty_acres_form_system_theme_settings_alter(&$form, &$form_state) {
       'header_menu' => t('Header menu'),
     ),
     '#default_value' => theme_get_setting('secondary_menu'),
-  );
-  $form['utexas_main_nav_theme_settings']['main_menu_font'] = array(
-    '#type' => 'radios',
-    '#title' => t('Select font for main menu'),
-    '#options' => array(
-      'charissilw' => t('Serif'),
-      'open_sans' => t('Sans-serif'),
-    ),
-    '#default_value' => theme_get_setting('main_menu_font'),
   );
 
   // Footer settings.
@@ -105,25 +102,5 @@ function forty_acres_form_system_theme_settings_alter(&$form, &$form_state) {
     '#default_value' => theme_get_setting('newsletter_url'),
     '#maxlength' => 256,
   );
-}
-/**
- * Form submission handler for system_settings_form().
- *
- * If you want node type configure style handling of your checkboxes,
- * add an array_filter value to your form.
- */
-function forty_acres_settings_form_submit(&$form, $form_state) {
-  $image_fid = $form_state['values']['tertiary_logo'];
-  $image = file_load($image_fid);
-  if (is_object($image)) {
-    // Check to make sure that the file is set to be permanent.
-    if ($image->status == 0) {
-      // Update the status.
-      $image->status = FILE_STATUS_PERMANENT;
-      // Save the update.
-      file_save($image);
-      // Add a reference to prevent warnings.
-      file_usage_add($image, 'forty_acres', 'theme', 1);
-    }
-  }
+
 }

@@ -712,60 +712,21 @@ function forty_acres_preprocess_page(&$variables, $hook) {
       $variables['theme_hook_suggestions'][] = 'page__page_403';
     }
   }
-  // Set the font of the topnav bar from the theme settings.
-  $font = theme_get_setting('main_menu_font');
-  drupal_add_css('#main-nav li a { font-family:' . $font . ';}', 'inline');
 
-  // Set the secondary logo.
-  $secondary_logo = theme_get_setting('choose_secondary_logo');
-  if ($secondary_logo == 'large_horizontal_logo') {
-    $logo_class = 'long_logo';
-  }
-  elseif ($secondary_logo == 'small_texas_logo') {
-    $logo_class = 'short_logo';
-  }
-  else {
-    $logo_class = 'knockout_logo';
-  }
-  $variables['branded_logo_class'] = $logo_class;
   $variables['newsletter_display'] = theme_get_setting('newsletter_url');
   $variables['footer_text'] = check_markup(theme_get_setting('footer_text_area'), 'filtered_html');
   $variables['display_social'] = theme_get_setting('display_social_icons');
   $variables['display_header_menu'] = theme_get_setting('secondary_menu');
-  $variables['tertiary_logo_link'] = check_url(theme_get_setting('tertiary_logo_link'));
-  // Manage image files uploaded through theme.
-  $fid = theme_get_setting('tertiary_logo');
-  // $variables['tertiary_logo_url'] = file_create_url(file_load($fid)->uri);
-  $variables['tertiary_logo_url'] = FALSE;
-  $variables['tertiary_logo'] = FALSE;
-  $variables['tertiary_logo_title'] = FALSE;
-  if (isset($fid)) {
-    if ($fid != 0) {
-      $variables['tertiary_logo_url'] = ($file = file_load($fid)) ? file_create_url($file->uri) : FALSE;
-      if ($variables['tertiary_logo_url'] != FALSE) {
-        $image = array(
-          'path' => $variables['tertiary_logo_url'],
-          'alt' => 'Logo',
-          'title' => '',
-          'attributes' => '',
-        );
-      }
-      if (($variables['tertiary_logo_url'] != FALSE) and ($variables['tertiary_logo_link'] != '')) {
-        $variables['tertiary_logo'] = '<h2 class="UT-tertiary-logo">' .
-        l(theme_image($image), $variables['tertiary_logo_link'], array('html' => TRUE, 'external' => TRUE)) . '</h2>';
-        $variables['tertiary_logo_title'] = theme_get_setting('tertiary_logo_title');
-      }
-      elseif (isset($variables['tertiary_logo_url'])) {
-        $variables['tertiary_logo'] = '<h2 class="UT-tertiary-logo">' . theme_image($image) . '</h2>';
-      }
-    }
-  }
   $variables['newsletter_exists'] = theme_get_setting('newsletter_exists');
   $variables['newsletter_url'] = check_url(theme_get_setting('newsletter_url'));
-  $variables['hide_homepage_title'] = '';
-  if (drupal_is_front_page()) {
-    $variables['hide_homepage_title'] = 'hiddenText';
-    drupal_add_css('.UT-page { margin-top:50px;}', 'inline');
+  $variables['parent_link_title'] = theme_get_setting('parent_link_title');
+  $variables['parent_link'] = theme_get_setting('parent_link');
+  $variables['parent_entity'] = FALSE;
+  if ($variables['parent_link_title'] != '' && $variables['parent_link'] != '') {
+    $variables['parent_entity'] = l($variables['parent_link_title'], $variables['parent_link'], array(
+      'html' => TRUE,
+      'external' => TRUE,
+      'attributes' => array('class' => 'parent_link')));
   }
 
   if (variable_get('utexas_google_tag_manager_gtm_verification', '') != '') {
@@ -786,6 +747,8 @@ function forty_acres_preprocess_page(&$variables, $hook) {
     $variables['size_content_region'] = 'medium-8 large-9';
   }
 
+  // Add css if user selects Tall logo option in theme settings.
+  $variables['logo_height'] = theme_get_setting('logo_height');
 }
 
 /**

@@ -5,14 +5,6 @@
 	&.no-bottom {
 		border-bottom: none;
 	}
-
-	// &.container{
-	// 	@include respond(small){
-	// 		padding-left: 0px;
-	// 		padding-right: 0px;
-	// 	}
-	// }
-	
 }
 
 .top-theme-2{
@@ -20,7 +12,6 @@
 	border-bottom: 0px;
 	padding-bottom: 0px;
 }
-
 
 .container-top{
 	.ct--sidebar-events, .ct--sidebar-news{

@@ -1,9 +1,5 @@
 // featured highlight field relies on highlight.scss styles
 .field_utexas_featured_highlight{
-	@include respond(medium){
-		margin-bottom: 20px;
-	}
-
 	// Color Themes
 	.dark{
 		background-color: #6a6361;

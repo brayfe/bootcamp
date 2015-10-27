@@ -14,9 +14,6 @@
       margin-bottom: 0px;
       border-bottom: 0px;
     }
-    // .tabs .tab-title a{
-    //  border-left: 0px;
-    // }
     .tabs-content > .content.active{
       padding-top: 0px;
     }
@@ -69,7 +66,6 @@ table.tablesaw thead th,
 table.tablesaw thead td {
   color: #444;
   font-size: .9em;
-  font-family: $opensans;
 }
 
 .tablesaw th,
@@ -108,8 +104,7 @@ table.tablesaw thead td {
 }
 
 .tablesaw thead tr:first-child th {
-  font-weight: 600;
-  font-family: $opensans;
+  font-weight: 700;
 }
 
 /* Table rows have a gray bottom stroke by default */
