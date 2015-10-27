@@ -1,8 +1,4 @@
 .field_utexas_promo_units {
-	margin-bottom: 20px;
-	@include respond(medium) {
-		margin-bottom: 40px;
-	}
 	.cta-wrapper .cta-link {
 		padding: 0;
 	}
@@ -88,9 +84,6 @@
     line-height:1.625rem;
     margin:0 0 6px;
   }
-}
-.utexas-promo-field .promo-copy {
-  font-family:CharisSILW,serif;
 }
 .utexas-promo-field .promo-copy p {
   margin:0;

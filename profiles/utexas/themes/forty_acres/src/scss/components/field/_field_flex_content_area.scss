@@ -2,7 +2,6 @@
 // Base styles for Flex Content Areas. Used throughout UT Core.
 // =======
 .utexas-flex-content {
-  margin-bottom: 20px;
 
   .utexas-flex-content-area-image-wrapper {
     .utexas-flex-content-area-image {
@@ -21,7 +20,7 @@
     font-size: rem-calc(17px);
     line-height: rem-calc(22px);
     margin: 0 0 8px;
-    font-weight: 600;
+    font-weight: 700;
 
     @include respond(small-only) {
       padding: 0 5px;
@@ -39,7 +38,6 @@
 
   .utexas-flex-content-area-copy {
     font : {
-      family: $charis;
       size: rem-calc(15px);
     }
     line-height: rem-calc(22px);

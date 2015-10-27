@@ -1,9 +1,4 @@
 .field_wysiwyg_a, .field_wysiwyg_b{
-	margin: 0 0 20px 0;
-
-	@include respond(medium){
-		margin: 0 0 40px 0;
-	}
 
 	@include respond(small-only){
 		padding: 0 5px;
@@ -11,7 +6,6 @@
 
 	li, ol{
 		color: $bodyCopy;
-		font-family: $charis;
 		font-size: rem-calc(16);
 		line-height: rem-calc(24);
 		margin: 0;
@@ -31,3 +25,20 @@
 	padding:20px;
 }
 
+.sidebar-content {
+	.field_wysiwyg_a, .field_wysiwyg_b {
+		ol, ul, li {
+			color: #474541;
+			font-size: rem-calc(15);
+			line-height: rem-calc(22);
+		}
+	}
+}
+
+.container.container-bottom.accent {
+	.field_wysiwyg_a, .field_wysiwyg_b {
+		a {
+			color: #A04400;
+		}
+	}	
+}

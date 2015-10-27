@@ -53,7 +53,7 @@
 		
 		label{
 			display: block;
-			font-weight: 600;
+			font-weight: 700;
 			font-size: rem-calc(14);
 			margin-right: 20px;
 
@@ -127,7 +127,7 @@
 			line-height: rem-calc(19);
 			margin: 18px 0 12px 0;
 			color: #382F2D;
-			font-weight: 600;
+			font-weight: 700;
 
 			@include respond(small-only){
 				padding: 0 5px;
@@ -146,7 +146,6 @@
 			color: $lightGreyText;
 		}
 		.professor{
-			font-family: $opensans;
 			&:before{
 				content: " • ";
 			}
@@ -165,7 +164,6 @@
 		}
 		
 		p{
-			font-family: $charis;
 			font-size: rem-calc(16);
 			line-height: rem-calc(24);
 			margin: 0 5px rem-calc(20) 5px;

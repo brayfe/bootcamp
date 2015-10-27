@@ -24,7 +24,7 @@
 		margin: 0 -1px;
 		padding: 5px 10px;
 		width: 100.8%;
-		font-weight: 600;
+		font-weight: 700;
 
 		@include respond(medium){
 			padding: 5px 15px;
@@ -50,7 +50,7 @@
 			color: #373737;
 			margin: 0 -1px;
 			width: 100.8%;
-			font-weight: 600;
+			font-weight: 700;
 
 			a{
 				color: #373737
@@ -60,7 +60,6 @@
 		span{
 			color: #6a6a6a;
 			display: block;
-			font-family: CharisSILW, serif;
 			font-size: 0.875rem;
 			font-style: italic;
 			font-weight: 400;
@@ -71,7 +70,6 @@
 
 
 	p{
-		font-family: $charis;
 		margin: 0 0 10px 0;
 		color: #474541;
 		font-size: rem-calc(15);
@@ -81,7 +79,6 @@
 	.post-date{
 		color: #6a6a6a;
 		font-style: italic;
-		font-family: $charis;
 		margin: 18px 0 0px 0;
 		font-size: rem-calc(14);
 		line-height: rem-calc(16);

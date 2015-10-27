@@ -1,9 +1,5 @@
 
 .field_utexas_call_to_action {
-  margin-bottom:20px;
-  @include respond(medium){
-    margin-bottom:40px;
-  }
   a.cta{
     margin-bottom:0;
   }

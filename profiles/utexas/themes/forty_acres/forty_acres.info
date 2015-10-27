@@ -1,11 +1,13 @@
 name        = Forty Acres theme
 description = Theme for the University of Texas at Austin site.
 core        = 7.x
+version     = 1.0
 php         = DRUPAL_MINIMUM_PHP
 
 
 stylesheets[all][] = css/base.css
 stylesheets[all][] = css/forty_acres.css
+stylesheets[print][] = css/print.css
 
 scripts[] = js/custom.js
 
@@ -46,7 +48,6 @@ features[] = main_menu
 features[] = secondary_menu
 
 settings[secondary_menu] = 'social_links'
-settings[main_menu_font] = 'charissilw'
-settings[choose_secondary_logo] = 'large_horizontal_logo'
 settings[display_social_icons] = '1'
 settings[newsletter_exists] = '0'
+settings[logo_height] = 'short_logo'

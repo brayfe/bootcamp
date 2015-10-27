@@ -1,5 +1,4 @@
 .subnav{
-	font-family: $opensans;
 	margin-top: 10px;
 
 	@include respond(medium){
@@ -33,7 +32,7 @@
         }
 	}
 	li a {
-		font-weight: 500;
+		font-weight: 600;
 		font-size: rem-calc(14);
 		line-height: rem-calc(20);
 		padding: 7px 5px 7px 15px;
@@ -48,7 +47,6 @@
 		a{
 			text-decoration: none;
 			font-style: normal;
-			font-family: $opensans;
 		}
 
 		&:hover{

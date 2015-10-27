@@ -11,7 +11,6 @@ a{
 
 p{
 	color: $bodyCopy;
-	font-family: $charis;
 	font-size: rem-calc(16);
 	line-height: rem-calc(24);
 	margin: 0 0 rem-calc(20) 0;
@@ -22,15 +21,15 @@ p{
 }
 
 h2{
-	font-size: rem-calc(26);
-	line-height: rem-calc(32);
+	font-size: rem-calc(24);
+	line-height: rem-calc(30);
 	color: $burntGrey;
-	font-weight: 500;
+	font-weight: 600;
 	letter-spacing: rem-calc(-1);
 	margin: 0 0 12px 0;
 	@include respond(medium){
-		font-size: rem-calc(40);
-		line-height: rem-calc(46);
+		font-size: rem-calc(34);
+		line-height: rem-calc(40);
 	}
 }
 
@@ -38,7 +37,7 @@ h2{
 h3{
 	font-size: rem-calc(20);
 	line-height: rem-calc(26);
-	font-weight: 500;
+	font-weight: 600;
 	color: $burntGrey;
 	margin: 0 0 8px 0;
 	@include respond(medium){
@@ -50,7 +49,7 @@ h3{
 h4{
 	font-size: rem-calc(17);
 	line-height: rem-calc(24);
-	font-weight: 600;
+	font-weight: 700;
 	color: $burntGrey;
 	margin: 0 0 5px 0;
 	@include respond(medium){
@@ -60,7 +59,7 @@ h4{
 }
 
 strong{
-	font-weight: 600;
+	font-weight: 700;
 }
 
 em{
@@ -70,19 +69,17 @@ em{
 
 //Misc
 .body-copy{
-	font-family: $charis;
 	font-size: rem-calc(16);
 	line-height: rem-calc(24);
 	margin: 0 0 rem-calc(20) 0;
 	color: $bodyCopy;
 
 	strong{
-		font-weight: 600;
+		font-weight: 700;
 	}
 }
 
 .sans{
-	font-family: $opensans;
 	font-style: normal;
 }
 
@@ -111,7 +108,6 @@ em{
 		margin: 0 0 5px 0;
 		font-style: italic;
 		color: #6a6a6a;
-		font-family: $charis;
 		font-size: rem-calc(12);
 		line-height: rem-calc(15);
 		text-align: right;
@@ -125,15 +121,16 @@ em{
 
 
 // Global Headline classes
-.page-title{
+h1, .page-title{
 	color: $burntGrey;
-	font-size: rem-calc(34);
-	line-height: rem-calc(40);
+	font-size: rem-calc(32);
+	line-height: rem-calc(38);
 	letter-spacing: rem-calc(-1.5);
 	margin: 5px 0 20px 0;
+	font-weight: 600;
 	@include respond(medium){
-		font-size: rem-calc(64);
-		line-height: rem-calc(74);
+		font-size: rem-calc(48);
+		line-height: rem-calc(56);
 		margin: 10px 0 30px 0;
 	}
 	@include respond(small-only){
@@ -144,7 +141,7 @@ em{
 .post-headline {
 	font-size: rem-calc(17);
 	line-height: rem-calc(20);
-	font-weight: 600;
+	font-weight: 700;
 
 	@include respond(medium){
 		font-size: rem-calc(18);

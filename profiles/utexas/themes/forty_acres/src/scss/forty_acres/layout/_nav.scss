@@ -82,7 +82,6 @@
 		text-decoration: none;
 		text-transform: uppercase;
 		font-size: rem-calc(13);
-		font-family: $opensans;
 		font-weight: bold;
 		position: relative;
         width: 77%;
@@ -153,7 +152,6 @@
 		text-decoration: none;
 		text-transform: uppercase;
 		font-size: rem-calc(12);
-		font-family: $opensans;
 		font-weight: bold;
 		position: relative;
 
@@ -241,7 +239,6 @@
 	}
 
 	.sub-nav-link {
-		font-family: $opensans;
 		font-size: rem-calc(14);
 		line-height: rem-calc(18);
 		border-top: 1px solid $nav-constituents-bkg;
@@ -466,7 +463,6 @@
 		}
 
 		.name{
-			font-family: $opensans;
 			font-size: rem-calc(16);
 			margin-left: 10px;
 			&.hover{

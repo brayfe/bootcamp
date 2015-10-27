@@ -7,10 +7,6 @@
 	@include respond(small-only) {
 		height: auto !important;
 	}
-
-	@include respond(medium, large) {
-		padding: 0px 0 40px 0px;
-	}
 }
 
 .sidebar-content-news {

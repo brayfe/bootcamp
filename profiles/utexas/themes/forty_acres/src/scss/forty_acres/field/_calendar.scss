@@ -45,7 +45,6 @@
 			padding: 8px 10px;
 			background-color: $navy;
 			font-style: italic;
-			font-family: $opensans;
 			margin-bottom: 6px;
 
 			@include respond(medium){
@@ -84,7 +83,6 @@
 		}
 
 		.event-text {
-			font-family: $charis;
 			font-size: rem-calc(16);
 			line-height: rem-calc(24);
 			margin: 6px 0 20px 0;
@@ -98,7 +96,6 @@
 		}
 
 		.post-cta-link {
-			font-family: $charis;
 			font-style: italic;
 			font-size: 14px;
 
