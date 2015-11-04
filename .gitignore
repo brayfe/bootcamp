@@ -1,3 +1,7 @@
+# This is the .gitignore file for use by the UT Drupal Kit core development team.
+# It is not intended for use by end-users, and should be removed for packaging.
+# There is an "example.gitignore" file provided for end-users.
+
 # Ignore paths that contain user-generated content.
 /sites/*/files
 /sites/*/private
