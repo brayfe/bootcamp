@@ -174,6 +174,7 @@ function install_utexas_welcome($form, &$form_state, &$install_state) {
   // Set up the "Welcome" message.
   drupal_set_title(st('Welcome to the University of Texas at Austin\'s Drupal Distribution'));
   $message = '<p>' . st('The goal of the UT Drupal Distribution is to simplify deployment of University-affiliated websites while keeping all of the extensibility of Drupal\'s platform.') . '</p>';
+  $message .= '<div class="messages warning">' . st('<h2>Special note for UT Web users</h2> <p>If you are installing the UT Drupal Kit on the UT Web service, please see the ' . l(t('Installation on UT Web'), 'https://wikis.utexas.edu/display/UTDK/Installation+on+UT+Web')) . ' documentation for important configuration guidelines.</p></div>';
   $message .= '<p>' . st('It packages a custom login module which allows authentication via UTLogin, the centralized authentication service. This module requires configuration of a Web Policy Agent. For installation instructions, see ') . l(t('the ITS Website'), 'http://wwwtest.utexas.edu/its/help/ut-drupal-kit/2489') . '.</p>';
   $message .= '<p>' . st('It also includes a number of modules recommended by Drupal developers on campus, with the most common enabled upon installation. For a full list of the modules see ') . l(t('the ITS Website'), 'http://wwwtest.utexas.edu/its/help/ut-drupal-kit/2493') . '.</p>';
 
