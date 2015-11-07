@@ -51,6 +51,14 @@ function _utexas_beacon_prepare_data() {
   else {
     $site_data['page_builder_enabled'] = 'no';
   }
+  if (module_exists('utlogin')) {
+    $site_data['utlogin_enabled'] = 'yes';
+    $utlogin_info = system_get_info('module', 'utlogin');
+    $site_data['utlogin_version'] = $utlogin_info['version'];
+  }
+  else {
+    $site_data['utlogin_enabled'] = 'no';
+  }
   return $site_data;
 }
 
@@ -66,7 +74,7 @@ function utexas_beacon_cron() {
   // Only send email once a day.
   if (isset($cron_last) && date('ymd', $cron_last) != date('ymd', time())) {
     $email_params = array(
-      'subject' => 'Utexas distribution installed at ' . $site_data['base_url'] . ' phoning home.',
+      'subject' => 'Utexas distribution installed at ' . $site_data_for_mail['base_url'] . ' phoning home.',
     );
     foreach ($site_data_for_mail as $key => $value) {
       $email_params['body'] .= $key . ': ';
