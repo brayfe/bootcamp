@@ -41,15 +41,15 @@
  * @ingroup themeable.
  */
 ?>
-<?php if (file_exists($partials_dir . 'header.inc')): require_once $partials_dir . 'header.inc'; endif;  ?>
+<?php if (file_exists($partials_dir . 'header.tpl.php')): require_once $partials_dir . 'header.tpl.php'; endif;  ?>
 
 <div class="UT-page phase2_theme2" id="ut-page-content" role="main">
   <div class="container">
     <?php
-    if (file_exists($partials_dir . 'page-top.inc')) :
-      require_once $partials_dir . 'page-top.inc';
+    if (file_exists($partials_dir . 'page-top.tpl.php')) :
+      require_once $partials_dir . 'page-top.tpl.php';
     else :
-      require_once $utexas_templates_dir . '/page-top.inc';
+      require_once $utexas_templates_dir . '/page-top.tpl.php';
     endif;
     ?>
     <div class="row">
@@ -95,5 +95,5 @@
     </div>
   <?php endif; ?>
 
-  <?php if (file_exists($partials_dir . 'footer.inc')): require_once $partials_dir . 'footer.inc'; endif;  ?>
+  <?php if (file_exists($partials_dir . 'footer.tpl.php')): require_once $partials_dir . 'footer.tpl.php'; endif;  ?>
 </div>

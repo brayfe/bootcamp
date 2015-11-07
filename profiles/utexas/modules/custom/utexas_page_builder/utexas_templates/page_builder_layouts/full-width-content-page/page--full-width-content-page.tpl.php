@@ -41,20 +41,20 @@
  * @ingroup themeable.
  */
 ?>
-<?php if (file_exists($partials_dir . 'header.inc')): require_once $partials_dir . 'header.inc'; endif;  ?>
+<?php if (file_exists($partials_dir . 'header.tpl.php')): require_once $partials_dir . 'header.tpl.php'; endif;  ?>
 
-<div class="UT-page" id="ut-page-content" role="main">
+<div class="UT-page full-width-content-page" id="ut-page-content" role="main">
   <div class="container container-top search">
     <?php
-      if (file_exists($partials_dir . 'breadcrumbs.inc')) :
-        require_once $partials_dir . 'breadcrumbs.inc';
+      if (file_exists($partials_dir . 'breadcrumbs.tpl.php')) :
+        require_once $partials_dir . 'breadcrumbs.tpl.php';
       else :
-        require_once $utexas_templates_dir . '/breadcrumbs.inc';
+        require_once $utexas_templates_dir . '/breadcrumbs.tpl.php';
       endif;
-      if (file_exists($partials_dir . 'page-top.inc')) :
-        require_once $partials_dir . 'page-top.inc';
+      if (file_exists($partials_dir . 'page-top.tpl.php')) :
+        require_once $partials_dir . 'page-top.tpl.php';
       else :
-        require_once $utexas_templates_dir . '/page-top.inc';
+        require_once $utexas_templates_dir . '/page-top.tpl.php';
       endif;
     ?>
     <?php if (isset($page['content_top'])): ?>
@@ -62,7 +62,7 @@
         <div class="column medium-centered medium-10 large-9">
           <div class="row">
             <div class="column small-12">
-              <h1 class="page-title"><?php print $title; ?></h1>
+              <h1 class="page-title hiddenText"><?php print $title; ?></h1>
             </div>
           </div>
           <?php print render($page['content_top']); ?>
@@ -83,5 +83,5 @@
     <?php endif; ?>
   </div>
 
-  <?php if (file_exists($partials_dir . 'footer.inc')): require_once $partials_dir . 'footer.inc'; endif;  ?>
+  <?php if (file_exists($partials_dir . 'footer.tpl.php')): require_once $partials_dir . 'footer.tpl.php'; endif;  ?>
 </div>

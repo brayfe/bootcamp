@@ -21,7 +21,7 @@ if ($copy != FALSE) :
   echo '<div class="body-copy"><p>' . $copy . '</p></div>';
 endif;
 if ($links != FALSE) :
-  if ($page_template == 'P2H2') :
+  if ($page_template == 'Landing Page Template 2') :
     echo '<div class="row">';
     print render($links);
     echo '</div>';

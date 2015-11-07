@@ -22,25 +22,27 @@
 ?>
 
 <div class="container container-highlight field_utexas_featured_highlight <?php print $highlight_style; ?> <?php print $has_image; ?>">
-  <div class="row">
-    <div class="column small-12">
-      <?php
-        if ($image != '') :
-          echo '<div class="highlight-image template-highlight">';
-          print render($image);
-          echo '</div>';
-        endif;
-        if ($date) :
-          echo '<div class="highlight-date">' . $date . '</div>';
-        endif;
-      ?>
-      <div class="featured-highlight-content">
-        <h2 class="highlight-headline"><?php print $headline; ?></h2>
-        <div class="highlight-text">
-          <p>
-          <?php print $copy; ?>
-          <?php print $read_more; ?>
-          </p>
+  <div class="container-highlight-table-row">
+    <div class="row">
+      <div class="column small-12">
+        <?php
+          if ($image != '') :
+            echo '<div class="highlight-image template-highlight">';
+            print render($image);
+            echo '</div>';
+          endif;
+        ?>
+        <div class="featured-highlight-content">
+          <?php
+            if ($date) :
+              echo '<div class="highlight-date">' . $date . '</div>';
+            endif;
+          ?>
+          <h2 class="highlight-headline"><?php print $headline; ?></h2>
+          <div class="highlight-text">           
+            <?php print $copy; ?>
+            <?php print $read_more; ?>           
+          </div>
         </div>
       </div>
     </div>

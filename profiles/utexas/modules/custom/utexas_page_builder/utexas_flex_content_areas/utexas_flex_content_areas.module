@@ -779,6 +779,9 @@ function template_preprocess_utexas_flex_content_area(&$variables) {
   if ($cta) {
     $headline = l($headline, $cta_link, array('html' => TRUE, 'attributes' => array('class' => array('headline-link'))));
   }
+  if ($cta && $image) {
+    $image = l($image, $cta_link, array('html' => TRUE));
+  }
 
   // Reset variables.
   $variables += array(
