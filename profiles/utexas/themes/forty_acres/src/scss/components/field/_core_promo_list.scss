@@ -167,4 +167,14 @@
     padding-left: 20px!important;
     padding-right: 20px!important;
   }
+}  
+.fieldblock_field_utexas_promo_list {
+  margin-bottom: 5px!important;
+  @include respond(medium) {
+    margin-bottom: 20px!important;
+  }
+}
+.featured-highlight-page-template .container.container-top .field_utexas_promo_list .two-column .promo-list-li {
+    padding-left: 0!important;
+    padding-right: 0!important;
 }

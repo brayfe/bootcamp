@@ -41,11 +41,11 @@
  */
 ?>
 <?php global $base_root; ?>
-<?php require_once $partials_dir . 'header.inc'; ?>
+<?php require_once $partials_dir . 'header.tpl.php'; ?>
 
 <div class="UT-page page-404" id="ut-page-content" role="main">
-  <?php require_once $partials_dir . 'timely-announcement.inc'; ?>
-  <?php require_once $partials_dir . 'page-top.inc'; ?>
+  <?php require_once $partials_dir . 'timely-announcement.tpl.php'; ?>
+  <?php require_once $partials_dir . 'page-top.tpl.php'; ?>
 
   <div class="container container-top">
     <div class="row">
@@ -77,5 +77,5 @@
     </div>
   </div>
 
-  <?php require_once $partials_dir . 'footer.inc'; ?>
+  <?php require_once $partials_dir . 'footer.tpl.php'; ?>
 </div>

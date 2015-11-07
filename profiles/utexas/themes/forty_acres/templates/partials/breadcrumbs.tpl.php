@@ -7,8 +7,6 @@
  *  - $breadcrumb: The rendered breadcrumb for the page.
  */
 
-?>
-  <?php
 if ($breadcrumb) :
   ?>
   <div class="row">

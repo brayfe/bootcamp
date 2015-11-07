@@ -6,6 +6,9 @@
 	@include respond(medium){
 		padding: 60px 5px;
 	}
+	@include respond(large) {
+		padding: 60px 10px;
+	}
 
 	.highlight-date {
 		font-size: rem-calc(13);

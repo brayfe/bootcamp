@@ -67,6 +67,9 @@
 	}
 	.utexas-flex-content .utexas-flex-content-area-links ul li {
 		line-height:1.375rem;
+        &.last {
+            padding-bottom: 0;
+        }
 	}
 	.utexas-flex-content .utexas-flex-content-cta {
 		margin-top:6px;
@@ -174,7 +177,7 @@
           background-color: #f5f4f0;
           list-style-type: none;
           margin: 0;
-          padding: 0 10px 20px 10px;
+          padding: 0 10px 10px 10px;
 
           @include respond(medium){
             padding: 0 15px 15px 15px;
@@ -193,6 +196,10 @@
           @include respond(large){
             font-size: rem-calc(15);
             line-height: rem-calc(19);
+          }
+          &.last {
+            margin-bottom: 0;
+            padding-bottom: 0;
           }
         }
 
@@ -217,7 +224,7 @@
 }
 // phase2 theme2 style for 3 column pillar
 .region.region-content-top-three-pillars {
-  .fieldblock_field_utexas_flex_content_area_a, .fieldblock_field_utexas_flex_content_area_b{
+  .fieldblock_field_utexas_flex_content_area_a, .fieldblock_field_utexas_flex_content_area_b {
     .utexas-flex-content{
       h3.utexas-flex-content-area-headline {
         font-family: open_sans;
@@ -248,9 +255,28 @@
         margin: 25px 0;
       }
       .utexas-flex-content-cta {
-        display: inline;
+        display: inline-block;
         width: auto;
       }
     }
   }
+}
+// adjust bottom margin
+.block-fieldblock {
+    &.fieldblock_field_utexas_flex_content_area_a, .fieldblock_field_utexas_flex_content_area_b {
+        margin-bottom: 5px!important;
+        @include respond(medium) {
+            margin-bottom: 30px!important;
+        }
+    }
+}
+.region.region-content-top-four-pillars {
+    .block-fieldblock {
+        &.fieldblock_field_utexas_flex_content_area_a, .fieldblock_field_utexas_flex_content_area_b {
+            margin-bottom: 20px!important;
+            @include respond(medium) {
+                margin-bottom: 40px!important;
+            }
+        }
+    }
 }

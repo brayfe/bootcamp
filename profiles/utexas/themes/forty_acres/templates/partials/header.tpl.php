@@ -31,9 +31,7 @@
                <a href="<?php print $base_path; ?>" class="main-logo"><span class="hiddenText"><?php print $site_name; ?></span><img class="main_logo" src="<?php print $logo; ?>" alt="main_logo">
                </a>
             </div>
-  <?php
-endif;
-  ?>
+          <?php endif; ?>
         </div>
       </div>
       <a href="#" class="UT-nav-hamburger icon-menu" id="menu-icon"><span class="hiddenText">Menu</span></a>
@@ -54,67 +52,46 @@ endif;
                   <h2 class="UT-parent-link">
                     <?php print $parent_entity; ?>
                   </h2>
-  <?php
-endif;
-  ?>
+                <?php endif; ?>
               </div>
               <div class="hide-for-large-up">
                 <div class="parent-links" id="parents">
                   <a href="http://www.utexas.edu">The University of Texas at Austin</a>
-                  <?php if($parent_entity) : ?>
-                      <?php print $parent_entity; ?>
-  <?php
-endif;
-  ?>
+                  <?php if($parent_entity) :
+                     print $parent_entity;
+                  endif; ?>
                 </div>
-
-  <?php
-if ($site_name) :
-  ?>
+                <?php if ($site_name) : ?>
                   <a href="<?php print $base_path; ?>" class="current-directory" id="show-parents"><span class="name"><?php print $site_name; ?></span><span class="toggle"></span></a>
-  <?php
-else :
-  ?>
+                <?php else : ?>
                   <a href="<?php print $base_path; ?>" class="current-directory" id="show-parents"><span class="name">Home</span><span class="toggle"></span></a>
-  <?php
-endif;
-  ?>
+                <?php endif; ?>
               </div>
-
               <div class="nav-item-search show-for-large-up">
-  <?php
-if ($display_header_menu == 'header_menu') {
-  print render($page['menus']['header']);
-}
-else {
-  $block = block_load('utexas_partials_social_links', 'social_links_block');
-  $render_array = _block_get_renderable_array(_block_render_blocks(array($block)));
-  $output = $render_array['utexas_partials_social_links_social_links_block']["content"]["#markup"];
-  print $output;
-}
-  ?>
-<?php
-if (isset($header_search_cse)) :
-  print render($header_search_cse);
-endif;
-?>
+                <?php if ($display_header_menu == 'header_menu') :
+                  print render($page['menus']['header']);
+                endif; ?>
+                <?php if ($display_header_menu == 'social_links') :
+                  $block = block_load('utexas_partials_social_links', 'social_links_block');
+                  $render_array = _block_get_renderable_array(_block_render_blocks(array($block)));
+                  $output = $render_array['utexas_partials_social_links_social_links_block']["content"]["#markup"];
+                   print $output;
+                endif; ?>
+                <?php if (isset($header_search_cse) && ($search_bar_display == TRUE)) :
+                  print render($header_search_cse);
+                endif; ?>
               </div>
-
               <ul class="topnav-links hide-for-large-up">
                 <li class="nav-item nav-item-search">
-<?php
-if (isset($header_search_cse)) :
-  print render($header_search_cse);
-endif;
-?>
+                  <?php if (isset($header_search_cse)&& ($search_bar_display == TRUE)) :
+                    print render($header_search_cse);
+                  endif; ?>
                 </li>
               </ul>
-
             </div>
           </div>
         </div>
       </div> <!-- container-topnav -->
-
       <div class="container container-nav container-nav-phase2">
         <div class="row">
           <div class="column small-12">
@@ -124,7 +101,5 @@ endif;
           </div>
         </div>
       </div> <!-- container-nav-phase2 -->
-
     </div> <!-- nav-wrapper -->
-
   </header><!-- /header -->

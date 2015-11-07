@@ -40,20 +40,20 @@
  * @ingroup themeable.
  */
 ?>
-<?php require_once $partials_dir . 'header.inc'; ?>
+<?php require_once $partials_dir . 'header.tpl.php'; ?>
 
 <div class="UT-page" id="ut-page-content" role="main">
   <div class="container container-top">
     <?php
-    if (file_exists($partials_dir . 'breadcrumbs.inc')) :
-      require_once $partials_dir . 'breadcrumbs.inc';
+    if (file_exists($partials_dir . 'breadcrumbs.tpl.php')) :
+      require_once $partials_dir . 'breadcrumbs.tpl.php';
     else :
-      require_once '../partials/breadcrumbs.inc';
+      require_once '../partials/breadcrumbs.tpl.php';
     endif;
-    if (file_exists($partials_dir . 'page-top.inc')) :
-      require_once $partials_dir . 'page-top.inc';
+    if (file_exists($partials_dir . 'page-top.tpl.php')) :
+      require_once $partials_dir . 'page-top.tpl.php';
     else :
-      require_once '../partials/page-top.inc';
+      require_once '../partials/page-top.tpl.php';
     endif;
     ?>
     <div class="row">
@@ -93,5 +93,5 @@
       </div>
     <?php endif; ?>
   </div>
-    <?php require_once $partials_dir . 'footer.inc'; ?>
+    <?php require_once $partials_dir . 'footer.tpl.php'; ?>
 </div>

@@ -40,11 +40,11 @@
  * @ingroup themeable.
  */
 ?>
-<?php require_once $partials_dir . 'header.inc'; ?>
+<?php require_once $partials_dir . 'header.tpl.php'; ?>
 
 <div class="UT-page" id="ut-page-content" role="main">
-  <?php require_once $partials_dir . 'timely-announcement.inc'; ?>
-  <?php require_once $partials_dir . 'page-top.inc'; ?>
+  <?php require_once $partials_dir . 'timely-announcement.tpl.php'; ?>
+  <?php require_once $partials_dir . 'page-top.tpl.php'; ?>
 
   <?php if($page['content_top']):?>
     <div class="container container-pillars">
@@ -70,5 +70,5 @@
     </div>
   <?php endif; ?>
 
-  <?php require_once $partials_dir . 'footer.inc'; ?>
+  <?php require_once $partials_dir . 'footer.tpl.php'; ?>
 </div>
