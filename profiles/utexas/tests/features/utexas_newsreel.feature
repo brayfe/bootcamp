@@ -36,7 +36,7 @@ Scenario: User can customize and place a UT Newsreel
   And I click "UT Newsreel" in the "vertical_tabs" region
   And I fill in "Headline Text" for "edit-field-utexas-newsreel-und-0-headline"
   And I select "7" from "edit-field-utexas-newsreel-und-0-count"
-  And I select "Science and Technology" from "edit-field-utexas-newsreel-und-0-category"
+  And I check the box "edit-field-utexas-newsreel-und-0-category-science-and-technology"
   And I uncheck the box "Include article teaser text?"
   And I fill in "View all Test" for "edit-field-utexas-newsreel-und-0-view-all"
   And I press the "Save" button
