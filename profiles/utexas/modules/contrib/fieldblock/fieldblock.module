@@ -76,7 +76,12 @@ function fieldblock_block_info() {
   foreach ($fieldblocks as $fieldblock_id => $description) {
     $blocks[$fieldblock_id] = array(
       'info' => $description,
-      'cache' => DRUPAL_CACHE_PER_PAGE,
+      // The block can not be cached, because the content of it (ie. the content
+      // of the field displayed in it) may vary based on whatever criteria the
+      // fieldblock.module is unaware of. Eg. the same field might be displayed
+      // differently for different users, for different roles, for different
+      // pages, etc.
+      'cache' => DRUPAL_NO_CACHE,
     );
   }
 
