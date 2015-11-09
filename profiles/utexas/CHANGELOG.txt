@@ -1,0 +1,3 @@
+Managed CMS 7.x-2.0, xxxx-xx-xx (development version)
+-----------------------------------------------------
+- First release with the Forty Acres theme and Page Builder module
