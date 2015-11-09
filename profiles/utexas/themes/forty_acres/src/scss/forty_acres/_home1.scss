@@ -196,18 +196,11 @@ header{
 		}
 	}
 
-	//// To
 	.container-top{
 		background-color: #fff;
-		padding:0;
-	/*	padding: 20px 5px;
-		@include respond(medium){
-			padding: 40px 5px;
-		}
-		@include respond(large){
-			padding: 40px 10px;
-		}
-	*/
+//		@include respond(small-only){
+//			padding: 0;
+//		}
 		.promo-unit{
 			@include respond(small-only){
 				.cta-link{

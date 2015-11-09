@@ -37,10 +37,10 @@
       <?php if ($headline != FALSE): ?>
         <h3 class="promo-headline"><?php print $headline; ?></h3>
       <?php endif; ?>
-      <div class="promo-copy"><p>
+      <div class="promo-copy">
       <?php if ($copy != FALSE): ?>
        <?php print $copy; ?>
       <?php endif; ?>
-      </p></div>
+      </div>
     </div>
 </div>

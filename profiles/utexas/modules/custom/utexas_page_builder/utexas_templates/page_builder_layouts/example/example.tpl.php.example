@@ -42,23 +42,23 @@
  */
 
 ?>
-<?php if (file_exists($partials_dir . 'header.inc')) { require_once($partials_dir . 'header.inc'); } ?>
+<?php if (file_exists($partials_dir . 'header.tpl.php')) { require_once($partials_dir . 'header.tpl.php'); } ?>
 <div class="UT-page" id="ut-page-content" role="main">
   <div class="container container-top">
     <?php
       // Look in theme for these partials. If not present, use the partials
       // defined by the "UTexas Templates" module.
-      if (file_exists($partials_dir . 'breadcrumbs.inc')) {
-        require_once($partials_dir . 'breadcrumbs.inc');
+      if (file_exists($partials_dir . 'breadcrumbs.tpl.php')) {
+        require_once($partials_dir . 'breadcrumbs.tpl.php');
       }
       else {
-        require_once($utexas_templates_dir . 'breadcrumbs.inc');
+        require_once($utexas_templates_dir . 'breadcrumbs.tpl.php');
       }
-      if (file_exists($partials_dir . 'page-top.inc')) {
-        require_once($partials_dir . 'page-top.inc');
+      if (file_exists($partials_dir . 'page-top.tpl.php')) {
+        require_once($partials_dir . 'page-top.tpl.php');
       }
       else {
-        require_once($utexas_templates_dir . 'page-top.inc');
+        require_once($utexas_templates_dir . 'page-top.tpl.php');
       }
     ?>
     <div class="row">
@@ -109,5 +109,5 @@
       </div>
     </div>
   </div>
-  <?php if (file_exists($partials_dir . 'footer.inc')): require_once($partials_dir . 'footer.inc'); endif;  ?>
+  <?php if (file_exists($partials_dir . 'footer.tpl.php')): require_once($partials_dir . 'footer.tpl.php'); endif;  ?>
 </div>

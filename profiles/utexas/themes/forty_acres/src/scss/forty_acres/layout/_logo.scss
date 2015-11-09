@@ -59,16 +59,16 @@
         @include respond(large) {
           margin-top: -3px;
           top: inherit;
-          transform: unset;
+          transform: none;
         }
     }
 
     @media (max-width: 500px) {
       .p2-logo, .main-logo {
-        width: 100%;
+        width: 90%;
       }
       .main_logo {
-        max-width: 80%;
+        max-width: 90%;
       }
     }
 

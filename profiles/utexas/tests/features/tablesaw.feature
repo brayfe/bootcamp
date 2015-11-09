@@ -20,7 +20,7 @@ Scenario: User adds table to page
   # Add UT Newsreel #
   And I click on the link "UT Newsreel" in the ".vertical-tabs-list" region
   And I fill in "Headline Text" for "edit-field-utexas-newsreel-und-0-headline"
-  And I select "Science and Technology" from "edit-field-utexas-newsreel-und-0-category"
+  And I check the box "edit-field-utexas-newsreel-und-0-category-science-and-technology"
   And I fill in "View all Test" for "edit-field-utexas-newsreel-und-0-view-all"
   And I press the "Save" button
   # Assign fields to regions #

@@ -2221,6 +2221,10 @@ span.form-required {
 	margin-bottom: 25px; /* Landscape phones and down */
 }
 
+.sidebar-content .block-fieldblock:last-child {
+	margin-bottom: 40px;
+}
+
 .container.container-bottom {
 	padding-top: 25px; /* Landscape phones and down */
 }
@@ -2234,6 +2238,11 @@ span.form-required {
 .views-table tr.even,
 .views-table tr.odd {
 	background: #fff;
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -3115,7 +3124,8 @@ ul.pagination li.current a:hover {
 .quick-links-cta,
 .call-to-action-cta,
 .newsletter .cta.sidebar-cta,
-.sidebar-cta {
+.sidebar-cta,
+.hero-cta {
 	text-decoration: none;
 	display: inline-block;
 }
@@ -3126,7 +3136,8 @@ ul.pagination li.current a:hover {
 .quick-links-cta:after,
 .call-to-action-cta:after,
 .newsletter .cta.sidebar-cta:after,
-.sidebar-cta:after {
+.sidebar-cta:after,
+.hero-cta:after {
 	display: inline;
 	zoom: 1;
 }
@@ -3137,7 +3148,8 @@ ul.pagination li.current a:hover {
 .quick-links-cta:hover,
 .call-to-action-cta:hover,
 .newsletter .cta.sidebar-cta:hover,
-.sidebar-cta:hover {
+.sidebar-cta:hover,
+.hero-cta:hover {
 	text-decoration: none;
 }
 
@@ -3147,7 +3159,8 @@ ul.pagination li.current a:hover {
 .quick-links-cta span:hover,
 .call-to-action-cta span:hover,
 .newsletter .cta.sidebar-cta span:hover,
-.sidebar-cta span:hover {
+.sidebar-cta span:hover,
+.hero-cta span:hover {
 	text-decoration: underline;
 }
 

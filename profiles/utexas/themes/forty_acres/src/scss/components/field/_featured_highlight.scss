@@ -34,46 +34,55 @@
       }
     }
   .has_image {
-    .featured-highlight-content, .highlight-date {
+    .featured-highlight-content {
       padding-left: 0;
       text-align: center;
+      display: block;
       @include respond(medium){
-        padding-left: 330px;
+        padding-left: 30px;
         text-align: left;
+        display: table-cell;
+        vertical-align: middle;
       }
     }
   }
   .no_image {
     .featured-highlight-content {
       max-width: 90%;
-      margin: auto;
+      margin: auto;     
       @include respond(medium) {
         max-width: 80%;
+
       }
     }
   }
-  a.highlight-headline {
+  h2.highlight-headline {
+    margin-top: 0;
+  }
+  .highlight-headline .highlight-headline {
+    margin-top: 0;
     @include respond(small-only) {
-      font-size: rem-calc(26);
-      line-height: rem-calc(24);
-      margin-top: 10px;
+      font-size: rem-calc(30);
+      line-height: rem-calc(36);
     }
   }
 }
 
 .highlight-image.template-highlight{
-  width: 100%;
+  display: block;
   padding-bottom: 20px;
   @include respond(medium){
-    max-width: 310px;
-    float: left;
-    margin-right: 20px;
-  }
-
-  @include respond(large){
+    padding-bottom: 0;
+    display: table-cell;
+    vertical-align: middle;
     max-width: 330px;
-  }
+    min-width: 330px;
 
+  }
+  @media (min-width: 641px) and (max-width: 860px){
+    max-width: 250px;
+    min-width: 250px;
+  }
   @include respond(small-only){
     width: 80%;
     height: auto;
@@ -81,9 +90,16 @@
   }
   .flex-video {
     padding-bottom: 45.5%;
+    margin-bottom: 0;
     @include respond(medium){
       padding-bottom: 48.5%;
     }
   }
 }
-
+.container.container-highlight.field_utexas_featured_highlight {
+  display: table;
+  width: 100%;
+  .container-highlight-table-row {
+    display:table-row;
+  }   
+}

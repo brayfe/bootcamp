@@ -256,7 +256,7 @@ function template_preprocess_utexas_newsreel(&$variables) {
       $all_types = FALSE;
     }
   }
-  $types = (!$all_types) ? implode('+', $valid_types) : 'all';
+  $types = (!$all_types) ? implode(',', $valid_types) : 'all';
 
   // Prepare concatenated list of primary categories.
   $categories = unserialize($variables['item']['category']);
@@ -270,7 +270,7 @@ function template_preprocess_utexas_newsreel(&$variables) {
       $all_categories = FALSE;
     }
   }
-  $categories = (!$all_categories) ? implode('+', $valid_categories) : 'all';
+  $categories = (!$all_categories) ? implode(',', $valid_categories) : 'all';
 
   // Prepare concatenated list of tags.
   $tag_list = $variables['item']['tag'] != '' ? $variables['item']['tag'] : 'all';

@@ -547,7 +547,7 @@ function utexas_templates_install() {
     ),
     array(
       'name' => 'Featured Highlight',
-      'description' => 'For pages like "Header with Content &amp; Sidebars", where a story or other item is promoted.',
+      'description' => 'For pages like "Header with Content & Sidebars", where a story or other item is promoted.',
       'additional_settings' => array(
         'template_file' => 'page--featured-highlight.tpl.php',
         'fields' => array(
@@ -783,7 +783,7 @@ function utexas_templates_install() {
     ),
     array(
       'name' => 'Full Width Content Page',
-      'description' => 'Ideal for news and information with a title that does not require sidebar items.',
+      'description' => 'Ideal for news and information without a title that does not require sidebar items.',
       'additional_settings' => array(
         'template_file' => 'page--full-width-content-page.tpl.php',
         'fields' => array(
@@ -998,19 +998,19 @@ function utexas_templates_install() {
           'field_utexas_contact_info' => array(
             'machine_name' => 'field_utexas_contact_info',
             '_weight' => -3,
-            'enabled' => TRUE,
+            'enabled' => FALSE,
             'locked' => FALSE,
           ),
           'field_utexas_call_to_action' => array(
             'machine_name' => 'field_utexas_call_to_action',
             '_weight' => -1,
-            'enabled' => TRUE,
+            'enabled' => FALSE,
             'locked' => FALSE,
           ),
           'field_utexas_newsreel' => array(
             'machine_name' => 'field_utexas_newsreel',
             '_weight' => 0,
-            'enabled' => TRUE,
+            'enabled' => FALSE,
             'locked' => FALSE,
           ),
         ),
