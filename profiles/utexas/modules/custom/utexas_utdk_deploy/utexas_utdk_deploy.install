@@ -1,0 +1,20 @@
+<?php
+/**
+ * @file
+ * Install file for UT Drupal Kit code deployment.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function utexas_utdk_deploy_install() {
+  // Set the initial value for the schema version so we can run updates after
+  // install.
+  drupal_set_installed_schema_version('utexas_utdk_deploy', 7100);
+}
+
+/**
+ * Implements hook_update_N().
+ */
+/*function utexas_utdk_deploy_update_7101() {
+}*/
