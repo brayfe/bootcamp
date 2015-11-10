@@ -81,5 +81,6 @@ dependencies[] = utexas_fonts
 dependencies[] = utexas_google_cse
 dependencies[] = utexas_google_tag_manager
 dependencies[] = utexas_tablesaw_filter
+dependencies[] = utexas_utdk_deploy
 
 files[] = utexas.profile
