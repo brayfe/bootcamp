@@ -9,7 +9,7 @@ Feature: Social Links
 
 @javascript
 Scenario: User with correct permissions can add fields
-  Given I am logged in as a user with the "administrator" role
+  Given I am logged in as a user with the "Site Builder,Standard Page Editor" role
   And I set browser window size to "1200" x "900"
   When I go to "node/add/standard-page"
   And I fill in "test form" for "edit-title" in the "form_item_title" region

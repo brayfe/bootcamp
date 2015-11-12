@@ -25,21 +25,14 @@ source $script_path/config.sh
 # Get a timestamp for log naming
 now="$(date +%s)"
 
-if [ "$1" == "all" ] || [ "$1" == "noscreens" ] || [ "$1" == "screens" ] && [ "$2" == "mc" ] || [ "$2" == "utdk" ]; then
+if [ "$1" == "all" ] || [ "$1" == "noscreens" ] || [ "$1" == "screens" ]; then
 
-  # If noscreens or all argument was passed with the mc argument run the entire behat suite.
-  if [ "$1" == "all" ] || [ "$1" == "noscreens" ] && [ "$2"  == "mc" ]; then
-    # Run the full behat suite for the mcms code base - outputting to screen and logs
-    echo "Running behat test suite for mcms code base..."
+  # If noscreens argument was passed or no argument (all steps) given run the behat suite.
+  if [ "$1" == "all" ] || [ "$1" == "noscreens" ]; then
+    # Run the full behat suite - outputting to screen and logs
+    echo "Running behat test suite..."
     echo ===========================================================================
-    behat --config="$script_path/behat.yml" --tags '~@screenshots' | tee "$script_path/logs/behat-$now.log"
-    echo ===========================================================================
-  #
-  elif [ "$1" == "all" ] || [ "$1" == "noscreens" ] && [ "$2"  == "utdk" ]; then
-    # Run the behat suite for the UTDK code base - outputting to screen and logs
-    echo "Running limited behat test suite for the UTDK code base..."
-    echo ===========================================================================
-    behat --config="$script_path/behat.yml" --tags '~@screenshots&&~@faculty_profile' | tee "$script_path/logs/behat-$now.log"
+    behat --config="$script_path/behat.yml" --tags ~screenshots | tee "$script_path/logs/behat-$now.log"
     echo ===========================================================================
   fi
   
@@ -133,10 +126,7 @@ else
   # Only run when appropriate argument is passed.
   script=$(basename $0)
   echo "That $script option does not exist."
-  echo "Options:  $script screens mc"
-  echo "          $script noscreens mc"
-  echo "          $script all mc"
-  echo "          $script screens utdk"
-  echo "          $script noscreens utdk"
-  echo "          $script all utdk"
+  echo "Options:  $script screens"
+  echo "          $script noscreens"
+  echo "          $script all"
 fi

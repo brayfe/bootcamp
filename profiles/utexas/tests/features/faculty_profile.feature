@@ -1,6 +1,6 @@
 # features/faculty_profile.feature
 
-@api @javascript @faculty_profile
+@api @javascript
 
 Feature: Faculty Profile Content Type
   In order to feature faculty and staff

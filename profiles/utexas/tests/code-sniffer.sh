@@ -56,7 +56,7 @@ if [ -z "$1" -o "$1" == "modules" ] ; then
   # drush drupalcs ../modules/custom/utexas_google_tag_manager
   drush drupalcs ../modules/custom/utexas_menu
   # drush drupalcs ../modules/custom/utexas_page_builder
-  drush drupalcs ../modules/custom/utexas_social_accounts
+  drush drupalcs ../modules/custom/utexas_partials_social_links
   drush drupalcs ../modules/custom/utexas_tablesaw_filter
   drush drupalcs ../modules/custom/utexas_admin
   drush drupalcs ../modules/custom/utexas_beacon
