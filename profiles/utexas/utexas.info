@@ -1,12 +1,12 @@
 name = Utexas
-description = Install the University of Texas distribution.
+description = UT Drupal Kit installation profile
 version = "7.x-2.0-alpha2"
 core = 7.x
 php = 5.4
 
 ; The distribution_name property is used in the installer and other places as
 ; a label for the software being installed.
-distribution_name = Utexas
+distribution_name = UT Drupal Kit
 
 ; The exclusive flag auto-selects the profile during installation, if there
 ; are no other exclusive ones.
