@@ -190,7 +190,6 @@ function utexas_admin_library_alter(array &$javascript, $module) {
 
   // Only apply updates on non-admin and non-ajax paths.
   if (!(path_is_admin(current_path()) or current_path() == 'system/ajax') or $node_form) {
-    $path = drupal_get_path('module', 'utexas_admin') . '/js';
 
     if ($node_form) {
       // Include jQuery in the update.
@@ -198,6 +197,8 @@ function utexas_admin_library_alter(array &$javascript, $module) {
     }
 
     if ($module === 'system') {
+      $path = drupal_get_path('module', 'utexas_admin') . '/js';
+
       // Always add a new jquery_version array to ajaxPageState.
       // This is what we used to determine which version to use
       // for any ajax callback.
