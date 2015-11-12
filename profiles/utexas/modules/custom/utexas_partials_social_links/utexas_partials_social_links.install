@@ -1,0 +1,20 @@
+<?php
+/**
+ * @file
+ * Install file for Homepage Alerts module.
+ *
+ * Used to install a schema for the logging changes to homepage alerts.
+ */
+
+/**
+ * Implements hook_unininstall().
+ */
+function utexas_partials_social_links_enable() {
+  // Creating default variables for the social links.
+  variable_set('utexas_social_links_facebook', 'http://www.facebook.com/UTAustinTX');
+  variable_set('utexas_social_links_twitter', 'http://twitter.com/utaustin');
+  variable_set('utexas_social_links_instagram', 'https://instagram.com/utaustintx');
+  variable_set('utexas_social_links_linkedin', 'https://www.linkedin.com/edu/the-university-of-texas-at-austin-19518');
+  variable_set('utexas_social_links_youtube', 'http://www.youtube.com/utaustintexas');
+  variable_set('utexas_social_links_googleplus', 'https://plus.google.com/+UTAustin');
+}
