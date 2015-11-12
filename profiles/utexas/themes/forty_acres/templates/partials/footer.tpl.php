@@ -18,13 +18,13 @@
               </div>
             <?php endif; ?>
             <?php if ($footer_text) : ?>
-              <div class="footer-contact">                
-                <?php print $footer_text; ?>               
+              <div class="footer-contact">
+                <?php print $footer_text; ?>
               </div>
             <?php endif; ?>
               <div class="connect">
-                <?php if ($display_social == '1') :
-                  $block = block_load('utexas_partials_social_links', 'social_links_block');
+                <?php if ($display_social == '1' && module_exists('utexas_social_accounts')) :
+                  $block = block_load('utexas_social_accounts', 'social_accounts_block');
                   $render_array = _block_get_renderable_array(_block_render_blocks(array($block)));
                   $output = render($render_array);
                   print $output;

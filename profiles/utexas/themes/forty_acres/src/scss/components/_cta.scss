@@ -209,7 +209,8 @@
 //  fixes to keep arrow icons from displaying on own line for quick links, flex content
 //  area links, promo list links, homepage pillar cta's and call to action buttons
 
-.flex-content-cta, .utexas-flex-content-cta, .promo-list-cta, .quick-links-cta, .call-to-action-cta,.newsletter .cta.sidebar-cta, .sidebar-cta, .hero-cta  {
+.cta, .flex-content-cta, .utexas-flex-content-cta, .promo-list-cta, .quick-links-cta, 
+.call-to-action-cta,.newsletter .cta.sidebar-cta, .sidebar-cta, .hero-cta, .cta-link  {
   text-decoration: none;
   display: inline-block;
   &:after {
