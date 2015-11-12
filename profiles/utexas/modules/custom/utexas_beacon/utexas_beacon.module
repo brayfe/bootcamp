@@ -38,12 +38,6 @@ function _utexas_beacon_prepare_data() {
   $site_data['hostname'] = gethostname();
   $site_data['admin_email'] = variable_get('site_mail', 'none');
   $site_data['drupal_version'] = VERSION;
-  
-  $install_profile_info = install_profile_info(drupal_get_profile());
-  $site_data['active_installation_profile'] = $install_profile_info['name'];
-  $site_data['active_installation_profile_distribution_name'] = $install_profile_info['distribution_name'];
-  $site_data['active_installation_profile_version'] = $install_profile_info['version'];
-  
   $site_data['current_theme'] = variable_get('theme_default', 'none');
   if ($site_data['current_theme'] == 'forty_acres') {
     $forty_acres_info = system_get_info('theme', 'forty_acres');
