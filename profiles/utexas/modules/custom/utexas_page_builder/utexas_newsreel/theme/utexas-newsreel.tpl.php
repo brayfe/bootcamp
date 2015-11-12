@@ -26,7 +26,7 @@ if (!empty($items)) :
       if ($include_description) :
         echo '<p class="news-description">' . $item['description'] . '</p>';
       endif;
-      echo '<a class="cta-link" href="' . $item['link'] . '">Read more</a>
+      echo '<a class="cta-link" href="' . $item['link'] . '"><span>Read more</span></a>
     </div>';
   endforeach;
   if ($view_all) : print $view_all; endif;
