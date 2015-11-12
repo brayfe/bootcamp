@@ -20,8 +20,8 @@ Scenario: Test theme-settings and verify starterkit is default theme
   Then I go to "admin/appearance"
   And I should see "STARTERKIT (default theme)" in the "theme_default" region
   Then I go to "admin/appearance/settings/STARTERKIT"
-  And I select the radio button "Header menu"
-  And I enter "this is a behat test of the STARTERKIT subtheme" for "Enter the text for footer"
+  And I select the radio button "Header menu: Configure header menu here."
+  And I enter "this is a behat test of the STARTERKIT subtheme" for "OPTIONAL - Enter text to be displayed in a block in the left-most region of the footer."
   And I enter "School of Law" for "Parent Entity Name"
   And I press the "edit-submit" button
   Then I should see the message "Please enter a link for the Parent Entity Website. A link is required if you have entered a Parent Entity Name."

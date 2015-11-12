@@ -8,7 +8,7 @@ Feature: UTexas Admin
 
 
 Scenario: Verify jQuery version is correct on node forms and allows add/remove.
-  Given I am logged in as a user with the "Site Builder,Standard Page Editor" role
+  Given I am logged in as a user with the "administrator" role
   When I go to "node/add/standard-page"
   And I fill in "Test Page" for "edit-title" in the "form_item_title" region
   And I click on the link "Flex Content Area A" in the ".vertical-tabs-list" region
