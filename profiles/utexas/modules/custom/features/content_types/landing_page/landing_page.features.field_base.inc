@@ -1,16 +1,16 @@
 <?php
 /**
  * @file
- * content_type_landing_page.features.field_base.inc
+ * landing_page.features.field_base.inc
  */
 
 /**
  * Implements hook_field_default_field_bases().
  */
-function content_type_landing_page_field_default_field_bases() {
+function landing_page_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_utexas_background_accent'.
+  // Exported field_base: 'field_utexas_background_accent'
   $field_bases['field_utexas_background_accent'] = array(
     'active' => 1,
     'cardinality' => 1,

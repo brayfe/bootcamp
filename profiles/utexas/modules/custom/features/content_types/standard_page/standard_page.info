@@ -1,8 +1,8 @@
-name = Content Type : Standard Page
+name = Standard Page
 core = 7.x
 package = Content Types
 version = 7.x-1.0
-project = content_type_standard_page
+project = standard_page
 dependencies[] = context_field
 dependencies[] = entityreference
 dependencies[] = features

@@ -1,117 +1,18 @@
 <?php
 /**
  * @file
- * content_type_standard_page.features.field_instance.inc
+ * landing_page.features.field_instance.inc
  */
 
 /**
  * Implements hook_field_default_field_instances().
  */
-function content_type_standard_page_field_default_field_instances() {
+function landing_page_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance:
-  // 'field_collection_item-field_utexas_promo_list-field_utexas_promo_list_headline'.
-  $field_instances['field_collection_item-field_utexas_promo_list-field_utexas_promo_list_headline'] = array(
-    'bundle' => 'field_utexas_promo_list',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'text',
-        'settings' => array(),
-        'type' => 'text_default',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'field_collection_item',
-    'field_name' => 'field_utexas_promo_list_headline',
-    'label' => 'Promo List Headline',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 1,
-    ),
-  );
-
-  // Exported field_instance:
-  // 'field_collection_item-field_utexas_promo_list-field_utexas_promo_list_item'.
-  $field_instances['field_collection_item-field_utexas_promo_list-field_utexas_promo_list_item'] = array(
-    'bundle' => 'field_utexas_promo_list',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'utexas_promo_list',
-        'settings' => array(),
-        'type' => 'utexas_promo_list',
-        'weight' => 2,
-      ),
-    ),
-    'entity_type' => 'field_collection_item',
-    'field_name' => 'field_utexas_promo_list_item',
-    'label' => 'Promo List Item',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'utexas_promo_list',
-      'settings' => array(),
-      'type' => 'utexas_promo_list',
-      'weight' => 3,
-    ),
-  );
-
-  // Exported field_instance:
-  // 'field_collection_item-field_utexas_promo_list-field_utexas_promo_list_style'.
-  $field_instances['field_collection_item-field_utexas_promo_list-field_utexas_promo_list_style'] = array(
-    'bundle' => 'field_utexas_promo_list',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '<p>Choose \'Single list full\' for a one-column list of items that spans the width of its container.<br>Choose \'Single list responsive\' to produce a two-column list that spans the width of its container.<br>Choose \'Two lists, side-by-side\' to produce a one-column list that spans half the width of its container.<br>*note: two lists need to be entered with \'Two lists, side-by-side\' style selected to fill a container</p>',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'list',
-        'settings' => array(),
-        'type' => 'list_default',
-        'weight' => 1,
-      ),
-    ),
-    'entity_type' => 'field_collection_item',
-    'field_name' => 'field_utexas_promo_list_style',
-    'label' => 'Promo List Style',
-    'required' => 1,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_buttons',
-      'weight' => 2,
-    ),
-  );
-
-  // Exported field_instance: 'node-standard_page-field_page_layout'.
-  $field_instances['node-standard_page-field_page_layout'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_page_layout'
+  $field_instances['node-landing_page-field_page_layout'] = array(
+    'bundle' => 'landing_page',
     'default_value' => array(
       0 => array(
         'context' => '',
@@ -125,7 +26,7 @@ function content_type_standard_page_field_default_field_instances() {
         'module' => 'context_field',
         'settings' => array(),
         'type' => 'context_field_context',
-        'weight' => 6,
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -140,7 +41,6 @@ function content_type_standard_page_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'allowed_blocks' => array(
-        'block' => 0,
         'context_ui' => 0,
         'fieldblock' => 'fieldblock',
         'node' => 0,
@@ -148,6 +48,8 @@ function content_type_standard_page_field_default_field_instances() {
         'shortcut' => 0,
         'system' => 0,
         'user' => 0,
+        'utexas_menu' => 0,
+        'utexas_partials_social_links' => 0,
       ),
       'default_context' => 'context_field_default_context',
       'use_default' => 0,
@@ -162,13 +64,13 @@ function content_type_standard_page_field_default_field_instances() {
         ),
       ),
       'type' => 'context_field',
-      'weight' => 15,
+      'weight' => 2,
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_template'.
-  $field_instances['node-standard_page-field_template'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_template'
+  $field_instances['node-landing_page-field_template'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -177,7 +79,7 @@ function content_type_standard_page_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -191,11 +93,6 @@ function content_type_standard_page_field_default_field_instances() {
     'label' => 'Template',
     'required' => 0,
     'settings' => array(
-      'behaviors' => array(
-        'taxonomy-index' => array(
-          'status' => TRUE,
-        ),
-      ),
       'user_register_form' => FALSE,
     ),
     'widget' => array(
@@ -207,9 +104,46 @@ function content_type_standard_page_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_utexas_contact_info'.
-  $field_instances['node-standard_page-field_utexas_contact_info'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_utexas_background_accent'
+  $field_instances['node-landing_page-field_utexas_background_accent'] = array(
+    'bundle' => 'landing_page',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'utexas_background_accent',
+        'settings' => array(),
+        'type' => 'utexas_background_accent',
+        'weight' => 18,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_utexas_background_accent',
+    'label' => 'Background Accent',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'utexas_background_accent',
+      'settings' => array(),
+      'type' => 'utexas_background_accent',
+      'weight' => 20,
+    ),
+  );
+
+  // Exported field_instance: 'node-landing_page-field_utexas_contact_info'
+  $field_instances['node-landing_page-field_utexas_contact_info'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => 'Select an existing Contact Info block to be available on this page. <a href="/admin/content/contact_info">Review or add Contact Info blocks</a>.',
@@ -218,11 +152,11 @@ function content_type_standard_page_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'entityreference',
         'settings' => array(
-          'links' => TRUE,
+          'links' => 0,
           'view_mode' => 'default',
         ),
         'type' => 'entityreference_entity_view',
-        'weight' => 14,
+        'weight' => 17,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -243,24 +177,24 @@ function content_type_standard_page_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 17,
+      'weight' => 8,
     ),
   );
 
   // Exported field_instance:
-  // 'node-standard_page-field_utexas_featured_highlight'.
-  $field_instances['node-standard_page-field_utexas_featured_highlight'] = array(
-    'bundle' => 'standard_page',
+  // 'node-landing_page-field_utexas_featured_highlight'
+  $field_instances['node-landing_page-field_utexas_featured_highlight'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'boooty call',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
         'module' => 'utexas_featured_highlight',
         'settings' => array(),
         'type' => 'utexas_featured_highlight',
-        'weight' => 5,
+        'weight' => 8,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -281,24 +215,24 @@ function content_type_standard_page_field_default_field_instances() {
       'module' => 'utexas_featured_highlight',
       'settings' => array(),
       'type' => 'utexas_featured_highlight',
-      'weight' => 13,
+      'weight' => 3,
     ),
   );
 
   // Exported field_instance:
-  // 'node-standard_page-field_utexas_flex_content_area_a'.
-  $field_instances['node-standard_page-field_utexas_flex_content_area_a'] = array(
-    'bundle' => 'standard_page',
+  // 'node-landing_page-field_utexas_flex_content_area_a'
+  $field_instances['node-landing_page-field_utexas_flex_content_area_a'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Flexible area to share an image, title, copy and some links. This can appear in the body of the page or the sidebar.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
         'module' => 'utexas_flex_content_areas',
         'settings' => array(),
         'type' => 'utexas_flex_content_area',
-        'weight' => 7,
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -326,19 +260,19 @@ function content_type_standard_page_field_default_field_instances() {
   );
 
   // Exported field_instance:
-  // 'node-standard_page-field_utexas_flex_content_area_b'.
-  $field_instances['node-standard_page-field_utexas_flex_content_area_b'] = array(
-    'bundle' => 'standard_page',
+  // 'node-landing_page-field_utexas_flex_content_area_b'
+  $field_instances['node-landing_page-field_utexas_flex_content_area_b'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Flexible area to share an image, title, copy and some links. This can appear in the body of the page or the sidebar.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
         'module' => 'utexas_flex_content_areas',
         'settings' => array(),
         'type' => 'utexas_flex_content_area',
-        'weight' => 14,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -365,19 +299,19 @@ function content_type_standard_page_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_utexas_hero_photo'.
-  $field_instances['node-standard_page-field_utexas_hero_photo'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_utexas_hero_photo'
+  $field_instances['node-landing_page-field_utexas_hero_photo'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Add your hero photo and give it a caption. It will appear at the top of your page. Please upload the high resolution version of the image for best results.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
         'module' => 'utexas_hero_photo',
         'settings' => array(),
-        'type' => 'utexas_hero_photo',
-        'weight' => 3,
+        'type' => 'utexas_hero_photo_full',
+        'weight' => 16,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -397,24 +331,24 @@ function content_type_standard_page_field_default_field_instances() {
       'active' => 0,
       'module' => 'utexas_hero_photo',
       'settings' => array(),
-      'type' => 'utexas_hero_photo',
-      'weight' => 7,
+      'type' => 'utexas_hero_photo_full',
+      'weight' => 18,
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_utexas_image_link_a'.
-  $field_instances['node-standard_page-field_utexas_image_link_a'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_utexas_image_link_a'
+  $field_instances['node-landing_page-field_utexas_image_link_a'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Add an image that is clickable to a URL. This is ideal for small ad units that do not need captions or additional calls to action.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
         'module' => 'utexas_image_links',
         'settings' => array(),
         'type' => 'utexas_image_link',
-        'weight' => 8,
+        'weight' => 10,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -435,23 +369,23 @@ function content_type_standard_page_field_default_field_instances() {
       'module' => 'utexas_image_links',
       'settings' => array(),
       'type' => 'utexas_image_link',
-      'weight' => 8,
+      'weight' => 6,
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_utexas_image_link_b'.
-  $field_instances['node-standard_page-field_utexas_image_link_b'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_utexas_image_link_b'
+  $field_instances['node-landing_page-field_utexas_image_link_b'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Add an image that is clickable to a URL. This is ideal for small ad units that do not need captions or additional calls to action.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
         'module' => 'utexas_image_links',
         'settings' => array(),
         'type' => 'utexas_image_link',
-        'weight' => 16,
+        'weight' => 11,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -472,13 +406,13 @@ function content_type_standard_page_field_default_field_instances() {
       'module' => 'utexas_image_links',
       'settings' => array(),
       'type' => 'utexas_image_link',
-      'weight' => 9,
+      'weight' => 7,
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_utexas_newsreel'.
-  $field_instances['node-standard_page-field_utexas_newsreel'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_utexas_newsreel'
+  $field_instances['node-landing_page-field_utexas_newsreel'] = array(
+    'bundle' => 'landing_page',
     'default_value' => array(
       0 => array(
         'headline' => 'Latest from UTNews',
@@ -511,7 +445,7 @@ function content_type_standard_page_field_default_field_instances() {
         'module' => 'utexas_newsreel',
         'settings' => array(),
         'type' => 'utexas_newsreel',
-        'weight' => 21,
+        'weight' => 15,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -532,14 +466,14 @@ function content_type_standard_page_field_default_field_instances() {
       'module' => 'utexas_newsreel',
       'settings' => array(),
       'type' => 'utexas_newsreel',
-      'weight' => 18,
+      'weight' => 17,
     ),
   );
 
   // Exported field_instance:
-  // 'node-standard_page-field_utexas_photo_content_area'.
-  $field_instances['node-standard_page-field_utexas_photo_content_area'] = array(
-    'bundle' => 'standard_page',
+  // 'node-landing_page-field_utexas_photo_content_area'
+  $field_instances['node-landing_page-field_utexas_photo_content_area'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -549,7 +483,7 @@ function content_type_standard_page_field_default_field_instances() {
         'module' => 'utexas_photo_content_area',
         'settings' => array(),
         'type' => 'utexas_photo_content_area',
-        'weight' => 9,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -572,13 +506,13 @@ function content_type_standard_page_field_default_field_instances() {
         'max_links' => 1,
       ),
       'type' => 'utexas_photo_content_area',
-      'weight' => 14,
+      'weight' => 9,
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_utexas_promo_list'.
-  $field_instances['node-standard_page-field_utexas_promo_list'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_utexas_promo_list'
+  $field_instances['node-landing_page-field_utexas_promo_list'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -590,7 +524,7 @@ function content_type_standard_page_field_default_field_instances() {
           'view_mode' => 'full',
         ),
         'type' => 'field_collection_fields',
-        'weight' => 18,
+        'weight' => 9,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -615,19 +549,19 @@ function content_type_standard_page_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_utexas_promo_units'.
-  $field_instances['node-standard_page-field_utexas_promo_units'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_utexas_promo_units'
+  $field_instances['node-landing_page-field_utexas_promo_units'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Promo Units provide a two-thirds width area to promote an item, with an image, title, copy, and call to action.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
         'module' => 'utexas_promo_field',
         'settings' => array(),
         'type' => 'utexas_promo_unit',
-        'weight' => 15,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -648,16 +582,16 @@ function content_type_standard_page_field_default_field_instances() {
       'module' => 'utexas_promo_field',
       'settings' => array(),
       'type' => 'utexas_promo_unit',
-      'weight' => 6,
+      'weight' => 11,
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_utexas_quick_links'.
-  $field_instances['node-standard_page-field_utexas_quick_links'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_utexas_quick_links'
+  $field_instances['node-landing_page-field_utexas_quick_links'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'some quick links',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -684,16 +618,16 @@ function content_type_standard_page_field_default_field_instances() {
       'active' => 1,
       'module' => 'utexas_quick_links',
       'settings' => array(
-        'max_links' => 5,
+        'max_links' => 20,
       ),
       'type' => 'utexas_quick_links',
       'weight' => 10,
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_utexas_social_links'.
-  $field_instances['node-standard_page-field_utexas_social_links'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_utexas_social_links'
+  $field_instances['node-landing_page-field_utexas_social_links'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -703,7 +637,7 @@ function content_type_standard_page_field_default_field_instances() {
         'module' => 'utexas_social_links',
         'settings' => array(),
         'type' => 'utexas_social_links',
-        'weight' => 17,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -724,13 +658,13 @@ function content_type_standard_page_field_default_field_instances() {
       'module' => 'utexas_social_links',
       'settings' => array(),
       'type' => 'utexas_social_links',
-      'weight' => 11,
+      'weight' => 13,
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_utexas_twitter_widget'.
-  $field_instances['node-standard_page-field_utexas_twitter_widget'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_utexas_twitter_widget'
+  $field_instances['node-landing_page-field_utexas_twitter_widget'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => 'Select an existing Twitter Widget to be available on this page. <a href="/admin/content/twitter">Review or add Twitter widgets</a>.',
@@ -743,7 +677,7 @@ function content_type_standard_page_field_default_field_instances() {
           'view_mode' => 'default',
         ),
         'type' => 'entityreference_entity_view',
-        'weight' => 20,
+        'weight' => 14,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -764,16 +698,16 @@ function content_type_standard_page_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 17,
+      'weight' => 14,
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_wysiwyg_a'.
-  $field_instances['node-standard_page-field_wysiwyg_a'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_wysiwyg_a'
+  $field_instances['node-landing_page-field_wysiwyg_a'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'WYSIWYG A is the primary body copy entry field.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -804,16 +738,16 @@ function content_type_standard_page_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 2,
+      'weight' => 15,
     ),
   );
 
-  // Exported field_instance: 'node-standard_page-field_wysiwyg_b'.
-  $field_instances['node-standard_page-field_wysiwyg_b'] = array(
-    'bundle' => 'standard_page',
+  // Exported field_instance: 'node-landing_page-field_wysiwyg_b'
+  $field_instances['node-landing_page-field_wysiwyg_b'] = array(
+    'bundle' => 'landing_page',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'WYSIWYG B is a secondary body copy entry field.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -844,31 +778,24 @@ function content_type_standard_page_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 3,
+      'weight' => 16,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('<p>Choose \'Single list full\' for a one-column list of items that spans the width of its container.<br>Choose \'Single list responsive\' to produce a two-column list that spans the width of its container.<br>Choose \'Two lists, side-by-side\' to produce a one-column list that spans half the width of its container.<br>*note: two lists need to be entered with \'Two lists, side-by-side\' style selected to fill a container</p>');
-  t('Add an image that is clickable to a URL. This is ideal for small ad units that do not need captions or additional calls to action.');
-  t('Add your hero photo and give it a caption. It will appear at the top of your page. Please upload the high resolution version of the image for best results.');
+  t('Background Accent');
   t('Contact Info');
   t('Featured Highlight');
   t('Flex Content Area A');
   t('Flex Content Area B');
-  t('Flexible area to share an image, title, copy and some links. This can appear in the body of the page or the sidebar.');
   t('Hero Photo');
   t('Image Link A');
   t('Image Link B');
   t('Page Layout');
   t('Photo Content Area');
   t('Promo List');
-  t('Promo List Headline');
-  t('Promo List Item');
-  t('Promo List Style');
   t('Promo Units');
-  t('Promo Units provide a two-thirds width area to promote an item, with an image, title, copy, and call to action.');
   t('Quick Links');
   t('Select an existing Contact Info block to be available on this page. <a href="/admin/content/contact_info">Review or add Contact Info blocks</a>.');
   t('Select an existing Twitter Widget to be available on this page. <a href="/admin/content/twitter">Review or add Twitter widgets</a>.');
@@ -877,11 +804,7 @@ function content_type_standard_page_field_default_field_instances() {
   t('Twitter Widget');
   t('UT Newsreel');
   t('WYSIWYG A');
-  t('WYSIWYG A is the primary body copy entry field.');
   t('WYSIWYG B');
-  t('WYSIWYG B is a secondary body copy entry field.');
-  t('boooty call');
-  t('some quick links');
 
   return $field_instances;
 }

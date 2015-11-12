@@ -1,16 +1,16 @@
 <?php
 /**
  * @file
- * content_type_standard_page.features.field_base.inc
+ * standard_page.features.field_base.inc
  */
 
 /**
  * Implements hook_field_default_field_bases().
  */
-function content_type_standard_page_field_default_field_bases() {
+function standard_page_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_page_layout'.
+  // Exported field_base: 'field_page_layout'
   $field_bases['field_page_layout'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -27,7 +27,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'context_field',
   );
 
-  // Exported field_base: 'field_template'.
+  // Exported field_base: 'field_template'
   $field_bases['field_template'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -60,7 +60,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
-  // Exported field_base: 'field_utexas_contact_info'.
+  // Exported field_base: 'field_utexas_contact_info'
   $field_bases['field_utexas_contact_info'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -93,7 +93,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
-  // Exported field_base: 'field_utexas_featured_highlight'.
+  // Exported field_base: 'field_utexas_featured_highlight'
   $field_bases['field_utexas_featured_highlight'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -108,7 +108,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'utexas_featured_highlight',
   );
 
-  // Exported field_base: 'field_utexas_flex_content_area_a'.
+  // Exported field_base: 'field_utexas_flex_content_area_a'
   $field_bases['field_utexas_flex_content_area_a'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -123,7 +123,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'utexas_flex_content_area',
   );
 
-  // Exported field_base: 'field_utexas_flex_content_area_b'.
+  // Exported field_base: 'field_utexas_flex_content_area_b'
   $field_bases['field_utexas_flex_content_area_b'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -138,7 +138,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'utexas_flex_content_area',
   );
 
-  // Exported field_base: 'field_utexas_hero_photo'.
+  // Exported field_base: 'field_utexas_hero_photo'
   $field_bases['field_utexas_hero_photo'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -153,7 +153,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'utexas_hero_photo',
   );
 
-  // Exported field_base: 'field_utexas_image_link_a'.
+  // Exported field_base: 'field_utexas_image_link_a'
   $field_bases['field_utexas_image_link_a'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -168,7 +168,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'utexas_image_link',
   );
 
-  // Exported field_base: 'field_utexas_image_link_b'.
+  // Exported field_base: 'field_utexas_image_link_b'
   $field_bases['field_utexas_image_link_b'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -183,7 +183,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'utexas_image_link',
   );
 
-  // Exported field_base: 'field_utexas_newsreel'.
+  // Exported field_base: 'field_utexas_newsreel'
   $field_bases['field_utexas_newsreel'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -198,7 +198,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'utexas_newsreel',
   );
 
-  // Exported field_base: 'field_utexas_photo_content_area'.
+  // Exported field_base: 'field_utexas_photo_content_area'
   $field_bases['field_utexas_photo_content_area'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -213,7 +213,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'utexas_photo_content_area',
   );
 
-  // Exported field_base: 'field_utexas_promo_list'.
+  // Exported field_base: 'field_utexas_promo_list'
   $field_bases['field_utexas_promo_list'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -235,7 +235,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'field_collection',
   );
 
-  // Exported field_base: 'field_utexas_promo_list_headline'.
+  // Exported field_base: 'field_utexas_promo_list_headline'
   $field_bases['field_utexas_promo_list_headline'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -256,7 +256,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'text',
   );
 
-  // Exported field_base: 'field_utexas_promo_list_item'.
+  // Exported field_base: 'field_utexas_promo_list_item'
   $field_bases['field_utexas_promo_list_item'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -271,7 +271,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'utexas_promo_list',
   );
 
-  // Exported field_base: 'field_utexas_promo_list_style'.
+  // Exported field_base: 'field_utexas_promo_list_style'
   $field_bases['field_utexas_promo_list_style'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -297,7 +297,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'field_utexas_promo_units'.
+  // Exported field_base: 'field_utexas_promo_units'
   $field_bases['field_utexas_promo_units'] = array(
     'active' => 1,
     'cardinality' => -1,
@@ -312,7 +312,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'utexas_promo_field',
   );
 
-  // Exported field_base: 'field_utexas_quick_links'.
+  // Exported field_base: 'field_utexas_quick_links'
   $field_bases['field_utexas_quick_links'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -327,7 +327,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'utexas_quick_links',
   );
 
-  // Exported field_base: 'field_utexas_social_links'.
+  // Exported field_base: 'field_utexas_social_links'
   $field_bases['field_utexas_social_links'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -342,7 +342,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'utexas_social_links',
   );
 
-  // Exported field_base: 'field_utexas_twitter_widget'.
+  // Exported field_base: 'field_utexas_twitter_widget'
   $field_bases['field_utexas_twitter_widget'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -375,7 +375,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
-  // Exported field_base: 'field_wysiwyg_a'.
+  // Exported field_base: 'field_wysiwyg_a'
   $field_bases['field_wysiwyg_a'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -394,7 +394,7 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_wysiwyg_b'.
+  // Exported field_base: 'field_wysiwyg_b'
   $field_bases['field_wysiwyg_b'] = array(
     'active' => 1,
     'cardinality' => 1,
