@@ -44,7 +44,7 @@ features[] = favicon
 features[] = main_menu
 features[] = secondary_menu
 
-settings[secondary_menu] = 'social_accounts'
+settings[secondary_menu] = 'social_links'
 settings[display_social_icons] = '1'
 settings[newsletter_exists] = '0'
 settings[logo_height] = 'short_logo'

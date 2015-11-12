@@ -56,22 +56,17 @@ function STARTERKIT_form_system_theme_settings_alter(&$form, &$form_state) {
       form_error($element, t('Please enter a valid link for the Parent Entity Website.'));
     }
   }
+
   $form['utexas_main_nav_theme_settings']['secondary_menu'] = array(
     '#type' => 'radios',
     '#title' => t('Which option should be displayed in the secondary menu region (directly to the left of the search form)?'),
     '#options' => array(
-      'no_menu' => t('No menu or links'),
+      'social_links' => t('Social links: <a href="/admin/config/utexas/utexas-partials-social-links">Configure social links here.</a>'),
       'header_menu' => t('Header menu: <a href="/admin/structure/menu/manage/menu-header">Configure header menu here.</a>'),
+      'no_menu' => t('No menu or links'),
     ),
+    '#default_value' => theme_get_setting('secondary_menu'),
   );
-  if (module_exists('utexas_social_accounts')) {
-    $form['utexas_main_nav_theme_settings']['secondary_menu']['#options']['social_accounts'] = t('Social accounts: <a href="/admin/config/utexas/utexas-social-accounts">Configure social accounts here.</a>');
-    $form['utexas_main_nav_theme_settings']['secondary_menu']['#default_value'] = theme_get_setting('secondary_menu');
-  }
-  else {
-    $form['utexas_main_nav_theme_settings']['secondary_menu']['#default_value'] = (theme_get_setting('secondary_menu') == 'social_accounts') ? 'header_menu' : theme_get_setting('secondary_menu');
-  }
-
   $form['utexas_main_nav_theme_settings']['display_search'] = array(
     '#type' => 'radios',
     '#title' => t('Should the site search form be displayed in the header and mobile navigation menu?'),
@@ -94,14 +89,12 @@ function STARTERKIT_form_system_theme_settings_alter(&$form, &$form_state) {
     '#description' => t("For example, this block can be used for contact information for the site's office/department."),
     '#default_value' => theme_get_setting('footer_text_area'),
   );
-  if (module_exists('utexas_social_accounts')) {
-    $form['utexas_footer_theme_settings']['display_social_icons'] = array(
-      '#type' => 'checkbox',
-      '#title' => t('Would you like to display social accounts in the footer?'),
-      '#description' => t('<a href="/admin/config/utexas/utexas-social-accounts">Configure social accounts here.</a>'),
-      '#default_value' => theme_get_setting('display_social_icons'),
-    );
-  }
+  $form['utexas_footer_theme_settings']['display_social_icons'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Would you like to display social links in the footer?'),
+    '#description' => t('<a href="/admin/config/utexas/utexas-partials-social-links">Configure social links here.</a>'),
+    '#default_value' => theme_get_setting('display_social_icons'),
+  );
   $form['utexas_footer_theme_settings']['newsletter_exists'] = array(
     '#type' => 'checkbox',
     '#title' => t('Would you like to provide a link to a newsletter subscription form in the footer?'),

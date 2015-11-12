@@ -42,7 +42,7 @@
 ?>
 <?php require_once $partials_dir . 'header.tpl.php'; ?>
 
-<div class="UT-page default-page" id="ut-page-content" role="main">
+<div class="UT-page" id="ut-page-content" role="main">
   <div class="container container-top">
     <?php
     if (file_exists($partials_dir . 'breadcrumbs.tpl.php')) :
@@ -61,7 +61,6 @@
         <h1 class="page-title"><?php print $title; ?></h1>
       </div>
     </div>
-  </div>
   <div class="container">
     <?php if($page['header']):?>
       <div class="row">
@@ -70,7 +69,7 @@
         </div>
       </div>
     <?php endif; ?>
-  
+
   <div class="middle_content row">
 
     <?php if($page['content']):?>

@@ -100,13 +100,7 @@ span.form-required {
   }
 }
 
-.default-page {
-	.container-top {
-		border-bottom: none;
-	}
-}
-
-/************ accessibility related overrides *******************/
-.edit-links a {
-	color: $burntOrangeAccent;
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

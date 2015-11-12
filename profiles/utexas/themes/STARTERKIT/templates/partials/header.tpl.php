@@ -71,10 +71,10 @@
                 <?php if ($display_header_menu == 'header_menu') :
                   print render($page['menus']['header']);
                 endif; ?>
-                <?php if ($display_header_menu == 'social_accounts' && module_exists('utexas_social_accounts')) :
-                  $block = block_load('utexas_social_accounts', 'social_accounts_block');
+                <?php if ($display_header_menu == 'social_links') :
+                  $block = block_load('utexas_partials_social_links', 'social_links_block');
                   $render_array = _block_get_renderable_array(_block_render_blocks(array($block)));
-                  $output = $render_array['utexas_social_accounts_social_accounts_block']["content"]["#markup"];
+                  $output = $render_array['utexas_partials_social_links_social_links_block']["content"]["#markup"];
                    print $output;
                 endif; ?>
                 <?php if (isset($header_search_cse) && ($search_bar_display == TRUE)) :
@@ -83,7 +83,7 @@
               </div>
               <ul class="topnav-links hide-for-large-up">
                 <li class="nav-item nav-item-search">
-                  <?php if (isset($header_search_cse)&& ($search_bar_display == TRUE)) :
+                  <?php if (isset($header_search_cse) && ($search_bar_display == TRUE)) :
                     print render($header_search_cse);
                   endif; ?>
                 </li>

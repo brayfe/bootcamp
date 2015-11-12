@@ -441,10 +441,6 @@ select {
 	margin-bottom: 20px !important; /* Landscape phones and down */
 }
 
-.region.region-content-top-four-pillars .block-fieldblock span {
-	color: #A04400;
-}
-
 .field_utexas_promo_list .utexas-promo-list-wrapper .post-headline {
 	border-bottom: 2px solid #3c87a3;
 	margin: 0 0 20px;
@@ -595,7 +591,6 @@ select {
 
 .field_utexas_promo_units .cta-link {
 	margin-top: 0px;
-	color: #A04400;
 }
 
 .utexas-promo-field.utexas-promo-unit {
@@ -1320,9 +1315,10 @@ select {
 }
 
 .field_utexas_hero_photo .container.container-hero.hero-style-5 .hero-cta {
-	background-color: #A04400;
+	background-color: #BF5700;
 	color: #F5F4F0;
 	font-weight: 700;
+	font-style: italic;
 	display: block;
 	text-align: center;
 	margin: 20px 0 0px 0;
@@ -1377,10 +1373,6 @@ select {
 
 .field.field_utexas_newsreel .cta.sidebar-cta {
 	display: block;
-}
-
-.field.field_utexas_newsreel .cta-link span:hover {
-	text-decoration: underline;
 }
 
 .container.container-bottom.accent .field.field_utexas_newsreel .module-content {
