@@ -71,7 +71,7 @@ dependencies[] = token
 dependencies[] = views
 
 ; UTexas Dependencies
-dependencies[] = utexas_partials_social_links
+dependencies[] = utexas_social_accounts
 dependencies[] = utexas_admin
 dependencies[] = utexas_beacon
 dependencies[] = utexas_contact_info

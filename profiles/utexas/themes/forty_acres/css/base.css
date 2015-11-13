@@ -2155,7 +2155,7 @@ body {
 }
 
 .UT-page {
-	z-index: 999;
+	z-index: 99;
 	clear: both; /* Landscape phones and down */ /* Landscape phones and down */ /* Landscape phones and down */
 }
 
@@ -2240,9 +2240,14 @@ span.form-required {
 	background: #fff;
 }
 
-body {
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+.default-page .container-top {
+	border-bottom: none;
+}
+
+/************ accessibility related overrides *******************/
+
+.edit-links a {
+	color: #A04400;
 }
 
 a {
@@ -2477,7 +2482,7 @@ ul.pagination li.current a:hover {
 .container.container-bottom.accent .fieldblock_field_utexas_promo_list,
 .container.container-bottom.accent .field.field_utexas_twitter_widget,
 .container.container-bottom.accent .field_utexas_social_links {
-	background-color: rgba(248, 248, 248, 0.96);
+	background-color: #fff;
 	border: 1px solid #333f48;
 	padding: 20px 20px 3px;
 }
@@ -3118,6 +3123,7 @@ ul.pagination li.current a:hover {
 	font-style: normal;
 }
 
+.cta,
 .flex-content-cta,
 .utexas-flex-content-cta,
 .promo-list-cta,
@@ -3125,11 +3131,13 @@ ul.pagination li.current a:hover {
 .call-to-action-cta,
 .newsletter .cta.sidebar-cta,
 .sidebar-cta,
-.hero-cta {
+.hero-cta,
+.cta-link {
 	text-decoration: none;
 	display: inline-block;
 }
 
+.cta:after,
 .flex-content-cta:after,
 .utexas-flex-content-cta:after,
 .promo-list-cta:after,
@@ -3137,11 +3145,13 @@ ul.pagination li.current a:hover {
 .call-to-action-cta:after,
 .newsletter .cta.sidebar-cta:after,
 .sidebar-cta:after,
-.hero-cta:after {
+.hero-cta:after,
+.cta-link:after {
 	display: inline;
 	zoom: 1;
 }
 
+.cta:hover,
 .flex-content-cta:hover,
 .utexas-flex-content-cta:hover,
 .promo-list-cta:hover,
@@ -3149,10 +3159,12 @@ ul.pagination li.current a:hover {
 .call-to-action-cta:hover,
 .newsletter .cta.sidebar-cta:hover,
 .sidebar-cta:hover,
-.hero-cta:hover {
+.hero-cta:hover,
+.cta-link:hover {
 	text-decoration: none;
 }
 
+.cta span:hover,
 .flex-content-cta span:hover,
 .utexas-flex-content-cta span:hover,
 .promo-list-cta span:hover,
@@ -3160,7 +3172,8 @@ ul.pagination li.current a:hover {
 .call-to-action-cta span:hover,
 .newsletter .cta.sidebar-cta span:hover,
 .sidebar-cta span:hover,
-.hero-cta span:hover {
+.hero-cta span:hover,
+.cta-link span:hover {
 	text-decoration: underline;
 }
 

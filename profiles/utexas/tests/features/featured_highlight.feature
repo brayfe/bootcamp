@@ -21,7 +21,7 @@ Scenario: Validate copy field and URL field
 
 @javascript
 Scenario: Verify themed output
-  Given I am logged in as a user with the "Site Builder,Standard Page Editor" role
+  Given I am logged in as a user with the "administrator" role
   When I go to "node/add/standard-page"
   And I fill in "Test Featured Highlight" for "edit-title" in the "form_item_title" region
   And I click on the element "#featured_highlight"
