@@ -137,8 +137,8 @@ function install_utexas_page_builder() {
   }
   module_enable(array(
     'utexas_page_builder',
-    'standard_page',
-    'landing_page',
+    'content_type_standard_page',
+    'content_type_landing_page',
     )
   );
   // Reverting the features after enabling module.
