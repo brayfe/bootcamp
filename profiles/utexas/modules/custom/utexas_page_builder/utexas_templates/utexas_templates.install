@@ -1218,7 +1218,7 @@ function utexas_templates_install() {
             'machine_name' => 'field_utexas_social_links',
             '_weight' => -8,
             'enabled' => TRUE,
-            'locked' => TRUE,
+            'locked' => FALSE,
           ),
           'field_utexas_contact_info' => array(
             'machine_name' => 'field_utexas_contact_info',
@@ -1337,7 +1337,7 @@ function utexas_templates_install() {
             'machine_name' => 'field_utexas_social_links',
             '_weight' => -8,
             'enabled' => TRUE,
-            'locked' => TRUE,
+            'locked' => FALSE,
           ),
           'field_utexas_contact_info' => array(
             'machine_name' => 'field_utexas_contact_info',
