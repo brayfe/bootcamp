@@ -1,4 +1,4 @@
-UT Drupal Kit 7.x-2.0, xxxx-xx-xx (development version)
+UT Drupal Kit 7.x-2.0, 2015-11-17
 -------------------------------------------------------
 - First release with the Forty Acres theme and Page Builder module
 
