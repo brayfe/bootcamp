@@ -95,4 +95,3 @@ $menu = array(
 
 menu_delete_links('main-menu');
 utexas_menu_builder($menu, 'main-menu');
-variable_set('special_menu_items_nolink_tag', '<a href="#">');
