@@ -228,14 +228,19 @@ function install_utexas_welcome_submit($form, &$form_state) {
   // Since we skipped the language selection (locale), need to set value here.
   $install_state['parameters']['locale'] = 'en';
 
-  // Store user choice for  page builder. See install_utexas_preferences().
-  $install_state['parameters']['page_builder'] = $form['utexas_preferences']['page_builder']['#value'];
-
-  // Store user choice for default content. See install_utexas_preferences().
-  $install_state['parameters']['default_page'] = $form['utexas_preferences']['default_page']['#value'];
-
-  // Store user choice for default menu. See install_utexas_preferences().
-  $install_state['parameters']['default_menu'] = $form['utexas_preferences']['default_menu']['#value'];
+  // The following if statements check to see if an argument has been passed via
+  // drush site-install. If no arguments are present, the script proceeds,
+  // taking either user input or defaulting to default_value in
+  // install_utexas_welcome().
+  $install_state['parameters']['page_builder'] = (!isset($install_state['forms']['utexas_preferences']['page_builder']))
+    ? $form['utexas_preferences']['page_builder']['#value']
+    : $install_state['forms']['utexas_preferences']['page_builder'];
+  $install_state['parameters']['default_menu'] = (!isset($install_state['forms']['utexas_preferences']['default_menu']))
+    ? $form['utexas_preferences']['default_menu']['#value']
+    : $install_state['forms']['utexas_preferences']['default_menu'];
+  $install_state['parameters']['default_page'] = (!isset($install_state['forms']['utexas_preferences']['default_page']))
+    ? $form['utexas_preferences']['default_page']['#value']
+    : $install_state['forms']['utexas_preferences']['default_page'];
 }
 
 /**
