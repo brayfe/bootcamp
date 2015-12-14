@@ -131,10 +131,6 @@ function install_utexas_preferences() {
 function install_utexas_page_builder() {
   global $install_state;
 
-  // Remove the pre-fabricated 'Body' field from the 'page' content type.
-  if ($instance = field_info_instance('node', 'body', 'page')) {
-    field_delete_instance($instance);
-  }
   module_enable(array(
     'utexas_page_builder',
     'content_type_standard_page',
