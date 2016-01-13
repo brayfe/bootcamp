@@ -10,13 +10,26 @@
 function utexas_utdk_deploy_install() {
   // Set the initial value for the schema version so we can run updates after
   // install.
-  drupal_set_installed_schema_version('utexas_utdk_deploy', 7100);
+  drupal_set_installed_schema_version('utexas_utdk_deploy', 7102);
 }
 
 /**
  * Implements hook_update_N().
+ *
+ * Enable globalredirect, if not yet enabled, for better SEO.
  */
 function utexas_utdk_deploy_update_7101() {
+  if (!module_exists('globalredirect')) {
+    module_enable(array('globalredirect'));
+  }
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Add missing body field, if not present.
+ */
+function utexas_utdk_deploy_update_7102() {
   // Conditionally adding body field to page content type.
   if (!$instance = field_info_instance('node', 'body', 'page')) {
     $types = node_type_get_types();
