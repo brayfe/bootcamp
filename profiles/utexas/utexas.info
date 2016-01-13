@@ -55,6 +55,7 @@ dependencies[] = features_roles_permissions
 dependencies[] = field_collection
 dependencies[] = field_collection_node_clone
 dependencies[] = file_entity
+dependencies[] = globalredirect
 dependencies[] = libraries
 dependencies[] = link
 dependencies[] = media
