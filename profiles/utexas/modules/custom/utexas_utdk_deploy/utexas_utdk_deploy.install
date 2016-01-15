@@ -10,7 +10,7 @@
 function utexas_utdk_deploy_install() {
   // Set the initial value for the schema version so we can run updates after
   // install.
-  drupal_set_installed_schema_version('utexas_utdk_deploy', 7102);
+  drupal_set_installed_schema_version('utexas_utdk_deploy', 7103);
 }
 
 /**
@@ -35,4 +35,13 @@ function utexas_utdk_deploy_update_7102() {
     $types = node_type_get_types();
     node_add_body_field($types['page'], $label = 'Body');
   }
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Sets CKEditor link's helper text to describe both files and pages.
+ */
+function utexas_utdk_deploy_update_7103() {
+  variable_set('ckeditor_link_type_name', 'Page title or filename on this site');
 }

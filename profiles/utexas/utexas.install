@@ -163,7 +163,7 @@ function _utexas_install_settings() {
 
   // CKEditor Link File settings.
   variable_set('ckeditor_link_file_link_method', 'url');
-  variable_set('ckeditor_link_type_name', 'Uploaded file');
+  variable_set('ckeditor_link_type_name', 'Page title or filename on this site.');
 
   // Update settings for Text Formats.
   $formats = array('filtered_html', 'full_html');
