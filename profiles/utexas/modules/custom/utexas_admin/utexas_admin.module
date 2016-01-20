@@ -451,3 +451,21 @@ function utexas_admin_clone_node_complete($new, $old) {
     }
   }
 }
+
+/**
+ * Custom function to return the region a field is placed in.
+ */
+function utexas_admin_retrieve_parent_region($nid, $block_id) {
+  // Retrieve this node's context layout.
+  $layout = db_query("SELECT reactions from {context} WHERE name = :name LIMIT 1", array(":name" => 'context_field-node-' . $nid))->fetchField();
+  $blocks = unserialize($layout);
+  $region = FALSE;
+  if (isset($blocks['block']['blocks'])) {
+    foreach ($blocks['block']['blocks'] as $block) {
+      if ($block['delta'] == $block_id) {
+        $region = $block['region'];
+      }
+    }
+  }
+  return $region;
+}
