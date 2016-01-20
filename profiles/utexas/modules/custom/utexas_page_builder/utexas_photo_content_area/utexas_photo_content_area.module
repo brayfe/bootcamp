@@ -506,6 +506,26 @@ function template_preprocess_utexas_photo_content_area(&$variables) {
   // Unset unneeded variables.
   unset($variables['item']);
 
+  // Set the grid class for template file based on region.
+  $variables['page_template'] = FALSE;
+  if ($node = menu_get_object() and isset($node->field_template['und'][0]['target_id'])) {
+    $id = $node->field_template['und'][0]['target_id'];
+    $exists = entity_get_info('template');
+    if ($exists) {
+      $template = entity_load('template', array($id));
+      if (isset($template[$id])) {
+        $variables['page_template'] = $template[$id]->name;
+      }
+    }
+  }
+
+  // Generate the fieldblock ID for the given field (see fieldblock.module).
+  $variable_name = 'fieldblock-node-' . $node->type . '-default';
+  $photo_content_area_id = md5($variable_name . '-' . 'field_utexas_photo_content_area');
+  $parent_region = utexas_admin_retrieve_parent_region($node->nid, $photo_content_area_id);
+  $sidebar_regions = array('sidebar_second', 'content_top_right');
+  $grid_class = in_array($parent_region, $sidebar_regions) ? 'medium-12' : 'medium-6';
+
   // Reset variables.
   $variables += array(
     'headline' => $headline,
@@ -513,6 +533,7 @@ function template_preprocess_utexas_photo_content_area(&$variables) {
     'copy' => $copy,
     'photo' => $photo,
     'credit' => $credit,
+    'grid_class' => $grid_class,
   );
 }
 

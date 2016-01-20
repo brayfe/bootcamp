@@ -812,11 +812,20 @@ function utexas_page_builder_preprocess_context_block_browser(&$variables) {
     'fieldblock' => t('Page Components'),
     'views' => t('Views'),
     'menu-block' => t('Menu Blocks'),
+    'block' => t('Standard Blocks'),
   );
 
   // Reassign blocks based on available modules.
   $modules = array_keys($available_modules);
   $blocks  = array();
+
+  // Move 'Standard Blocks' to end of array.
+  if (isset($variables['blocks']['block'])) {
+    $standard_blocks = $variables['blocks']['block'];
+    unset($variables['blocks']['block']);
+    $variables['blocks']['block'] = $standard_blocks;
+  }
+
   $initial_blocks = $variables['blocks'];
   unset($variables['blocks']);
   foreach ($initial_blocks as $key => $block_list) {
@@ -954,6 +963,8 @@ function utexas_page_builder_preprocess_block(&$variables) {
       'field_utexas_image_link_b',
       'field_gift_link',
       'field_utexas_promo_list',
+      'field_utexas_resource',
+      'field_utexas_promo_units',
     );
     if (isset($variables['elements']['#field_name']) and !in_array($variables['elements']['#field_name'], $no_default)) {
       $variables['classes_array'][] = 'sidebar-default-style';
