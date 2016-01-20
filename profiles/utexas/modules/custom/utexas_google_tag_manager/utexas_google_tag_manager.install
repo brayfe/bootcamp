@@ -5,6 +5,13 @@
  */
 
 /**
+ * Implements hook_install().
+ */
+function utexas_google_tag_manager_install() {
+  // Intentionally left blank to register the install hook.
+}
+
+/**
  * Implements hook_uninstall().
  *
  * Performs cleanup actions when the module is uninstalled.
@@ -19,7 +26,8 @@ function utexas_google_tag_manager_uninstall() {
 /**
  * Implements hook_requirements().
  *
- * Reports problems if module-specific configuration variables are not set.
+ * Used to report problems if certain module-specific configuration
+ * variables are not set.
  */
 function utexas_google_tag_manager_requirements($phase) {
   $requirements = array();

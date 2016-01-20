@@ -3,7 +3,7 @@
 /**
  * @file
  * General utexas_google_tag_manager module file, which defines the Google Tag
- * Manager functionality, system configuration, and other aspects of the module.
+ * Manager functionality, system configuration, & other aspects of this module.
  */
 
 /**
@@ -42,6 +42,21 @@ define('GTM_VARNAME_GTM_VERIFICATION', 'utexas_google_tag_manager_gtm_verificati
 define('GTM_VARNAME_GTM_INCLUDE_ADMIN', 'utexas_google_tag_manager_gtm_include_admin');
 
 /**
+ * Google Tag Manager include on unpublished nodes.
+ */
+define('GTM_VARNAME_GTM_INCLUDE_UNPUBLISHED', 'utexas_google_tag_manager_gtm_include_unpublished');
+
+/**
+ * Google Tag Manager include on unpublished nodes.
+ */
+define('GTM_VARNAME_GTM_INCLUDE_403', 'utexas_google_tag_manager_gtm_include_403');
+
+/**
+ * Google Tag Manager include on authenticated pages.
+ */
+define('GTM_VARNAME_GTM_INCLUDE_AUTHENTICATED', 'utexas_google_tag_manager_gtm_include_authenticated');
+
+/**
  * Google Tag Manager exclude paths variable name.
  */
 define('GTM_VARNAME_GTM_EXCLUDE_PATHS', 'utexas_google_tag_manager_gtm_exclude_paths');
@@ -52,11 +67,9 @@ define('GTM_VARNAME_GTM_EXCLUDE_PATHS', 'utexas_google_tag_manager_gtm_exclude_p
 function utexas_google_tag_manager_help($path, $args) {
   switch ($path) {
     case 'admin/help#' . GTM_MODULE_NAME:
-
       return '<p>' . t('The Google Tag Manager module allows users with the
         @role_title permission to configure the GTM tag that appears on every
         page.', array('@role_title' => GTM_ADMIN_ROLE_TITLE)) . '</p>';
-
     break;
 
   }
@@ -65,7 +78,7 @@ function utexas_google_tag_manager_help($path, $args) {
 /**
  * Implements hook_permission().
  *
- * Defines a user permission to allow users to configure the module.
+ * Defines a user permission to allow users to configure module administration.
  */
 function utexas_google_tag_manager_permission() {
   return array(
@@ -120,8 +133,8 @@ function utexas_google_tag_manager_admin_form($form, &$form_state) {
   $form[GTM_VARNAME_GTM_VERIFICATION] = array(
     '#type' => 'textfield',
     '#title' => t('Webmaster Tools Verification Code'),
-    '#description' => t('Enter your !gtm_verification code (a long,
-      alphanumeric string). This is not required, but it is one way to authenticate your website with Google.', array(
+    '#description' => t('What is your !gtm_verification code? It usually is a long,
+      alphanumeric string', array(
         '!gtm_verification' => l(t('Google site verification'),
           '//support.google.com/webmasters/answer/35659',
           array('absolute' => TRUE)))),
@@ -135,8 +148,29 @@ function utexas_google_tag_manager_admin_form($form, &$form_state) {
   // Add a checkbox to indicate if GTM should be included on admin paths.
   $form[GTM_VARNAME_GTM_INCLUDE_ADMIN] = array(
     '#type' => 'checkbox',
-    '#title' => t('Include Google Tag Manager on administration pages'),
+    '#title' => t('Include Google Tag Manager on administration pages.'),
     '#default_value' => variable_get(GTM_VARNAME_GTM_INCLUDE_ADMIN, FALSE),
+  );
+
+  // Add a checkbox to indicate if GTM should be included on unpublished nodes.
+  $form[GTM_VARNAME_GTM_INCLUDE_UNPUBLISHED] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Include Google Tag Manager on unpublished nodes.'),
+    '#default_value' => variable_get(GTM_VARNAME_GTM_INCLUDE_UNPUBLISHED, FALSE),
+  );
+
+  // Add a checkbox to indicate if GTM should show for authenticated pages.
+  $form[GTM_VARNAME_GTM_INCLUDE_AUTHENTICATED] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Include Google Tag Manager for logged in users.'),
+    '#default_value' => variable_get(GTM_VARNAME_GTM_INCLUDE_AUTHENTICATED, FALSE),
+  );
+
+  // Add a checkbox to indicate if GTM should show for 403 pages.
+  $form[GTM_VARNAME_GTM_INCLUDE_403] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Include Google Tag Manager on 403 nodes.'),
+    '#default_value' => variable_get(GTM_VARNAME_GTM_INCLUDE_403, FALSE),
   );
 
   // Add a textarea to set extra exclude paths.
@@ -183,6 +217,9 @@ function utexas_google_tag_manager_page_build(&$page) {
   // Get our configuration options.
   $include_admin = variable_get(GTM_VARNAME_GTM_INCLUDE_ADMIN, FALSE);
   $exclude_paths = variable_get(GTM_VARNAME_GTM_EXCLUDE_PATHS, '');
+  $include_unpublished = variable_get(GTM_VARNAME_GTM_INCLUDE_UNPUBLISHED, FALSE);
+  $include_authenticated = variable_get(GTM_VARNAME_GTM_INCLUDE_AUTHENTICATED, FALSE);
+  $include_403 = variable_get(GTM_VARNAME_GTM_INCLUDE_403, FALSE);
 
   $include_embed_code = FALSE;
 
@@ -192,10 +229,30 @@ function utexas_google_tag_manager_page_build(&$page) {
     $include_embed_code = TRUE;
   }
 
-  // Second, check whether the current path is an admin path and whether admin
-  // paths are excluded in the module config. If so, exclude the embed code.
+  // Check whether the current path is an admin path and whether admin paths
+  // are excluded in the module config. If so, exclude the embed code.
   if ((path_is_admin(current_path()) and !$include_admin)) {
     $include_embed_code = FALSE;
+  }
+
+  // Next, exclude code if (1) the site shouldn't track authenticated
+  // traffic and (2) this page is being viewed by an authenticated user.
+  if (!$include_authenticated and user_is_logged_in()) {
+    $include_embed_code = FALSE;
+  }
+
+  // Now we check if (1) the site should track 403 pages.
+  // And if (2) this is a 403 page.
+  if (!$include_403 && drupal_get_http_header('Status') == "403 Forbidden") {
+    $include_embed_code = FALSE;
+  }
+
+  // Check if we are on an unpublished node. If so, exclude the embed.
+  if (!$include_unpublished and menu_get_object('node', 1)) {
+    $node = menu_get_object('node', 1);
+    if ($node->status == 0) {
+      $include_embed_code = FALSE;
+    }
   }
 
   if ($include_embed_code && $embed_code = utexas_google_tag_manager_generate_embed_code()) {
@@ -233,9 +290,7 @@ j=d.createElement(s),dl=l!=\'dataLayer\'?\'&l=\'+l:\'\';j.async=true;j.src=
 }
 
 /**
- * Helper function to parse excluded paths.
- *
- * Also checks current_path() against the exclude list.
+ * Helper function to parse excluded paths and checks current_path().
  *
  * @param string $paths
  *   Multiline string that represents paths to check against.
