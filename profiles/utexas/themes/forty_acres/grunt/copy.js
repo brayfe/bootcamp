@@ -13,8 +13,7 @@ module.exports = {
       		flatten: true,
       		src: [
       			'<%= path.src %>/bower_components/modernizr/modernizr.js',
-      			'<%= path.src %>/bower_components/jquery/dist/jquery.js',
-            '<%= path.src %>/bower_components/tablesaw/dist/tablesaw.js'
+      			'<%= path.src %>/bower_components/jquery/dist/jquery.js'
       		],
       		dest: '<%= path.dist %>/js'
       	}]
@@ -39,7 +38,7 @@ module.exports = {
           {
             expand: true,
             cwd: '<%= path.dist %>/js/',
-            src: ['application.min.js', 'foundation.min.js', 'jquery.min.js', 'jquery.plugins.min.js', 'modernizr.min.js', 'polyfill.min.js','tablesaw.js'],
+            src: ['application.min.js', 'foundation.min.js', 'jquery.min.js', 'jquery.plugins.min.js', 'modernizr.min.js', 'polyfill.min.js'],
             dest: 'js'
           }
         ]

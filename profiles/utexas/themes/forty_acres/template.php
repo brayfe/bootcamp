@@ -759,14 +759,6 @@ function forty_acres_preprocess_page(&$variables, $hook) {
     drupal_add_css('.footer-theme2 .footer-primary {border-right: 1px solid #cbcbcb!important;}', 'inline');
   }
 
-  // Pass variable for search bar display.
-  $variables['search_bar_display'] = FALSE;
-  if (theme_get_setting('display_search') == 'yes') {
-    $variables['search_bar_display'] = TRUE;
-  }
-  else {
-    drupal_add_css('@media only screen and (max-width: 64em) {.container-nav-phase2 .nav-item:first-child {border-top:none!important;}.container-nav-phase2 .nav {margin-top: 0!important;}}', 'inline');
-  }
 }
 
 /**

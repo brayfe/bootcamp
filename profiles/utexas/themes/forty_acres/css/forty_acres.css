@@ -481,7 +481,11 @@ select {
 .UT-header {
 	position: relative;
 	z-index: 100;
-	border-bottom: 1px solid #EBE8E2; /* overlay to catch touch events when side menu is open */
+	min-height: 80px; /* Landscape phones and down */ /* Landscape phones and down */ /* overlay to catch touch events when side menu is open */
+}
+
+.UT-header.tall_logo {
+	min-height: 102px;
 }
 
 .UT-header .nav-overlay {
@@ -496,7 +500,6 @@ select {
 	min-height: 100%;
 	z-index: 101;
 	-webkit-transform: translateX(-16.5625rem);
-	-ms-transform: translateX(-16.5625rem);
 	transform: translateX(-16.5625rem);
 }
 
@@ -515,7 +518,6 @@ select {
 	right: 0;
 	height: 100%;
 	-webkit-transform: translateX(100%);
-	-ms-transform: translateX(100%);
 	transform: translateX(100%);
 	-webkit-transform: translate3d(100%, 0, 0);
 	transform: translate3d(100%, 0, 0);
@@ -528,7 +530,6 @@ select {
 
 .show-nav .UT-header .nav-wrapper {
 	-webkit-transform: translateX(0);
-	-ms-transform: translateX(0);
 	transform: translateX(0);
 	-webkit-transform: translate3d(0%, 0, 0);
 	transform: translate3d(0%, 0, 0);
@@ -544,7 +545,6 @@ select {
 
 .UT-page {
 	-webkit-transform: translateX(0);
-	-ms-transform: translateX(0);
 	transform: translateX(0);
 	-webkit-transform: translate3d(0%, 0, 0);
 	transform: translate3d(0%, 0, 0);
@@ -553,7 +553,6 @@ select {
 
 .show-nav .UT-page {
 	-webkit-transform: translateX(-16.5625rem);
-	-ms-transform: translateX(-16.5625rem);
 	transform: translateX(-16.5625rem);
 	-webkit-transform: translate3d(-16.5625rem, 0, 0);
 	transform: translate3d(-16.5625rem, 0, 0); /* Landscape phones and down */
@@ -1677,20 +1676,20 @@ textarea {
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 100px;
+	height: 50px;
 	background: #fff;
 	z-index: 100;
 	transition: 0.2s ease-in-out;
+	border-bottom: 1px solid #EBE8E2;
 	margin-left: auto;
 	margin-right: auto; /* Landscape phones and down */
 }
 
 .show-nav .container-logo-p2 {
 	-webkit-transform: translateX(-16.5625rem);
-	-ms-transform: translateX(-16.5625rem);
 	transform: translateX(-16.5625rem);
-	-webkit-transform: translate3d(-16.5625rem, 0, 0);
-	transform: translate3d(-16.5625rem, 0, 0); /* Landscape phones and down */
+	-webkit-transform: translate3d(-16.5625rem, 0, 0) !important;
+	transform: translate3d(-16.5625rem, 0, 0) !important; /* Landscape phones and down */
 }
 
 .no-csstransforms .show-nav .container-logo-p2 {
@@ -1704,13 +1703,10 @@ textarea {
 }
 
 .container-logo-p2 .main_logo {
-	max-height: 60px;
+	max-height: 40px;
 	margin-top: 0;
 	position: relative;
-	top: 50%;
-	-webkit-transform: translateY(-50%);
-	-ms-transform: translateY(-50%);
-	transform: translateY(-50%); /* Landscape phones and down */
+	top: 5px; /* Landscape phones and down */
 }
 
 .container-logo-p2 .UT-nav-hamburger {
@@ -1718,14 +1714,23 @@ textarea {
 	color: #BF5700;
 	text-decoration: none;
 	float: right;
-	height: 100px;
-	line-height: 100px;
+	height: 50px;
+	line-height: 55px;
 	padding: 0 10px;
 	font-size: 1.25rem; /* Landscape phones and down */
 }
 
+.UT-header.theme1.tall_logo .container-logo-p2 {
+	height: 70px; /* Landscape phones and down */
+}
+
 .UT-header.theme1.tall_logo .container-logo-p2 .main_logo {
-	max-height: 75px; /* Landscape phones and down */
+	max-height: 60px; /* Landscape phones and down */
+}
+
+.UT-header.theme1.tall_logo .container-logo-p2 .UT-nav-hamburger {
+	height: 70px;
+	line-height: 70px;
 }
 
 .UT-header.theme1.tall_logo .container.container-nav.container-nav-phase2 {
@@ -2135,162 +2140,12 @@ textarea {
 	font-weight: bold;
 }
 
-.subnav ul {
-	display: none; /* Landscape phones and down */
-}
-
 .subnav ul.menu li {
 	margin-bottom: 5px;
 }
 
 .container-top.top-subnav {
 	padding-bottom: 0px;
-}
-
-.container-table {
-	padding-top: 20px;
-	padding-bottom: 0px; /* Landscape phones and down */
-}
-
-.container-table .table-with-tabs .tabs {
-	margin-bottom: 0px;
-	border-bottom: 0px;
-}
-
-.container-table .table-with-tabs .tabs-content > .content.active {
-	padding-top: 0px;
-}
-
-/*! Tablesaw - v0.1.6 - 2014-07-23
-* https://github.com/filamentgroup/tablesaw
-* Copyright (c) 2014 Filament Group; Licensed MIT */
-
-table.tablesaw {
-	empty-cells: show;
-	max-width: 100%;
-	width: 100%;
-}
-
-.tablesaw {
-	border-collapse: collapse;
-	width: 100%;
-}
-
-/* Structure */
-
-.tablesaw {
-	border: 0;
-	padding: 0;
-	margin-bottom: 20px;
-}
-
-.tablesaw th,
-.tablesaw td {
-	box-sizing: border-box;
-	padding: 0.5em 0.7em;
-}
-
-.tablesaw thead tr:first-child th {
-	padding-top: 0.9em;
-	padding-bottom: 0.7em;
-}
-
-table.tablesaw tbody th {
-	font-weight: bold;
-}
-
-table.tablesaw thead th,
-table.tablesaw thead td {
-	color: #444;
-	font-size: 0.9em;
-}
-
-.tablesaw th,
-.tablesaw td {
-	line-height: 1em;
-	text-align: left;
-	vertical-align: middle;
-}
-
-.tablesaw tbody {
-	border-left: 1px solid #e1ddd2;
-	border-right: 1px solid #e1ddd2;
-}
-
-.tablesaw td,
-.tablesaw tbody th {
-	vertical-align: middle;
-	font-size: 0.875rem;
-}
-
-.tablesaw td .btn,
-.tablesaw tbody th .btn {
-	margin: 0;
-}
-
-.tablesaw thead {
-	border: 1px solid #e1ddd2;
-	background: #F5F4F0;
-}
-
-.tablesaw thead th {
-	font-weight: 100;
-	color: #777;
-	text-shadow: 0 1px 0 #fff;
-	text-align: left;
-}
-
-.tablesaw thead tr:first-child th {
-	font-weight: 700;
-}
-
-/* Table rows have a gray bottom stroke by default */
-
-.tablesaw tbody tr {
-	border-bottom: 1px solid #e1ddd2;
-}
-
-.tablesaw caption {
-	text-align: left;
-	margin-bottom: 1.4em;
-	opacity: 0.5;
-}
-
-/* Stack */
-
-.tablesaw-cell-label-top {
-	text-transform: uppercase;
-	font-size: 0.9em;
-	font-weight: normal;
-}
-
-.tablesaw-cell-label {
-	font-size: 0.65em;
-	text-transform: uppercase;
-	color: #888;
-	font-family: sans-serif;
-}
-
-/* Table rows have a gray bottom stroke by default */
-
-.tablesaw-stack tbody tr {
-	border-bottom: 1px solid #dfdfdf;
-}
-
-.tablesaw-stack td .tablesaw-cell-label,
-.tablesaw-stack th .tablesaw-cell-label {
-	display: none;
-}
-
-/* Mobile first styles: Begin with the stacked presentation at narrow widths */
-
-.tablesaw-stack tbody td { /* Landscape phones and down */
-}
-
-/* Media query to show as a standard table at 560px (35em x 16px) or wider */
-
-.tablesaw-fix-persist {
-	table-layout: fixed;
 }
 
 .tweet {
@@ -2426,58 +2281,6 @@ hr {
 	padding: 0;
 }
 
-@media only all {
-
-/* Show the table cells as a block level element */
-
-/* Make the label elements a percentage width */
-
-/* For grouped headers, have a different style to visually separate the levels by classing the first label in each col group */
-
-/* Avoid double strokes when stacked */
-
-/* Avoid double strokes when stacked */
-
-.tablesaw-stack td,
-.tablesaw-stack th {
-	text-align: left;
-	display: block;
-}
-
-.tablesaw-stack tr {
-	clear: both;
-	display: table-row;
-}
-
-.tablesaw-stack td .tablesaw-cell-label,
-.tablesaw-stack th .tablesaw-cell-label {
-	display: block;
-	padding: 0 0.6em 0 0;
-	min-width: 30%;
-	display: inline-block;
-}
-
-.tablesaw-stack th .tablesaw-cell-label-top,
-.tablesaw-stack td .tablesaw-cell-label-top {
-	display: block;
-	padding: 0.4em 0;
-	margin: 0.4em 0;
-}
-
-.tablesaw-cell-label {
-	display: block;
-}
-
-.tablesaw-stack tbody th.group {
-	margin-top: -1px;
-}
-
-.tablesaw-stack th.group b.tablesaw-cell-label {
-	display: none !important;
-}
-
-}
-
 @media only screen and (min-width:40.063em) {
 
 .ct--sidebar-tabs .ct--article-details {
@@ -2529,6 +2332,20 @@ hr {
 	clear: none;
 	font-size: 1.125rem;
 	line-height: 1.625rem;
+}
+
+.UT-header {
+	position: fixed;
+	left: 0;
+	right: 0;
+}
+
+.UT-header + .UT-page {
+	padding-top: 82px;
+}
+
+.UT-header.tall_logo + .UT-page {
+	padding-top: 102px;
 }
 
 .container-footer {
@@ -2761,23 +2578,12 @@ hr {
 }
 
 .subnav {
-	margin-top: 30px;
-	margin-bottom: 50px;
 	padding-right: 30px;
 	padding-left: 5px;
 }
 
 .subnav select {
 	display: none;
-}
-
-.subnav ul {
-	display: block;
-}
-
-.container-table {
-	padding-bottom: 20px;
-	margin-bottom: 30px;
 }
 
 .tweet .tweet-image {
@@ -2868,44 +2674,6 @@ body #toolbar {
 
 }
 
-@media (min-width: 40em) {
-
-.tablesaw td {
-	line-height: 2em;
-}
-
-/* Show the table header rows */
-
-/* Hide the labels in each cell */
-
-.tablesaw-stack tr {
-	display: table-row;
-}
-
-.tablesaw-stack td,
-.tablesaw-stack th,
-.tablesaw-stack thead td,
-.tablesaw-stack thead th {
-	display: table-cell;
-	margin: 0;
-}
-
-.tablesaw-stack td .tablesaw-cell-label,
-.tablesaw-stack th .tablesaw-cell-label {
-	display: none !important;
-}
-
-.tablesaw-modeswitch {
-	float: left;
-	clear: none;
-}
-
-.tablesaw-sortable-switch + .tablesaw-modeswitch {
-	border-top: none;
-}
-
-}
-
 @media only screen and (min-width:64.063em) {
 
 .tabs .tab-title a {
@@ -2925,12 +2693,24 @@ body #toolbar {
 	line-height: 2.8125rem;
 }
 
+.UT-header {
+	position: relative;
+	border-bottom: 1px solid #EBE8E2;
+}
+
+.UT-header + .UT-page {
+	padding-top: 0;
+}
+
+.UT-header.tall_logo + .UT-page {
+	padding-top: 0;
+}
+
 .UT-header .nav-wrapper {
 	position: static;
 	height: auto;
 	width: auto !important;
 	-webkit-transform: translateX(0);
-	-ms-transform: translateX(0);
 	transform: translateX(0);
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
@@ -2940,7 +2720,6 @@ body #toolbar {
 
 .show-nav .UT-page {
 	-webkit-transform: translateX(0);
-	-ms-transform: translateX(0);
 	transform: translateX(0);
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
@@ -3120,7 +2899,6 @@ body #toolbar {
 
 .show-nav .container-logo-p2 {
 	-webkit-transform: translateX(0);
-	-ms-transform: translateX(0);
 	transform: translateX(0);
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
@@ -3132,16 +2910,20 @@ body #toolbar {
 }
 
 .container-logo-p2 .main_logo {
+	max-height: 60px;
 	margin-top: -3px;
 	top: inherit;
 	-webkit-transform: none;
-	-ms-transform: none;
 	transform: none;
 }
 
 .container-logo-p2 .UT-nav-hamburger {
 	display: none;
 	color: #382E2C;
+}
+
+.UT-header.theme1.tall_logo .container-logo-p2 {
+	height: inherit;
 }
 
 .UT-header.theme1.tall_logo .container-logo-p2 .main_logo {
@@ -3528,67 +3310,12 @@ body #toolbar {
 	padding: 10px 10px 0 10px !important;
 }
 
-.tablesaw-stack tbody td:first-child {
-	padding-top: 15px;
-}
-
-.tablesaw-stack tbody td:last-child {
-	padding-bottom: 5px;
-}
-
 body.toolbar-drawer {
 	padding-top: 0 !important;
 }
 
 body #toolbar {
 	display: none;
-}
-
-}
-
-@media (max-width: 39.9375em) {
-
-.tablesaw-stack thead td,
-.tablesaw-stack thead th {
-	display: none;
-}
-
-.tablesaw-stack tbody td,
-.tablesaw-stack tbody th {
-	clear: left;
-	float: left;
-	width: 100%;
-	font-size: 0.8125rem;
-	padding-top: 10px;
-	padding-bottom: 0px;
-}
-
-.tablesaw-stack tbody td:after,
-.tablesaw-stack tbody th:after {
-	content: "";
-	display: block;
-	height: 1px;
-	width: 100%;
-	padding-top: 10px;
-	border-bottom: 1px solid #e1ddd2;
-}
-
-.tablesaw-stack tbody td:last-child:after,
-.tablesaw-stack tbody th:last-child:after {
-	border-bottom: 0px;
-}
-
-.tablesaw-stack tbody tr {
-	border-bottom: 1px solid #333F48;
-}
-
-.tablesaw-stack tbody tr:last-child {
-	border-bottom: 2px solid #e1ddd2;
-}
-
-.tablesaw-cell-label {
-	position: relative;
-	top: -1px;
 }
 
 }

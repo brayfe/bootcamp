@@ -37,7 +37,7 @@
 		}
 		@include respond(large) {
 			font-size:1.25rem;
-			line-height:1.6875rem		
+			line-height:1.6875rem
 		}
 	}
 	.utexas-flex-content .utexas-flex-content-area-copy {
@@ -62,7 +62,7 @@
 		list-style-type:none;
 			padding:0 5px;
 		@include respond(medium) {
-			padding:0 
+			padding:0
 		}
 	}
 	.utexas-flex-content .utexas-flex-content-area-links ul li {
@@ -103,10 +103,23 @@
 .field_utexas_flex_content_area_a .content.row .utexas_flex_content_hr:first-child, .field_utexas_flex_content_area_b .content.row .utexas_flex_content_hr:first-child {
 	display: none;
 }
+.region-content-bottom.accent {
+	.utexas-flex-content {
+		margin-bottom: 20px;
+		@include respond(medium) {
+			margin-bottom: 25px;
+		}
+	}
+}
 .sidebar-content {
 	.field_utexas_flex_content_area_a,
 	.field_utexas_flex_content_area_b {
 		.utexas-flex-content {
+			margin-bottom: 20px;
+			@include respond(medium) {
+				margin-bottom: 25px;
+			}
+			.utexas-flex-content-area-headline,
 			.utexas-flex-content-area-headline a {
 				color: #474747;
 				font-size: rem-calc(17px);
@@ -171,7 +184,7 @@
               padding: 10px 20px;
             }
           }
-        
+
 
         ul{
           background-color: #f5f4f0;
@@ -217,6 +230,11 @@
             &:after{
               font-size: rem-calc(11);
             }
+          }
+        }
+        .cta.utexas-flex-content-cta {
+          span {
+            color: #fff;
           }
         }
     }

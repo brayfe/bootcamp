@@ -27,8 +27,7 @@ module.exports = {
             '<%= path.src %>/bower_components/Accessible-Mega-Menu/js/jquery-accessibleMegaMenu.js',
             '<%= path.src %>/js/navigation.js',
             '<%= path.src %>/js/layout.js',
-            '<%= path.src %>/js/app.js',
-            '<%= path.src %>/bower_components/tablesaw/dist/tablesaw.stackonly.js'
+            '<%= path.src %>/js/app.js'
           ]
         }
     },
