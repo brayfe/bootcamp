@@ -39,6 +39,7 @@ function content_type_standard_page_strongarm() {
     'field_utexas_twitter_widget' => 'Twitter Widget',
     'field_wysiwyg_a' => 'WYSIWYG A',
     'field_wysiwyg_b' => 'WYSIWYG B',
+    'field_utexas_resource' => 'Resources',
   );
   $export['fieldblock-node-standard_page-default'] = $strongarm;
 
@@ -63,11 +64,17 @@ function content_type_standard_page_strongarm() {
       'search_result' => array(
         'custom_settings' => FALSE,
       ),
+      'token' => array(
+        'custom_settings' => FALSE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
         'title' => array(
           'weight' => '0',
+        ),
+        'path' => array(
+          'weight' => '30',
         ),
       ),
       'display' => array(),
