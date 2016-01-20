@@ -1,13 +1,13 @@
 # features/background_accent.feature
 
-@api @javascript
+@api @javascript @media_upload
 Feature: Background Accent
   In order brand individual landing pages
   As a site builder
   I need to be able to add a background image to the related content region
 
 Scenario: Demonstrate adding an image and its presence on a page
-  Given I am logged in as a user with the "administrator" role
+  Given I am logged in as a user with the "administrator" role on this site
   When I go to "node/add/landing-page"
   And I fill in "Test Background Image" for "edit-title" in the "form_item_title" region
   And I click on the link "Background Accent" in the ".vertical-tabs-list" region
@@ -22,7 +22,7 @@ Scenario: Demonstrate adding an image and its presence on a page
   And I press the "Save" button
   Then I should see the text "Test Background Image" in the "page_title" region
   And I should see the ".container.container-bottom.accent" css selector with css property "position" containing "relative"
-  And I should see the ".container.container-bottom.accent .field_utexas_social_links" css selector with css property "background-color" containing "rgba(248, 248, 248, 0"
+  And I should see the ".container.container-bottom.accent .field_utexas_social_links" css selector with css property "background-color" containing "rgb(255, 255, 255)"
   And I should see the ".container.container-bottom.accent .field_utexas_social_links " css selector with css property "border" containing "1px solid rgb(51, 63, 72)"
   And I should see the ".container.container-bottom.accent" css selector with pseudo element ":before" with css property "background-image" containing "files/styles/utexas_background_accent/public/background-accents/background-accent"
   And I should see the ".container.container-bottom.accent" css selector with pseudo element ":before" with css property "background-size" containing "cover"

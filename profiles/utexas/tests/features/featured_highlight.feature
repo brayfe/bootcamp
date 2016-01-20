@@ -1,6 +1,6 @@
 # features/featured_highlight.feature
 
-@api
+@api @media_upload
 Feature: Featured Highlight
 #  In order use the Featured Highlight widget
 #  As a site builder

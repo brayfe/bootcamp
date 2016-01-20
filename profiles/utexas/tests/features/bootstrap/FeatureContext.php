@@ -203,6 +203,40 @@ class FeatureContext extends RawDrupalContext implements SnippetAcceptingContext
   }
 
   /**
+   * @When I click on the element :arg1 in the :arg2 region containing the text :arg3
+   */
+  public function iClickOnTheElementintheRegionContainingTheText($element, $region, $text) {
+    $session = $this->getSession();
+    $found_region = $session->getPage()->find('css', $region);
+    // Errors must not pass silently.
+    if (NULL === $found_region) {
+      throw new \InvalidArgumentException(sprintf('Could not find element: "%s"', $element));
+    }
+
+    $found_elements = $found_region->findAll('css', $element);
+    // Errors must not pass silently.
+    if (NULL === $found_elements) {
+      throw new \InvalidArgumentException(sprintf('Could not find element: "%s"', $element));
+    }
+    $found = FALSE;
+    foreach($found_elements as $element) {
+      $pos = strpos($element->getText(), $text);
+      if ($pos === FALSE) {
+      }
+      else {
+        $found = TRUE;
+        $element->click();
+      }
+    }
+    // Errors must not pass silently.
+    if (!$found) {
+      throw new \InvalidArgumentException(sprintf('Could not find link with text: "%s"', $text));
+    }
+
+
+  }
+
+  /**
    * @When /^I switch to the iframe "([^"]*)"$/
    */
   public function iSwitchToTheIframe($name) {

@@ -1,6 +1,6 @@
 # features/landing_page.feature
 
-@api @javascript
+@api @javascript @media_upload
 
 Feature: Landing Page Content Type
   In order to add overview/feature pages

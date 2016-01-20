@@ -1,6 +1,6 @@
 # features/photo_content_area.feature
 
-@api
+@api @media_upload
 Feature: Photo Content Area
   In order use the Photo Content Area widget
   As a site builder

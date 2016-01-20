@@ -1,6 +1,6 @@
 # features/image_links.feature
 
-@api
+@api @media_upload
 
 Feature: Image Links
   In order to use the Image Links widget

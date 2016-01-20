@@ -1,6 +1,6 @@
 # features/promo_units.feature
 
-@api @javascript
+@api @javascript @media_upload
 Feature: UTexas Promo Units
   In order add promo units to a page
   As a site builder

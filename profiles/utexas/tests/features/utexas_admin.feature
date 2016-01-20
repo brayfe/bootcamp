@@ -1,6 +1,6 @@
 # features/utexas_admin.feature
 
-@api @javascript
+@api @javascript @media_upload
 Feature: UTexas Admin
   In order to leverage the full functionality of the UTexas distribution
   As a site builder
@@ -15,7 +15,7 @@ Scenario: Verify jQuery version is correct on node forms and allows add/remove.
   And I click on the element "#edit-field-utexas-flex-content-area-a-und-0-image-browse-button"
   And I switch to the iframe "mediaBrowser"
   And I click "Library"
-  And I click on the element "#media-item-1"
+  And I click on the element ".media-item"
   And I click "Submit"
   And I wait for css element "#edit-field-utexas-flex-content-area-a-und-0-image-remove-button" to appear
   And I click on the element "#edit-field-utexas-flex-content-area-a-und-0-image-remove-button"
@@ -24,7 +24,7 @@ Scenario: Verify jQuery version is correct on node forms and allows add/remove.
   And I switch to the iframe "mediaBrowser"
   # If jQuery library is not correct, the test should fail here.
   And I click "Library"
-  And I click on the element "#media-item-1"
+  And I click on the element ".media-item"
   And I click "Submit"
   And I press the "Save" button
   Then I should see the text "Test Page" in the "page_title" region
