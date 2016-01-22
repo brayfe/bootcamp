@@ -25,22 +25,40 @@ source $script_path/config.sh
 # Get a timestamp for log naming
 now="$(date +%s)"
 
-if [ "$1" == "all" ] || [ "$1" == "noscreens" ] || [ "$1" == "screens" ] && [ "$2" == "mc" ] || [ "$2" == "utdk" ]; then
+# If log directory doesn't exist, make it.
+if [ ! -d "$script_path/logs" ]; then
+  echo "Making log directory..."
+  mkdir "$script_path/logs"
+fi
 
-  # If noscreens or all argument was passed with the mc argument run the entire behat suite.
+if [ "$1" == "all" ] || [ "$1" == "noscreens" ] || [ "$1" == "screens" ] && [ "$2" == "mc" ] || [ "$2" == "utdk" ] || [ "$2" == "nomedia" ] || [ "$2" == "headless" ] ; then
+
+  # If the mc argument was passed, run the entire behat suite.
   if [ "$1" == "all" ] || [ "$1" == "noscreens" ] && [ "$2"  == "mc" ]; then
     # Run the full behat suite for the mcms code base - outputting to screen and logs
     echo "Running behat test suite for mcms code base..."
     echo ===========================================================================
     behat --config="$script_path/behat.yml" --tags '~@screenshots' | tee "$script_path/logs/behat-$now.log"
     echo ===========================================================================
-  #
+  # If the utdk argument was passed, omit mcms specific tests.
   elif [ "$1" == "all" ] || [ "$1" == "noscreens" ] && [ "$2"  == "utdk" ]; then
     # Run the behat suite for the UTDK code base - outputting to screen and logs
     echo "Running limited behat test suite for the UTDK code base..."
     echo ===========================================================================
-    behat --config="$script_path/behat.yml" --tags '~@screenshots&&~@faculty_profile' | tee "$script_path/logs/behat-$now.log"
+    behat --config="$script_path/behat.yml" --tags '~@screenshots&&~@mcms_only' | tee "$script_path/logs/behat-$now.log"
     echo ===========================================================================
+  elif [ "$1" == "all" ] || [ "$1" == "noscreens" ] && [ "$2"  == "nomedia" ] || [ "$2"  == "headless" ]; then
+    # Run the behat suite for the UTDK code base - outputting to screen and logs
+    echo "Running limited behat test suite without media uploads..."
+    echo ===========================================================================
+    if [ "$2"  == "nomedia" ]; then
+      # Don't run tests with media uploads.
+      behat --config="$script_path/behat.yml" --tags '~@screenshots&&~@media_upload' | tee "$script_path/logs/behat-$now.log"
+      # Don't run tests with media uploads and use phantom.js
+    elif [ "$2"  == "headless" ]; then
+      behat --config="$script_path/behat.yml" --tags '~@screenshots&&~@media_upload' -p phantomjs | tee "$script_path/logs/behat-$now.log"
+      echo ===========================================================================
+    fi
   fi
   
   # If screens argument was passed or no argument (all steps) given run the screen tests with phantom.js.
@@ -139,4 +157,10 @@ else
   echo "          $script screens utdk"
   echo "          $script noscreens utdk"
   echo "          $script all utdk"
+  echo "          $script screens nomedia"
+  echo "          $script noscreens nomedia"
+  echo "          $script all nomedia"
+  echo "          $script screens headless"
+  echo "          $script noscreens headless"
+  echo "          $script all headless"
 fi

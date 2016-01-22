@@ -9,7 +9,7 @@
       .hero-callout {
         position: absolute;
         bottom: 30px;
-        right: 0px;
+        right: 7px;
         display: inline-block;
         float: right;
         @include respond(large) {
@@ -71,7 +71,7 @@
     .hero-callout{
       position: absolute;
       bottom: 30px;
-      right: 0px;
+      right: 7px;
       max-width: 60%;
       @include respond(medium){
         // Set desired max-width based on content/photo
@@ -301,10 +301,12 @@
       border: 1px solid $light-grey-border;
       padding: 15px;
       background-color: #fff;
+      min-height: inherit;
       @include respond(medium){
         padding: 50px 30px 60px 30px;
         padding-left: 40px;
         margin-left: -15px;
+        min-height: 250px;
       }
       @include respond(small-only){
         //Overrides Equalizer
@@ -326,6 +328,7 @@
       box-shadow: none;
       left: 0;
       bottom:0;
+      display: block;
       @include respond(medium){
         margin-top: 0px;
         margin-bottom: 0px;
@@ -388,9 +391,11 @@
         padding: 30px;
         margin-left: 0px;
         height: auto !important;
+        min-height: inherit;
       }
       .hero-thumbnail{
         max-height: 300px  !important;
+        min-height: 250px;
       }
     }
   }

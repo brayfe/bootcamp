@@ -15,6 +15,7 @@ function content_type_landing_page_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'fieldblock-node-landing_page-default';
   $strongarm->value = array(
+    'field_utexas_contact_info' => 'Contact Info',
     'field_utexas_featured_highlight' => 'Featured Highlight',
     'field_utexas_flex_content_area_a' => 'Flex Content Area A',
     'field_utexas_flex_content_area_b' => 'Flex Content Area B',
@@ -30,7 +31,7 @@ function content_type_landing_page_strongarm() {
     'field_utexas_twitter_widget' => 'Twitter Widget',
     'field_wysiwyg_a' => 'WYSIWYG A',
     'field_wysiwyg_b' => 'WYSIWYG B',
-    'field_utexas_contact_info' => 'Contact Info',
+    'field_utexas_resource' => 'Resources',
   );
   $export['fieldblock-node-landing_page-default'] = $strongarm;
 

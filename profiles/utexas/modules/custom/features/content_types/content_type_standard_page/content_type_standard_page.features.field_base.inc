@@ -27,6 +27,32 @@ function content_type_standard_page_field_default_field_bases() {
     'type' => 'context_field',
   );
 
+  // Exported field_base: 'field_standard_page_tags'.
+  $field_bases['field_standard_page_tags'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_standard_page_tags',
+    'indexes' => array(
+      'tid' => array(
+        0 => 'tid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'taxonomy',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => array(
+          'vocabulary' => 'tags',
+          'parent' => 0,
+        ),
+      ),
+    ),
+    'translatable' => 0,
+    'type' => 'taxonomy_term_reference',
+  );
+
   // Exported field_base: 'field_template'.
   $field_bases['field_template'] = array(
     'active' => 1,
@@ -325,6 +351,21 @@ function content_type_standard_page_field_default_field_bases() {
     'settings' => array(),
     'translatable' => 0,
     'type' => 'utexas_quick_links',
+  );
+
+  // Exported field_base: 'field_utexas_resource'.
+  $field_bases['field_utexas_resource'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_utexas_resource',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'utexas_resource',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'utexas_resource',
   );
 
   // Exported field_base: 'field_utexas_social_links'.

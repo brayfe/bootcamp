@@ -16,6 +16,11 @@ module.exports = {
   css: {
     files: '<%= path.dist %>/css/**/*.css',
     tasks: ['copy:STARTERKIT']
+  },
+
+  js: {
+    files: '<%= path.src %>/js/**/*.js',
+    tasks: ['concat','newer:uglify']
   }
 
 }

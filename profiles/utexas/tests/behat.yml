@@ -20,6 +20,7 @@ default:
       region_map:
         additional_info: ".additional-info"
         block_menu_block_1: "#block-menu-block-1"
+        branding: "#branding"
         caption_copy: '.caption-copy'
         content: ".content"
         content_top_left: "#context-block-region-content_top_left"
@@ -34,12 +35,15 @@ default:
         field_contact_info: ".field_contact_info"
         field_faculty_title: ".field_faculty_title"
         field_flex_content_area: "#field-utexas-flex-content-area-a-values"
+        field_name_body: ".field.body"
+        field_resource: "#field-utexas-resource-values"
         field_utexas_flex_content_area: ".field_utexas_flex_content_area_a"
         field_utexas_photo_content_area: ".field_utexas_photo_content_area"
         field_utexas_promo_list: ".field_utexas_promo_list"
         field_utexas_promo_units: ".field_utexas_promo_units"
         field_utexas_promo_units_values: "#field-utexas-promo-units-values"
         field_utexas_promo_list_values: "#edit-field-utexas-promo-list"
+        field_utexas_resource: ".field_utexas_resource"
         form_item_description: ".form-item-description"
         form_item_name: ".form-item-name"
         form_item_secondary_logo: ".form-item-secondary-logo"
@@ -56,6 +60,8 @@ default:
         image_links_edit: "#edit-field-utexas-image-link-a-und-0-link"
         main_content_context_region: "#context-block-region-content"
         main_content: "#context-block-region-content"
+        media_library: "#media-browser-tabset"
+        page: "#page"
         page_title: ".page-title"
         photo_content_area: "#edit-field-utexas-photo-content-area"
         primary_tabs: ".tabs.primary"
@@ -67,6 +73,7 @@ default:
         theme_default: ".theme-default"
         toolbar: "#toolbar"
         toolbar_drawer: '.toolbar-drawer'
+        top_left_region: '.region-main-content-top-left'
         twitter_widget_block: ".field.field_utexas_twitter_widget"
         utexas_newsreel_block: ".field.field_utexas_newsreel"
         wysiwyg_a_block: ".field_wysiwyg_a"

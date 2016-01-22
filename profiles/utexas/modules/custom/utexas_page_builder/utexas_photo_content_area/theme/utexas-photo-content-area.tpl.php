@@ -15,7 +15,7 @@
 ?>
 
 <div class="row">
-  <div class="column small-12 medium-6 force-width">
+  <div class="column small-12 force-width <?php print $grid_class; ?>">
     <?php if (isset($photo)): ?>
       <div class="photo-wrap">
         <?php print render($photo); ?>
@@ -25,7 +25,7 @@
       </div>
     <?php endif; ?>
   </div>
-  <div class="column small-12 medium-6 force-width">
+  <div class="column small-12 force-width <?php print $grid_class; ?>">
     <div class="links">
       <?php if (isset($headline)): ?>
         <h3 class="post-headline"><?php print $headline; ?></h3>

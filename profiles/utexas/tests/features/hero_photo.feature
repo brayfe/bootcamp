@@ -1,6 +1,6 @@
 # features/hero_photo.feature
 
-@api
+@api @media_upload
 Feature: UTexas Hero Photo
   In order use the Hero Photo field
   As a site builder

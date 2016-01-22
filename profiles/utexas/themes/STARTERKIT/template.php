@@ -16,4 +16,19 @@
  */
 function STARTERKIT_preprocess_page(&$vars, $hook) {
   $vars['partials_dir'] = __DIR__ . '/templates/partials/';
+
+  // Load foundation js files selected in theme settings.
+  $path = drupal_get_path('theme', 'STARTERKIT');
+  $extra_libraries = theme_get_setting('foundation_files') ? theme_get_setting('foundation_files') : array();
+  foreach ($extra_libraries as $library => $value) {
+    if ($library === $value) {
+      drupal_add_js($path . '/js/foundation.' . $library . '.js', array(
+        'scope' => 'foot_scripts',
+        'weight' => 4,
+      ));
+      if (file_exists($path . '/css/foundation.' . $library . '.css')) {
+        drupal_add_css($path . '/css/foundation.' . $library . '.css');
+      }
+    }
+  }
 }

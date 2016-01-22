@@ -69,7 +69,7 @@
                   <div class="subhead"><?php print $subhead; ?></div>
                 <?php endif; ?>
               </div>
-              <div class="medium-12 large-2 large-offset-1 column">
+              <div class="medium-12 large-3 column">
                 <?php if ($link) : ?>
                   <?php print $link; ?>
                 <?php endif; ?>

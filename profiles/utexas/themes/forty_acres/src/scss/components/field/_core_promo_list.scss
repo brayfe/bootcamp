@@ -6,21 +6,6 @@
       padding-bottom: 7px;
       font-weight: 700;
     }
-    ul {
-      margin: 0;
-      padding: 0;
-      @include respond(medium) {
-        padding: 0 5px;
-      }
-      @include respond(large) {
-        padding: 0 20px;
-      }
-    }
-    ul,
-    li {
-      display: block;
-      overflow: hidden;
-    }
   }
 }
 .utexas-promo-field.utexas-promo-list  {
@@ -66,7 +51,7 @@
   margin-right: 12px;
   margin-left: 0px;
   width: 63.92px;
-  @include respond (medium) {
+  @include respond(medium) {
     height: 68px;
     margin-top: 5px;
     width: 68px;
@@ -104,17 +89,16 @@
   @include respond(small-only) {
     margin-top: 2px;
   }
+  p {
+    margin: 0 0 10px;
+  }
 }
 .no_image {
+  min-height: 0!important;
   .promo-headline,
   .promo-copy {
     padding-left: 0!important;
   }
-}
-.utexas-promo-field .promo-copy p  {
-  margin: 0;
-  font-size: inherit;
-  line-height: inherit;
 }
 .field_utexas_promo_list .two-column .promo-list-li:nth-child(even) {
   .utexas-promo-field.utexas-promo-list {
@@ -167,7 +151,7 @@
     padding-left: 20px!important;
     padding-right: 20px!important;
   }
-}  
+}
 .fieldblock_field_utexas_promo_list {
   margin-bottom: 5px!important;
   @include respond(medium) {

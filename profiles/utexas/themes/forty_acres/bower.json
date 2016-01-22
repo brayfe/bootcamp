@@ -10,8 +10,7 @@
     "html5shiv": "~3.7.3",
     "jquery-placeholder": "~2.0.8",
     "jquery.browser": "~0.0.8",
-    "jquery-1.9.1": "http://code.jquery.com/jquery-1.9.1.js",
-    "tablesaw": "~1.0.4"
+    "jquery-1.9.1": "http://code.jquery.com/jquery-1.9.1.js"
   },
   "devDependencies": {
     "foundation": "5.4.7"

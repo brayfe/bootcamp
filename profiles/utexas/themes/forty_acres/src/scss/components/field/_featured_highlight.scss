@@ -97,9 +97,15 @@
   }
 }
 .container.container-highlight.field_utexas_featured_highlight {
-  display: table;
+  display: block;
   width: 100%;
+  @include respond(medium){
+    display: table;
+  }
   .container-highlight-table-row {
-    display:table-row;
+    display: block;
+    @include respond(medium){
+      display:table-row;
+    }
   }   
 }

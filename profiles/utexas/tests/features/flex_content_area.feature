@@ -1,6 +1,6 @@
 # features/flex_content_area.feature
 
-@api
+@api @media_upload
 Feature: Flex Content Area
   In order use the Flex Content Area widget
   As a site builder

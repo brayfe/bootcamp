@@ -70,7 +70,7 @@ function utexas_templates_schema() {
 function utexas_templates_install() {
   // Set the initial value for the schema version so we can
   // run updates after install.
-  drupal_set_installed_schema_version('utexas_templates', 7100);
+  drupal_set_installed_schema_version('utexas_templates', 7101);
 
   $templates = array(
     array(
@@ -185,6 +185,12 @@ function utexas_templates_install() {
             'machine_name' => 'field_utexas_photo_content_area',
             '_weight' => 0,
             'enabled' => FALSE,
+            'locked' => FALSE,
+          ),
+          'field_utexas_resource' => array(
+            'machine_name' => 'field_utexas_resource',
+            '_weight' => 1,
+            'enabled' => TRUE,
             'locked' => FALSE,
           ),
         ),
@@ -305,6 +311,12 @@ function utexas_templates_install() {
             'enabled' => FALSE,
             'locked' => FALSE,
           ),
+          'field_utexas_resource' => array(
+            'machine_name' => 'field_utexas_resource',
+            '_weight' => 1,
+            'enabled' => TRUE,
+            'locked' => FALSE,
+          ),
         ),
         'template_icon_fid' => 'header-with-content-sidebars.svg',
       ),
@@ -423,6 +435,12 @@ function utexas_templates_install() {
             'enabled' => FALSE,
             'locked' => FALSE,
           ),
+          'field_utexas_resource' => array(
+            'machine_name' => 'field_utexas_resource',
+            '_weight' => 3,
+            'enabled' => TRUE,
+            'locked' => FALSE,
+          ), 
         ),
         'template_icon_fid' => 'promotional-page-sidebar.svg',
       ),
@@ -539,6 +557,12 @@ function utexas_templates_install() {
             'machine_name' => 'field_utexas_photo_content_area',
             '_weight' => 1,
             'enabled' => FALSE,
+            'locked' => FALSE,
+          ),
+          'field_utexas_resource' => array(
+            'machine_name' => 'field_utexas_resource',
+            '_weight' => 2,
+            'enabled' => TRUE,
             'locked' => FALSE,
           ),
         ),
@@ -659,6 +683,12 @@ function utexas_templates_install() {
             'enabled' => TRUE,
             'locked' => FALSE,
           ),
+          'field_utexas_resource' => array(
+            'machine_name' => 'field_utexas_resource',
+            '_weight' => -2,
+            'enabled' => TRUE,
+            'locked' => FALSE,
+          ),
         ),
         'template_icon_fid' => 'featured-highlight.svg',
       ),
@@ -774,6 +804,12 @@ function utexas_templates_install() {
           'field_utexas_call_to_action' => array(
             'machine_name' => 'field_utexas_call_to_action',
             '_weight' => -1,
+            'enabled' => TRUE,
+            'locked' => FALSE,
+          ),
+          'field_utexas_resource' => array(
+            'machine_name' => 'field_utexas_resource',
+            '_weight' => 2,
             'enabled' => TRUE,
             'locked' => FALSE,
           ),
@@ -901,6 +937,12 @@ function utexas_templates_install() {
             'enabled' => TRUE,
             'locked' => FALSE,
           ),
+          'field_utexas_resource' => array(
+            'machine_name' => 'field_utexas_resource',
+            '_weight' => -2,
+            'enabled' => TRUE,
+            'locked' => FALSE,
+          ),
         ),
         'template_icon_fid' => 'full-width-content-page.svg',
       ),
@@ -1010,6 +1052,12 @@ function utexas_templates_install() {
           'field_utexas_newsreel' => array(
             'machine_name' => 'field_utexas_newsreel',
             '_weight' => 0,
+            'enabled' => FALSE,
+            'locked' => FALSE,
+          ),
+          'field_utexas_resource' => array(
+            'machine_name' => 'field_utexas_resource',
+            '_weight' => 1,
             'enabled' => FALSE,
             'locked' => FALSE,
           ),
@@ -1131,6 +1179,12 @@ function utexas_templates_install() {
             'enabled' => TRUE,
             'locked' => FALSE,
           ),
+          'field_utexas_resource' => array(
+            'machine_name' => 'field_utexas_resource',
+            '_weight' => -2,
+            'enabled' => TRUE,
+            'locked' => FALSE,
+          ),
         ),
         'template_icon_fid' => 'landing-page-template-1.svg',
       ),
@@ -1241,6 +1295,12 @@ function utexas_templates_install() {
           'field_utexas_call_to_action' => array(
             'machine_name' => 'field_utexas_call_to_action',
             '_weight' => -3,
+            'enabled' => TRUE,
+            'locked' => FALSE,
+          ),
+          'field_utexas_resource' => array(
+            'machine_name' => 'field_utexas_resource',
+            '_weight' => -2,
             'enabled' => TRUE,
             'locked' => FALSE,
           ),
@@ -1363,6 +1423,12 @@ function utexas_templates_install() {
             'enabled' => TRUE,
             'locked' => FALSE,
           ),
+          'field_utexas_resource' => array(
+            'machine_name' => 'field_utexas_resource',
+            '_weight' => -2,
+            'enabled' => TRUE,
+            'locked' => FALSE,
+          ),
         ),
         'template_icon_fid' => 'landing-page-template-3.svg',
       ),
@@ -1378,5 +1444,39 @@ function utexas_templates_install() {
     $entity->fields = serialize($template['additional_settings']['fields']);
     $entity->save();
     $inc++;
+  }
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Enabling UTexas Resource field.
+ */
+function utexas_templates_update_7101() {
+
+  $modules = array(
+    'utexas_resource',
+  );
+  module_enable($modules);
+
+  features_revert();
+
+  $templates = entity_load('template', FALSE, array(), FALSE);
+  foreach ($templates as $template) {
+
+    $template_fields = unserialize($template->fields);
+    if ($template->name != 'Open Text Page') {
+      $new_field = array(
+        'field_utexas_resource' => array(
+          'machine_name' => 'field_utexas_resource',
+          '_weight' => 1,
+          'enabled' => TRUE,
+          'locked' => FALSE,
+        )
+      );
+      $template_fields = array_merge($template_fields, $new_field);
+      $template->fields = serialize($template_fields);
+      entity_save('template', $template);
+    }
   }
 }

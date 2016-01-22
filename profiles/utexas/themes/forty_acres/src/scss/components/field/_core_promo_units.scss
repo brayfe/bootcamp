@@ -87,7 +87,7 @@
   }
 }
 .utexas-promo-field .promo-copy p {
-  margin:0;
+  margin:0 0 10px;
   font-size:inherit;
   line-height:inherit;
 }
@@ -108,14 +108,6 @@
   @include respond(large) {
   	padding-left:240px;
   }
-}
-.utexas-promo-field.utexas-promo-unit .promo-copy p, .utexas-promo-field.utexas-promo-unit .cta-wrapper p {
-	@include respond(small-only) {
-		display:inline;
-	}
-	@include respond(large) {
-		margin:0 0 6px;
-	}
 }
 .utexas-promo-field.utexas-promo-unit.utexas_promo_unit_landscape_image {
   .promo-copy, .promo-headline, .cta-wrapper {
@@ -152,24 +144,44 @@
     padding-left: 0px;
   }
 }
-.sidebar-module .field_utexas_promo_units .promo-copy,
-.sidebar-module .field_utexas_promo_units .cta-wrapper{
-  padding-left: 0 !important;
+
+.region-content-top-right,
+.sidebar-content .sidebar-module {
+	.field_utexas_promo_units .promo-copy,
+	.field_utexas_promo_units .cta-wrapper,
+	.field_utexas_promo_units .promo-headline {
+	  padding-left: initial !important;
+	}
+	.field_utexas_promo_units .promo-copy,
+	.field_utexas_promo_units .cta-wrapper{
+	  padding-left: initial !important;
+	}
+	.utexas-promo-field.utexas-promo-unit .promo-image {
+	  margin-bottom: 10px;
+	}
+	.utexas-promo-field.utexas-promo-unit .promo-image {
+	    width: 100%!important;
+	    height: auto!important;
+	}
 }
-.sidebar-default-style .field_utexas_promo_units .promo-copy,
-.sidebar-default-style .field_utexas_promo_units .cta-wrapper{
-  padding-left: 0 !important;
-}
-.region-content-top-right .field_utexas_promo_units .promo-copy,
-.region-content-top-right .field_utexas_promo_units .cta-wrapper{
-  padding-left: 0 !important;
-}
-.utexas-promo-field.utexas-promo-unit .promo-image {
-  margin-bottom: 10px;
-}
-.sidebar-module.sidebar-default-style .utexas-promo-field.utexas-promo-unit .promo-image {
-  @include respond(medium){
-    width: 100%;
-    height: auto;
-  }
+@media only screen and (min-width: 641px) and (max-width: 800px) {
+	.region-main-content-top-left,
+	.region-main-content-top-right {
+		.field_utexas_promo_units .promo-copy,
+		.field_utexas_promo_units .cta-wrapper,
+		.field_utexas_promo_units .promo-headline {
+			padding-left: initial !important;
+		}
+		.field_utexas_promo_units .promo-copy,
+		.field_utexas_promo_units .cta-wrapper{
+			padding-left: initial !important;
+		}
+		.utexas-promo-field.utexas-promo-unit .promo-image {
+			margin-bottom: 10px;
+		}
+		.utexas-promo-field.utexas-promo-unit .promo-image {
+				width: 100%!important;
+				height: auto!important;
+		}
+	}
 }

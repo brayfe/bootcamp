@@ -72,16 +72,20 @@ function forty_acres_form_system_theme_settings_alter(&$form, &$form_state) {
     $form['utexas_main_nav_theme_settings']['secondary_menu']['#default_value'] = (theme_get_setting('secondary_menu') == 'social_accounts') ? 'header_menu' : theme_get_setting('secondary_menu');
   }
 
-  $form['utexas_main_nav_theme_settings']['display_search'] = array(
-    '#type' => 'radios',
-    '#title' => t('Should the site search form be displayed in the header and mobile navigation menu?'),
-    '#options' => array(
-      'yes' => t('Yes'),
-      'no' => t('No'),
-    ),
-    '#description' => t("By default, the search form uses Drupal's internal search engine. To use Google Custom Search Engine, <a href='/admin/config/utexas/google_cse'>configure the CSE settings.</a>"),
-    '#default_value' => theme_get_setting('display_search'),
+  $form['utexas_searchbar_theme_settings'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Search Bar'),
   );
+  if (module_exists('utexas_google_cse')) {
+    $form['utexas_searchbar_theme_settings']['display_search'] = array(
+      '#markup' => t("Site search uses Google CSE, which yields better results than standard Drupal search.  If you would like to hide the search bar simply disable the <a href='/admin/modules'>Google CSE module.</a>"),
+    );
+  }
+  else {
+    $form['utexas_searchbar_theme_settings']['display_search'] = array(
+      '#markup' => t("<div class='messages warning'>Currently, the search bar will not display since the Google CSE module is not enabled. Check your <a href='/admin/modules'>enabled modules.</a></div>"),
+    );
+  }
 
   // Footer settings.
   $form['utexas_footer_theme_settings'] = array(

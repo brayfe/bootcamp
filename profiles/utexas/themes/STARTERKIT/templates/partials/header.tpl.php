@@ -77,13 +77,13 @@
                   $output = $render_array['utexas_social_accounts_social_accounts_block']["content"]["#markup"];
                    print $output;
                 endif; ?>
-                <?php if (isset($header_search_cse) && ($search_bar_display == TRUE)) :
+                <?php if (isset($header_search_cse)) :
                   print render($header_search_cse);
                 endif; ?>
               </div>
               <ul class="topnav-links hide-for-large-up">
                 <li class="nav-item nav-item-search">
-                  <?php if (isset($header_search_cse)&& ($search_bar_display == TRUE)) :
+                  <?php if (isset($header_search_cse)) :
                     print render($header_search_cse);
                   endif; ?>
                 </li>

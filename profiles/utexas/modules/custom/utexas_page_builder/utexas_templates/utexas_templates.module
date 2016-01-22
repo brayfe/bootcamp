@@ -634,8 +634,8 @@ function utexas_templates_theme_registry_alter(&$theme_registry) {
  * Loads the appropriate page.tpl.php file for page display.
  */
 function utexas_templates_preprocess_page(&$variables) {
-  // Make sure we're only doing these actions on a noad page.
-  if (isset($variables['node']) and arg(2) !== 'edit' and arg(2) !== 'delete') {
+  // Make sure we're only doing these actions on a noad "admin" callback.
+  if (isset($variables['node']) and !path_is_admin(current_path())) {
     // If we're on a node page, grab the object for use later.
     $node = $variables['node'];
 

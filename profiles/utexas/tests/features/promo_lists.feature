@@ -1,6 +1,6 @@
 # features/promo_lists.feature
 
-@api @javascript
+@api @javascript @media_upload
 Feature: UTexas Promo List
   In order to add promo lists to a page
   As a site builder

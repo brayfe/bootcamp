@@ -1,16 +1,12 @@
 default:
-- 'dev'
 - 'watch'
-
-dev:
-- 'clean'
-- 'sass:dev'
-- 'autoprefixer:dist'
 
 dist:
 - 'clean'
+- 'concurrent:copy-dist'
 - 'sass:dist'
 - 'autoprefixer:dist'
+- 'concat'
 
 build:
 - 'dist'

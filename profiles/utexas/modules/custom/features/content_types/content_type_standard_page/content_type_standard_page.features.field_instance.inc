@@ -166,6 +166,46 @@ function content_type_standard_page_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-standard_page-field_standard_page_tags'.
+  $field_instances['node-standard_page-field_standard_page_tags'] = array(
+    'bundle' => 'standard_page',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'A comma-separated list of terms from site <a href="/admin/structure/taxonomy/tags">Tags</a>. Existing tags will autocomplete as you type.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 23,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_standard_page_tags',
+    'label' => 'Tags',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'taxonomy',
+      'settings' => array(
+        'autocomplete_path' => 'taxonomy/autocomplete',
+        'size' => 60,
+      ),
+      'type' => 'taxonomy_autocomplete',
+      'weight' => 32,
+    ),
+  );
+
   // Exported field_instance: 'node-standard_page-field_template'.
   $field_instances['node-standard_page-field_template'] = array(
     'bundle' => 'standard_page',
@@ -691,6 +731,45 @@ function content_type_standard_page_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-standard_page-field_utexas_resource'.
+  $field_instances['node-standard_page-field_utexas_resource'] = array(
+    'bundle' => 'standard_page',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'utexas_resource',
+        'settings' => array(),
+        'type' => 'utexas_resource',
+        'weight' => 22,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_utexas_resource',
+    'label' => 'Resources',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'utexas_resource',
+      'settings' => array(
+        'max_links' => 5,
+      ),
+      'type' => 'utexas_resource',
+      'weight' => 31,
+    ),
+  );
+
   // Exported field_instance: 'node-standard_page-field_utexas_social_links'.
   $field_instances['node-standard_page-field_utexas_social_links'] = array(
     'bundle' => 'standard_page',
@@ -851,6 +930,7 @@ function content_type_standard_page_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('<p>Choose \'Single list full\' for a one-column list of items that spans the width of its container.<br>Choose \'Single list responsive\' to produce a two-column list that spans the width of its container.<br>Choose \'Two lists, side-by-side\' to produce a one-column list that spans half the width of its container.<br>*note: two lists need to be entered with \'Two lists, side-by-side\' style selected to fill a container</p>');
+  t('A comma-separated list of terms from site <a href="/admin/structure/taxonomy/tags">Tags</a>. Existing tags will autocomplete as you type.');
   t('Add an image that is clickable to a URL. This is ideal for small ad units that do not need captions or additional calls to action.');
   t('Add your hero photo and give it a caption. It will appear at the top of your page. Please upload the high resolution version of the image for best results.');
   t('Contact Info');
@@ -870,9 +950,11 @@ function content_type_standard_page_field_default_field_instances() {
   t('Promo Units');
   t('Promo Units provide a two-thirds width area to promote an item, with an image, title, copy, and call to action.');
   t('Quick Links');
+  t('Resources');
   t('Select an existing Contact Info block to be available on this page. <a href="/admin/content/contact_info">Review or add Contact Info blocks</a>.');
   t('Select an existing Twitter Widget to be available on this page. <a href="/admin/content/twitter">Review or add Twitter widgets</a>.');
   t('Social Links');
+  t('Tags');
   t('Template');
   t('Twitter Widget');
   t('UT Newsreel');

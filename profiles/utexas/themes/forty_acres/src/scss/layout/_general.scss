@@ -6,7 +6,7 @@ body {
 
 .UT-page {
 	z-index: $pageZindex;
-    clear: both;
+  clear: both;
 	@include respond(large) {
 		padding-top: 0;
 	}
@@ -63,22 +63,24 @@ span.form-required {
 	color:#000000;
 }
 
-/**********  control margins/padding on fields blocks and containers  *********/
+/**********  control margins/padding on custom blocks, fields blocks and containers  *********/
 
-.block-fieldblock {
+.block-fieldblock, .block {
 	margin-bottom:25px;
 	@include respond(medium){
 		margin-bottom: 40px;
 	}
 }
-.sidebar-content .block-fieldblock {
-	margin-bottom:25px;
-	@include respond(medium){
-		margin-bottom: 35px;
-	}
-	&:last-child {
-		margin-bottom:40px;
-	}
+.sidebar-content {
+  .block-fieldblock, .block {
+    margin-bottom: 25px;
+    @include respond(medium) {
+      margin-bottom: 35px;
+    }
+    &:last-child {
+      margin-bottom: 40px;
+    }
+  }
 }
 .container.container-bottom {
 	padding-top: 25px;
@@ -90,7 +92,7 @@ span.form-required {
 	padding-top: 25px;
 	@include respond(medium) {
 		padding-top: 40px;
-	}	
+	}
 }
 
 /********* set views tables background to white **************/
@@ -109,4 +111,11 @@ span.form-required {
 /************ accessibility related overrides *******************/
 .edit-links a {
 	color: $burntOrangeAccent;
+}
+// utility class to fix header on mobile views-table
+.fix-header {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
 }

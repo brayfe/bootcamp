@@ -2211,17 +2211,20 @@ span.form-required {
 	color: #000000;
 }
 
-/**********  control margins/padding on fields blocks and containers  *********/
+/**********  control margins/padding on custom blocks, fields blocks and containers  *********/
 
-.block-fieldblock {
+.block-fieldblock,
+.block {
 	margin-bottom: 25px; /* Landscape phones and down */
 }
 
-.sidebar-content .block-fieldblock {
+.sidebar-content .block-fieldblock,
+.sidebar-content .block {
 	margin-bottom: 25px; /* Landscape phones and down */
 }
 
-.sidebar-content .block-fieldblock:last-child {
+.sidebar-content .block-fieldblock:last-child,
+.sidebar-content .block:last-child {
 	margin-bottom: 40px;
 }
 
@@ -2248,6 +2251,13 @@ span.form-required {
 
 .edit-links a {
 	color: #A04400;
+}
+
+.fix-header {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
 }
 
 a {
@@ -2481,10 +2491,24 @@ ul.pagination li.current a:hover {
 .container.container-bottom.accent .field.field_utexas_contact_info,
 .container.container-bottom.accent .fieldblock_field_utexas_promo_list,
 .container.container-bottom.accent .field.field_utexas_twitter_widget,
-.container.container-bottom.accent .field_utexas_social_links {
+.container.container-bottom.accent .field_utexas_social_links,
+.container.container-bottom.accent .fieldblock_field_utexas_resource,
+.container.container-bottom.accent .block-menu-block {
 	background-color: #fff;
 	border: 1px solid #333f48;
 	padding: 20px 20px 3px;
+}
+
+.container.container-bottom.accent .field_utexas_resource .flex-content.horizontal {
+	background-color: #f8f8f8;
+}
+
+.container.container-bottom.accent .fieldblock_field_utexas_resource {
+	padding: 10px 20px 3px;
+}
+
+.container.container-bottom.accent .fieldblock_field_utexas_resource .post-headline {
+	padding-left: 0;
 }
 
 .container.container-bottom.accent .field.field_utexas_twitter_widget {
@@ -2693,11 +2717,11 @@ ul.pagination li.current a:hover {
 }
 
 .container.container-bottom.accent .sidebar-module {
-	background-color: rgba(248, 248, 248, 0.96);
+	background-color: #fff;
 }
 
 .container.container-bottom.accent .sidebar-module.sidebar-default-style {
-	background-color: rgba(248, 248, 248, 0.96);
+	background-color: #fff;
 }
 
 .search { /* Landscape phones and down */
@@ -4747,11 +4771,13 @@ button,
 	padding: 40px 0;
 }
 
-.block-fieldblock {
+.block-fieldblock,
+.block {
 	margin-bottom: 40px;
 }
 
-.sidebar-content .block-fieldblock {
+.sidebar-content .block-fieldblock,
+.sidebar-content .block {
 	margin-bottom: 35px;
 }
 

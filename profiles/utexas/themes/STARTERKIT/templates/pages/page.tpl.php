@@ -42,33 +42,57 @@
 ?>
 <?php require_once $partials_dir . 'header.tpl.php'; ?>
 
-<div class="UT-page" id="ut-page-content" role="main">
-  <?php require_once $partials_dir . 'timely-announcement.tpl.php'; ?>
-  <?php require_once $partials_dir . 'page-top.tpl.php'; ?>
-
-  <?php if($page['content_top']):?>
-    <div class="container container-pillars">
+<div class="UT-page default-page" id="ut-page-content" role="main">
+  <div class="container container-top">
+    <?php
+    if (file_exists($partials_dir . 'breadcrumbs.tpl.php')) :
+      require_once $partials_dir . 'breadcrumbs.tpl.php';
+    else :
+      require_once '../partials/breadcrumbs.tpl.php';
+    endif;
+    if (file_exists($partials_dir . 'page-top.tpl.php')) :
+      require_once $partials_dir . 'page-top.tpl.php';
+    else :
+      require_once '../partials/page-top.tpl.php';
+    endif;
+    ?>
+    <div class="row">
+      <div class="column small-12">
+        <h1 class="page-title"><?php print $title; ?></h1>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <?php if($page['header']):?>
       <div class="row">
-        <?php print render($page['content_top']); ?>
+        <div class="columns small-12">
+          <?php print render($page['header']); ?>
+        </div>
       </div>
-    </div>
-  <?php endif; ?>
+    <?php endif; ?>
+  
+  <div class="middle_content row">
 
-  <?php if($page['content']):?>
-    <div class="row">
-      <div class="column small-12">
-        <?php print render($page['content']); ?>
+    <?php if($page['content']):?>
+        <div class="column small-12 <?php print $size_content_region; ?>">
+          <?php print render($page['content']); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if($page['sidebar_second']):?>
+        <div class="column small-12 medium-4 large-3">
+          <?php print render($page['sidebar_second']); ?>
+        </div>
+    <?php endif; ?>
+  </div>
+
+    <?php if ($page['footer']): ?>
+      <div class="row">
+        <div class="column small-12">
+          <?php print render($page['footer']); ?>
+        </div>
       </div>
-    </div>
-  <?php endif; ?>
-
-  <?php if ($page['content_bottom']): ?>
-    <div class="row">
-      <div class="column small-12">
-        <?php print render($page['content_bottom']); ?>
-      </div>
-    </div>
-  <?php endif; ?>
-
-  <?php require_once $partials_dir . 'footer.tpl.php'; ?>
+    <?php endif; ?>
+  </div>
+    <?php require_once $partials_dir . 'footer.tpl.php'; ?>
 </div>

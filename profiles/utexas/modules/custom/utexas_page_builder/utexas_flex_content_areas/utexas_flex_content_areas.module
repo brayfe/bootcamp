@@ -254,21 +254,21 @@ function utexas_flex_content_areas_field_validate($entity_type, $entity, $field,
           foreach ($item['links'] as $key => $link) {
             $target = drupal_get_normal_path($link['link_url']);
             if (!empty($link['link_url']) and !drupal_valid_path($target)) {
-              $errors[$field['field_name']][$langcode][0][] = array(
+              $errors[$field['field_name']][$langcode][$delta][] = array(
                 'error' => 'link_invalid',
                 'message' => t('%field: The path provided is not a valid URL alias or external link.',
                 array('%field' => $instance['label'])),
               );
             }
             if (!empty($link['link_title']) and empty($link['link_url'])) {
-              $errors[$field['field_name']][$langcode][0][] = array(
+              $errors[$field['field_name']][$langcode][$delta][] = array(
                 'error' => 'title_no_link',
                 'message' => t('%field: There is a title but no corresponding link.',
                 array('%field' => $instance['label'])),
               );
             }
             if (empty($link['link_title']) and !empty($link['link_url'])) {
-              $errors[$field['field_name']][$langcode][0][] = array(
+              $errors[$field['field_name']][$langcode][$delta][] = array(
                 'error' => 'link_no_title',
                 'message' => t('%field: There is a link but no corresponding title.',
                 array('%field' => $instance['label'])
@@ -312,16 +312,6 @@ function utexas_flex_content_areas_field_widget_error($element, $error, $form, &
       form_error($element['cta']['cta_link'], $error['message']);
       break;
 
-    case 'link_no_url':
-      // Loop through the links, flagging all of the elements with a problem.
-      foreach (element_children($element['links']) as $key) {
-        $link = $element['links'][$key];
-        if (!empty($link['link_title']['#value']) and empty($link['link_url']['#value'])) {
-          form_error($element['links'][$key]['link_url'], $error['message']);
-        }
-      }
-      break;
-
     case 'title_no_link':
       // Loop through the links, flagging all of the elements with a problem.
       foreach (element_children($element['links']) as $key) {
@@ -336,7 +326,8 @@ function utexas_flex_content_areas_field_widget_error($element, $error, $form, &
       // Loop through the links, flagging all of the elements with a problem.
       foreach (element_children($element['links']) as $key) {
         $link = $element['links'][$key];
-        if (!empty($link['link_url']['#value']) and !filter_var($link['link_url']['#value'], FILTER_VALIDATE_URL)) {
+        $target = drupal_get_normal_path($link['link_url']['#value']);
+        if (!empty($link['link_url']['#value']) and !drupal_valid_path($target)) {
           form_error($element['links'][$key]['link_url'], $error['message']);
         }
       }
@@ -696,20 +687,10 @@ function template_preprocess_utexas_flex_content_area(&$variables) {
   $flex_context_a = md5($variable_name . '-' . 'field_utexas_flex_content_area_a');
   $flex_context_b = md5($variable_name . '-' . 'field_utexas_flex_content_area_b');
   // Retrieve this node's context layout.
-  $layout = db_query("SELECT reactions from {context} WHERE name = :name LIMIT 1", array(":name" => 'context_field-node-' . $node->nid))->fetchField();
-  $blocks = unserialize($layout);
   $variables['flex_content_area_a_region'] = FALSE;
   $variables['flex_content_area_b_region'] = FALSE;
-  if (isset($blocks['block']['blocks'])) {
-    foreach ($blocks['block']['blocks'] as $block) {
-      if ($block['delta'] == $flex_context_a) {
-        $variables['flex_content_area_a_region'] = $block['region'];
-      }
-      if ($block['delta'] == $flex_context_b) {
-        $variables['flex_content_area_b_region'] = $block['region'];
-      }
-    }
-  }
+  $variables['flex_content_area_a_region'] = utexas_admin_retrieve_parent_region($node->nid, $flex_context_a);
+  $variables['flex_content_area_b_region'] = utexas_admin_retrieve_parent_region($node->nid, $flex_context_b);
   // Adjust passed in variables.
   $image_fid = $variables['item']['image_fid'];
   $copy_value = $variables['item']['copy_value'];
