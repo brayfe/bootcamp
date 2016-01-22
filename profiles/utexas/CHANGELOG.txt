@@ -1,5 +1,41 @@
+UT Drupal Kit 7.x-2.1, 2016-01-22
+---------------------------------
+- [MC-20] - Implement new "Resources" field
+- [MC-196] - Allow Tablesaw to honor existing table classes
+- [MC-198] - Implement responsive Views tables via preprocess function
+- [MC-221] - Update background accent behat test to match new usage
+- [MC-226] - Validate all flex_content_area link deltas
+- [MC-227] - Allow behat config to specify Chrome version
+- [MC-228] - Apply Forty Acres page.tpl.php changes to the STARTERKIT
+- [MC-236] - Properly handle PHP notice when no custom blocks available
+- [MC-238] - Make Featured Highlight image respond correctly on mobile
+- [MC-240] - Fix CTA display on Landing Page 3
+- [MC-242] - Avoid use of min-height on promo-list items
+- [MC-243] - Update to latest Tablesaw.js library
+- [MC-244] - Properly display search bar based on configuration
+- [MC-247] - Fix display of promo units in sidebars
+- [MC-248] - Fix display of photo content area in sidebar
+- [MC-249] - Fix display of flex-content areas in sidebars
+- [MC-252] - Improve text for CKEditor Link dropdown
+- [MC-253] - Display menu sub-navigation correctly in mobile
+- [MC-257] - Display Promo List unordered lists correctly
+- [MC-258] - Fix hero image style #5 cropping when subhead and CTA absent
+- [MC-259] - Fix Revisions page to use correct tpl.php
+- [MC-261] - Improve header-fixing behavior in iOS
+- [MC-211] - Abstract media usage in utexas_admin behat test
+- [MC-223] - Improve Context module patch to work with existing permissions
+- [MC-224] - Add "Tags" field to standard page and landing page
+- [MC-229] - Allow standard Drupal blocks in Page Builder
+- [MC-231] - Move special menu item setting to installation profile
+- [MC-232] - Enhance Google Tag Manager page targeting
+- [MC-234] - Revise "standard Drupal search" language in theme settings
+- [MC-239] - Allow drush site-install arguments
+- [MC-251] - Enable globalredirect module
+- [MC-254] - Add ability to load foundation javascript files in STARTERKIT
+- [MC-268] - Add table-layout:fixed for Tablesaw
+
 UT Drupal Kit 7.x-2.0, 2015-11-17
--------------------------------------------------------
+---------------------------------
 - First release with the Forty Acres theme and Page Builder module
 
 UT Drupal Kit 7.x-1.4, 2015-09-02
