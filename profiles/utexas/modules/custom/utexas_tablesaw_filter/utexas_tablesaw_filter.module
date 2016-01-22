@@ -127,6 +127,7 @@ function _responsive_tables_filter_add_js_css($every_page) {
       'weight' => 30,
       )
     );
+    drupal_add_css($module_path . '/theme/utexas_tablesaw_filter.css', array('every_page' => $every_page));
     drupal_add_css($tablesaw_path . '/dist/stackonly/tablesaw.stackonly.css', array('every_page' => $every_page));
     if (file_exists($tablesaw_path . '/dist/tablesaw-init.js')) {
       // Tablesaw 2.x includes tablesaw-init.js
