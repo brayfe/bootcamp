@@ -113,6 +113,6 @@ Scenario: Validating and creating a node with Flex Content Area.
 
   # Making sure that the Second FCA object fields are present
   Then I should see "Headline 2" in the "field_utexas_flex_content_area" region
-  And I should see the image path "flex-content-areas/background-accent" in the css element ".two-up.clearfix .medium-6:nth-child(2) .utexas-flex-content .utexas-flex-content-area-image-wrapper .utexas-flex-content-area-image"
+  And I should see the image path "flex-content-areas/background-accent" in the css element ".utexas-flex-content:nth-child(2) .utexas-flex-content-area-image-wrapper .utexas-flex-content-area-image"
   Then I should see "Copy text field example second object" in the "field_utexas_flex_content_area" region
   Then I should see the link "CTA Title" in the "field_utexas_flex_content_area" region
