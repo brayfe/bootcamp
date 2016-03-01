@@ -62,6 +62,7 @@ dependencies[] = media
 dependencies[] = media_ckeditor
 dependencies[] = media_youtube
 dependencies[] = menu_block
+dependencies[] = metatag
 dependencies[] = module_filter
 dependencies[] = node_clone_tab
 dependencies[] = pathauto

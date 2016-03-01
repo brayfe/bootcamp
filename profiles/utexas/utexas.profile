@@ -18,6 +18,8 @@ function utexas_form_install_configure_form_alter(&$form, $form_state) {
   utexas_remove_message('was assigned to the invalid');
   utexas_remove_message('configuration tasks');
   utexas_remove_message('Added new Google CSE Id variable');
+  utexas_remove_message('Thank you for installing the Metatag module');
+  utexas_remove_message('Tablesaw filter was enabled');
   utexas_remove_message('To use menu blocks');
 
   hide($form['update_notifications']);
