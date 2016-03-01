@@ -148,6 +148,12 @@ function install_utexas_page_builder() {
     include_once 'default_content/default_standard_page.inc';
     include_once 'default_content/default_landing_page.inc';
     include_once 'default_content/default_video_filter_embed_page.inc';
+    // Install default Qualtrics page if default content is enabled.
+    if (module_exists('utexas_qualtrics_filter')) {
+      $dir = drupal_get_path('module', 'utexas_qualtrics_filter');
+      include_once $dir . '/assets/default_qualtrics_embed_page.inc';
+      _utexas_qualtrics_filter_default_page();
+    }
     variable_set('clone_menu_links', 0);
     variable_set('clone_method', 'save-edit');
     variable_set('clone_nodes_without_confirm', 1);
