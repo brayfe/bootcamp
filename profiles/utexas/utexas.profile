@@ -116,7 +116,7 @@ function install_utexas_preferences() {
   utexas_remove_message('context', 'error');
 
   // Ensure that the administrator account has all available permissions
-  // except for Full HTMl text format.
+  // except for Full HTML text format.
   $admin_role = user_role_load_by_name('administrator');
   user_role_grant_permissions($admin_role->rid, array_keys(module_invoke_all('permission')));
   user_role_revoke_permissions($admin_role->rid, array('use text format full_html'));
