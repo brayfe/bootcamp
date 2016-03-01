@@ -205,6 +205,14 @@ function _utexas_install_settings() {
             'status' => 1,
             ))
           ->execute();
+        $enable_qualtrics_filter = db_merge('filter')
+          ->key(array('format' => $type, 'name' => 'qualtrics_filter'))
+          ->fields(array(
+            'settings' => serialize(array('height' => '500', 'title' => 'Qualtrics survey')),
+            'weight' => 3,
+            'status' => 1,
+          ))
+          ->execute();
         $enable_video_filter = db_merge('filter')
           ->key(array('format' => $type, 'name' => 'video_filter'))
           ->fields(array(

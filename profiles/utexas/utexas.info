@@ -82,6 +82,7 @@ dependencies[] = utexas_twitter_widget
 dependencies[] = utexas_fonts
 dependencies[] = utexas_google_cse
 dependencies[] = utexas_google_tag_manager
+dependencies[] = utexas_qualtrics_filter
 dependencies[] = utexas_tablesaw_filter
 dependencies[] = utexas_utdk_deploy
 
