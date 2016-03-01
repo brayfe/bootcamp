@@ -144,6 +144,10 @@ function _utexas_install_content() {
  * Helper function for content settings.
  */
 function _utexas_install_settings() {
+
+  // Pathauto settings.
+  variable_set('pathauto_node_pattern', '[node:title]');
+
   variable_set('menu_block_suppress_core', '1');
   variable_set('menu_block_menu_order', array('main-menu' => ''));
 
