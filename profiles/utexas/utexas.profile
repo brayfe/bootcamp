@@ -122,6 +122,7 @@ function install_utexas_preferences() {
   // Reverting the features after enabling module.
   features_rebuild();
   features_revert();
+  reorder_filtered_html_text_filters();
   cache_clear_all();
 }
 
