@@ -243,7 +243,7 @@ function _utexas_install_settings() {
   $formats['filtered_html'] = array();
   $formats['full_html'] = array();
 
-  foreach ($formats as $type) {
+  foreach ($formats as $type => $settings) {
     $exists = (bool) db_query_range('SELECT 1 FROM {filter_format} WHERE format = :name', 0, 1, array(':name' => $type))->fetchField();
     if (!$exists) {
       // Create new text formats.
