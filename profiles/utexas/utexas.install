@@ -422,7 +422,8 @@ function _utexas_install_settings() {
         ),
       ),
       'input_formats' => array(
-        'filtered_html' => 'Filtered HTML',
+        'filtered_html',
+        'filtered_html_for_blocks',
       ),
     ),
   );
