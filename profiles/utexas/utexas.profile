@@ -147,6 +147,7 @@ function install_utexas_page_builder() {
   if ($install_state['parameters']['default_page'] == 1) {
     include_once 'default_content/default_standard_page.inc';
     include_once 'default_content/default_landing_page.inc';
+    include_once 'default_content/default_video_filter_embed_page.inc';
     variable_set('clone_menu_links', 0);
     variable_set('clone_method', 'save-edit');
     variable_set('clone_nodes_without_confirm', 1);

@@ -69,6 +69,7 @@ dependencies[] = redirect
 dependencies[] = security_review
 dependencies[] = special_menu_items
 dependencies[] = token
+dependencies[] = video_filter
 dependencies[] = views
 
 ; UTexas Dependencies
