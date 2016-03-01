@@ -260,3 +260,30 @@ function utexas_remove_message($partial_message, $type = 'status') {
     }
   }
 }
+
+/**
+ * Custom function to re-weight text format filters.
+ */
+function reorder_filtered_html_text_filters() {
+  $filters = array(
+    'filter_html' => 0,
+    'ckeditor_link_filter' => 1,
+    'filter_autop' => 2,
+    'qualtrics_filter' => 3,
+    'video_filter' => 4,
+    'filter_url' => 5,
+    'tablesaw' => 6,
+    'media_filter' => 7,
+    'html_corrector' => 8,
+  );
+
+  foreach ($filters as $name => $value) {
+    $num_updated = db_update('filter')
+      ->fields(array(
+        'weight' => $value,
+      ))
+      ->condition('name', $name)
+      ->condition('status', 1)
+      ->execute();
+  }
+}
