@@ -159,12 +159,10 @@ function install_utexas_page_builder() {
     variable_set('clone_nodes_without_confirm', 1);
     variable_set('clone_omitted',
       array(
-        // 'faculty_profile' => 0,
         'landing_page' => 0,
         'standard_page' => 0,
       )
     );
-    // variable_set('clone_reset_faculty_profile', 1);
     variable_set('clone_reset_landing_page', 1);
     variable_set('clone_reset_standard_page', 1);
     variable_set('clone_use_node_type_name', 0);
