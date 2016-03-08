@@ -71,20 +71,14 @@ function _qualtrics_filter_process($text, $filter, $format, $langcode, $cache, $
       );
 
       // Override default attributes.
-      if ($matches_code[3][$ci] && preg_match_all('/\|\s+([a-zA-Z_]+)\:(\s+)?([0-9a-zA-Z \/]+)([\s +$])/i', $matches_code[3][$ci], $matches_attributes)) {
-        foreach ($matches_attributes[0] as $ai => $attribute) {
+      if ($matches_code[3][$ci] && preg_match_all('/\|\s*([a-zA-Z_]+)\:(\s*)?([0-9a-zA-Z \/]+)(\s*)/i', $matches_code[3][$ci], $matches_attributes)) {
+        foreach ($matches_attributes[0] as $ai => $value) {
           $form[$matches_attributes[1][$ai]] = $matches_attributes[3][$ai];
         }
       }
 
-      // Get default filter height if no height specified.
-      if (!isset($form['height'])) {
-        $form['height'] = $filter->settings['qualtrics_filter_height'];
-      }
-
-      if (!isset($form['title'])) {
-        $form['title'] = $filter->settings['qualtrics_filter_title'];
-      }
+      $form['height'] = isset($form['height']) ? trim($form['height']) : $filter->settings['qualtrics_filter_height'];
+      $form['title'] = isset($form['title']) ? trim($form['title']) : $filter->settings['qualtrics_filter_title'];
 
       if (!$replacement = utexas_qualtrics_filter_iframe($form)) {
         // Invalid callback.
