@@ -338,7 +338,7 @@ function _utexas_install_settings() {
       'name' => 'Advanced',
       'settings' => array(
         'ss' => 2,
-        'toolbar' => '[[\'Source\'],[\'Cut\',\'Copy\',\'Paste\',\'PasteText\',\'PasteFromWord\',\'-\',\'SpellChecker\',\'Scayt\'],[\'Undo\',\'Redo\',\'Find\',\'Replace\',\'-\',\'SelectAll\'],[\'Media\',\'Table\',\'HorizontalRule\',\'SpecialChar\'],[\'Maximize\'],\'/\',[\'Format\'],[\'Bold\',\'Italic\',\'Underline\',\'Strike\',\'-\',\'Subscript\',\'Superscript\',\'-\',\'RemoveFormat\'],[\'NumberedList\',\'BulletedList\',\'-\',\'Outdent\',\'Indent\',\'Blockquote\'],[\'JustifyLeft\',\'JustifyCenter\',\'JustifyRight\',\'JustifyBlock\',\'-\',\'BidiLtr\',\'BidiRtl\'],[\'Link\',\'Unlink\',\'Anchor\']]',
+        'toolbar' => '[[\'Source\'],[\'Cut\',\'Copy\',\'Paste\',\'PasteText\',\'PasteFromWord\',\'-\',\'SpellChecker\',\'Scayt\'],[\'Undo\',\'Redo\',\'Find\',\'Replace\',\'-\',\'SelectAll\'],[\'Media\',\'video_filter\',\'qualtrics_filter\',\'Table\',\'HorizontalRule\',\'SpecialChar\'],[\'Maximize\'],\'/\',[\'Format\'],[\'Bold\',\'Italic\',\'Underline\',\'Strike\',\'-\',\'Subscript\',\'Superscript\',\'-\',\'RemoveFormat\'],[\'NumberedList\',\'BulletedList\',\'-\',\'Outdent\',\'Indent\',\'Blockquote\'],[\'JustifyLeft\',\'JustifyCenter\',\'JustifyRight\',\'JustifyBlock\',\'-\',\'BidiLtr\',\'BidiRtl\'],[\'Link\',\'Unlink\',\'Anchor\']]',
         'expand' => 't',
         'default' => 't',
         'show_toggle' => 't',
@@ -404,6 +404,15 @@ function _utexas_install_settings() {
             'desc' => 'Plugin file: widget',
             'path' => '%plugin_dir_extra%widget/',
             'buttons' => FALSE,
+            'default' => 'f',
+          ),
+          'qualtrics_filter' => array(
+            'name' => 'qualtrics_filter',
+            'desc' => 'Plugin for inserting embed tags with qualtrics_filter',
+            'path' => '%plugin_dir_extra%qualtrics_filter/',
+            'buttons' => array(
+              'video_filter' => array('label' => 'qualtrics_filter', 'icon' => 'qualtrics_filter.png'),
+            ),
             'default' => 'f',
           ),
           'media' => array(
