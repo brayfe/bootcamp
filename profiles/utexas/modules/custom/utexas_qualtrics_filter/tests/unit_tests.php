@@ -21,7 +21,7 @@ $tests = array(
 echo '<table border="1">';
 foreach ($tests as $data => $type) {
   $score = 'FAIL';
-  $result = _qualtrics_filter_process($data);
+  $result = _qualtrics_filter_process($data, NULL);
   $title = strpos($result, 'title="hello"');
   $height = strpos($result, 'height="10"');
   $malicious = strpos($result, 'malicious');

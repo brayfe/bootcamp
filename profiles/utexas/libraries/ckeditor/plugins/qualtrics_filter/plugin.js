@@ -19,7 +19,7 @@
 
   CKEDITOR.dialog.add('qualtrics_filterDialog', function(editor) {
     return {
-      title: 'Add Qualtrics survey',
+      title: 'Add Qualtrics form',
       minWidth: 600,
       minHeight: 180,
       contents: [{
@@ -29,7 +29,7 @@
           {
             type: 'text',
             id: 'file_url',
-            label: 'URL (ex. https://utexas.qualtrics.com/SE/?SID=SV_af1Gk9JWK2khAE)',
+            label: 'URL (ex. https://utexas.qualtrics.com/SE/?SID=SV_af1Gk9JWK2khAEJ)',
             validate: CKEDITOR.dialog.validate.regex( /^(.*)qualtrics.com(.*)$/i, 'Please enter a valid Qualtrics URL' ),
             required: true,
             commit: function(data) {
