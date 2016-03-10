@@ -391,31 +391,6 @@ function _utexas_install_settings() {
             'buttons' => FALSE,
             'default' => 'f',
           ),
-          'video_filter' => array(
-            'name' => 'video_filter',
-            'desc' => 'Plugin for inserting video tags with video_filter',
-            'path' => '%plugin_dir_extra%video_filter/',
-            'buttons' => array(
-              'video_filter' => array('label' => 'Video filter', 'icon' => 'video_filter.png'),
-            ),
-            'default' => 'f',
-          ),
-          'widget' => array(
-            'name' => 'widget',
-            'desc' => 'Plugin file: widget',
-            'path' => '%plugin_dir_extra%widget/',
-            'buttons' => FALSE,
-            'default' => 'f',
-          ),
-          'qualtrics_filter' => array(
-            'name' => 'qualtrics_filter',
-            'desc' => 'Plugin for inserting embed tags with qualtrics_filter',
-            'path' => '%plugin_dir_extra%qualtrics_filter/',
-            'buttons' => array(
-              'video_filter' => array('label' => 'qualtrics_filter', 'icon' => 'qualtrics_filter.png'),
-            ),
-            'default' => 'f',
-          ),
           'media' => array(
             'name' => 'media',
             'desc' => 'Plugin for embedding files using Media CKEditor',
@@ -428,7 +403,31 @@ function _utexas_install_settings() {
             ),
             'default' => 'f',
           ),
-
+          'qualtrics_filter' => array(
+            'name' => 'qualtrics_filter',
+            'desc' => 'Plugin for inserting embed tags with qualtrics_filter',
+            'path' => '%plugin_dir_extra%qualtrics_filter/',
+            'buttons' => array(
+              'qualtrics_filter' => array('label' => 'qualtrics_filter', 'icon' => 'qualtrics_filter.png'),
+            ),
+            'default' => 'f',
+          ),
+          'video_filter' => array(
+            'name' => 'video_filter',
+            'desc' => 'Plugin for inserting video tags with video_filter',
+            'path' => '%plugin_dir_extra%video_filter/',
+            'buttons' => array(
+              'video_filter' => array('label' => 'video_filter', 'icon' => 'video_filter.png'),
+            ),
+            'default' => 'f',
+          ),
+          'widget' => array(
+            'name' => 'widget',
+            'desc' => 'Plugin file: widget',
+            'path' => '%plugin_dir_extra%widget/',
+            'buttons' => FALSE,
+            'default' => 'f',
+          ),
         ),
       ),
       'input_formats' => array(

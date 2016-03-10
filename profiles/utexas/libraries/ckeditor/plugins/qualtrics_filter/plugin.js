@@ -1,5 +1,5 @@
 /**
- * @file Plugin for inserting embed tags with qualtrics_filter.
+ * @file Plugin for inserting embed tags with qualtrics_filter
  */
 (function() {
   CKEDITOR.plugins.add('qualtrics_filter', {
@@ -39,7 +39,7 @@
           {
             type: 'text',
             id: 'height',
-            label: 'Height (leave blank for default width)',
+            label: 'Height in pixels (e.g., "500"; leave blank for default height)',
             validate: CKEDITOR.dialog.validate.integer('Please enter a valid number for the height.'),
             commit: function(data) {
               data.height = this.getValue();
