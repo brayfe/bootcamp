@@ -38,6 +38,7 @@ default:
         field_name_body: ".field.body"
         field_resource: "#field-utexas-resource-values"
         field_utexas_flex_content_area: ".field_utexas_flex_content_area_a"
+        field_utexas_member_designation: ".field_utexas_member_designation"
         field_utexas_photo_content_area: ".field_utexas_photo_content_area"
         field_utexas_promo_list: ".field_utexas_promo_list"
         field_utexas_promo_units: ".field_utexas_promo_units"
@@ -58,6 +59,7 @@ default:
         highlight_text: ".highlight-text"
         image_link: ".utexas-image-link"
         image_links_edit: "#edit-field-utexas-image-link-a-und-0-link"
+        leadership_entity_table: "#draggableviews-table-team-members-page"
         main_content_context_region: "#context-block-region-content"
         main_content: "#context-block-region-content"
         media_library: "#media-browser-tabset"
@@ -65,6 +67,7 @@ default:
         page_title: ".page-title"
         photo_content_area: "#edit-field-utexas-photo-content-area"
         primary_tabs: ".tabs.primary"
+        promo_headline: ".promo-headline"
         quick_links_block: ".field_utexas_quick_links"
         sidebar_content: '.sidebar-content'
         social_links_block: ".field_utexas_social_links"
@@ -75,7 +78,10 @@ default:
         toolbar_drawer: '.toolbar-drawer'
         top_left_region: '.region-main-content-top-left'
         twitter_widget_block: ".field.field_utexas_twitter_widget"
+        utexas_member_bio: ".field_utexas_member_bio"
+        ui_dialog_buttonset: ".ui-dialog-buttonset"
         utexas_newsreel_block: ".field.field_utexas_newsreel"
+        utexas_promo_field: ".utexas-promo-field"
         wysiwyg_a_block: ".field_wysiwyg_a"
         vertical_tabs: ".vertical-tabs"
       text:
