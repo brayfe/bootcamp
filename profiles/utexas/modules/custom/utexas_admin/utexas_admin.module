@@ -61,13 +61,21 @@ function utexas_admin_menu() {
     'page callback' => 'utexas_admin_403_page',
     'access callback' => TRUE,
   );
-  $items['page/403'] = array(
-    'title' => 'Access Denied',
-    'page callback' => 'utexas_admin_403_page',
-    'access callback' => TRUE,
+  $items['demo/foundation-extra-libraries'] = array(
+    'title' => 'Foundation Extra Elements',
+    'page callback' => 'utexas_foundation_demo',
+    'access arguments' => array('access content overview'),
   );
 
   return $items;
+}
+
+/**
+ * Page callback for demo/foundation-extra-libraries.
+ */
+function utexas_foundation_demo() {
+  $output = '';
+  return $output;
 }
 
 /**
@@ -570,4 +578,31 @@ function utexas_admin_retrieve_parent_region($nid, $block_id) {
     }
   }
   return $region;
+}
+
+/**
+ * Custom function to re-weight text format filters.
+ */
+function reorder_filtered_html_text_filters() {
+  $filters = array(
+    'filter_html' => 0,
+    'ckeditor_link_filter' => 1,
+    'qualtrics_filter' => 2,
+    'video_filter' => 3,
+    'filter_url' => 4,
+    'tablesaw' => 5,
+    'media_filter' => 6,
+    'html_corrector' => 7,
+    'filter_autop' => 8,
+  );
+
+  foreach ($filters as $name => $value) {
+    $num_updated = db_update('filter')
+      ->fields(array(
+        'weight' => $value,
+      ))
+      ->condition('name', $name)
+      ->condition('status', 1)
+      ->execute();
+  }
 }
