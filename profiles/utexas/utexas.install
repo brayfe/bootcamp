@@ -376,6 +376,7 @@ function _utexas_install_settings() {
         'forcePasteAsPlainText' => 'f',
         'html_entities' => 'f',
         'scayt_autoStartup' => 'f',
+        'js_conf' => '',
         'theme_config_js' => 'f',
         'loadPlugins' => array(
           'ckeditor_link' => array(
