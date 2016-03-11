@@ -443,6 +443,18 @@ function _utexas_install_settings() {
         'settings' => serialize($profile['settings']),
       ))
       ->execute();
+      // Define the text formats that can use the CKEditor profile.
+      if (!empty($profile['input_formats'])) {
+      foreach ($profile['input_formats'] as $format) {
+        $text_format = db_merge('ckeditor_input_format')
+          ->key(array('name' => $profile['name'], 'format' => $format))
+          ->fields(array(
+            'name' => $profile['name'],
+            'format' => $format,
+          ))
+          ->execute();
+      }
+    }
   }
 }
 
