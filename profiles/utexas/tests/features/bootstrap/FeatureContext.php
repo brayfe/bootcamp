@@ -358,7 +358,7 @@ JS;
     if (NULL === $element) {
       throw new \InvalidArgumentException(sprintf('Could not evaluate CSS selector: "%s"', $region));
     }
-    // Get image source.
+    // Get image source
     $src = $element->getAttribute('src');
     if (strpos($src, $filename) === FALSE) {
       throw new \Exception(sprintf("The image '%s' was not found in the region '%s' on the page %s", $filename, $region, $this->getSession()->getCurrentUrl()));

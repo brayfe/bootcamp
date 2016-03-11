@@ -1,6 +1,6 @@
 name = Utexas
 description = UT Drupal Kit installation profile
-version = "7.x-2.1"
+version = "7.x-2.2"
 core = 7.x
 php = 5.4
 
@@ -62,6 +62,7 @@ dependencies[] = media
 dependencies[] = media_ckeditor
 dependencies[] = media_youtube
 dependencies[] = menu_block
+dependencies[] = metatag
 dependencies[] = module_filter
 dependencies[] = node_clone_tab
 dependencies[] = pathauto
@@ -69,6 +70,7 @@ dependencies[] = redirect
 dependencies[] = security_review
 dependencies[] = special_menu_items
 dependencies[] = token
+dependencies[] = video_filter
 dependencies[] = views
 
 ; UTexas Dependencies
@@ -81,6 +83,7 @@ dependencies[] = utexas_twitter_widget
 dependencies[] = utexas_fonts
 dependencies[] = utexas_google_cse
 dependencies[] = utexas_google_tag_manager
+dependencies[] = utexas_qualtrics_filter
 dependencies[] = utexas_tablesaw_filter
 dependencies[] = utexas_utdk_deploy
 

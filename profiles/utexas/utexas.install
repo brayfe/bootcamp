@@ -144,6 +144,10 @@ function _utexas_install_content() {
  * Helper function for content settings.
  */
 function _utexas_install_settings() {
+
+  // Pathauto settings.
+  variable_set('pathauto_node_pattern', '[node:title]');
+
   variable_set('menu_block_suppress_core', '1');
   variable_set('menu_block_menu_order', array('main-menu' => ''));
 
@@ -166,10 +170,87 @@ function _utexas_install_settings() {
   variable_set('ckeditor_link_type_name', 'Page title or filename on this site.');
 
   // Update settings for Text Formats.
-  $formats = array('filtered_html', 'full_html');
-  foreach ($formats as $type) {
+  $formats['filtered_html_for_blocks'] = array(
+    'format' => 'filtered_html_for_blocks',
+    'name' => 'Filtered HTML for Blocks',
+    'cache' => 1,
+    'status' => 1,
+    'weight' => -10,
+    'filters' => array(
+      'filter_html' => array(
+        'weight' => -10,
+        'status' => 1,
+        'settings' => array(
+          'allowed_html' => '<a> <abbr> <address> <article> <aside> <blockquote> <br> <button> <caption> <cite> <code> <del> <details> <dl> <dt> <dd> <div> <em> <figure> <figcaption> <img> <i> <input> <hr> <h1> <h2> <h3> <h4> <h5> <h6> <ul> <ol> <li> <mark> <nav> <p> <pre> <sub> <sup> <table> <th> <tr> <td> <thead> <tbody> <tfoot> <script> <section> <span> <strong> <time> <track> <video>',
+          'filter_html_help' => 1,
+          'filter_html_nofollow' => 0,
+        ),
+      ),
+      'qualtrics_filter' => array(
+        'weight' => -1,
+        'status' => 1,
+        'settings' => array(
+          'qualtrics_filter_height' => 500,
+          'qualtrics_filter_title' => 'Qualtrics survey',
+        ),
+      ),
+      'video_filter' => array(
+        'weight' => -1,
+        'status' => 1,
+        'settings' => array(
+          'video_filter_width' => '400',
+          'video_filter_height' => '400',
+          'video_filter_autoplay' => '0',
+          'video_filter_related' => '0',
+          'video_filter_html5' => '1',
+        ),
+      ),
+      'ckeditor_link_filter' => array(
+        'weight' => 0,
+        'status' => 1,
+        'settings' => array(),
+      ),
+      'filter_autop' => array(
+        'weight' => -2,
+        'status' => 1,
+        'settings' => array(),
+      ),
+      'filter_url' => array(
+        'weight' => 0,
+        'status' => 1,
+        'settings' => array(
+          'filter_url_length' => 72,
+        ),
+      ),
+      'tablesaw' => array(
+        'weight' => 0,
+        'status' => 1,
+        'settings' => array(),
+      ),
+      'media_filter' => array(
+        'weight' => 2,
+        'status' => 1,
+        'settings' => array(),
+      ),
+      'filter_htmlcorrector' => array(
+        'weight' => 10,
+        'status' => 1,
+        'settings' => array(),
+      ),
+    ),
+  );
+
+  $formats['filtered_html'] = array();
+  $formats['full_html'] = array();
+
+  foreach ($formats as $type => $settings) {
     $exists = (bool) db_query_range('SELECT 1 FROM {filter_format} WHERE format = :name', 0, 1, array(':name' => $type))->fetchField();
-    if ($exists) {
+    if (!$exists) {
+      // Create new text formats.
+      filter_format_save((object) $settings);
+    }
+    else {
+      // Modify existing text formats.
       $enable_tablesaw = db_merge('filter')
         ->key(array('format' => $type, 'name' => 'tablesaw'))
         ->fields(array(
@@ -183,7 +264,7 @@ function _utexas_install_settings() {
           ->fields(array(
             'settings' => serialize(
               array(
-                'allowed_html' => '<a> <br> <em> <img> <strong> <cite> <blockquote> <code> <ul> <ol> <li> <dl> <dt> <dd> <table> <th> <tr> <td> <thead> <tbody> <tfoot> <h1> <h2> <h3> <h4> <h5> <h6>',
+                'allowed_html' => '<a> <abbr> <address> <article> <aside> <blockquote> <br> <button> <caption> <cite> <code> <del> <details> <dl> <dt> <dd> <div> <em> <figure> <figcaption> <img> <i> <input> <hr> <h1> <h2> <h3> <h4> <h5> <h6> <ul> <ol> <li> <mark> <nav> <p> <pre> <sub> <sup> <table> <th> <tr> <td> <thead> <tbody> <tfoot> <section> <span> <strong> <time> <track> <video>',
                 'filter_html_help' => 1,
                 'filter_html_nofollow' => 0,
               )),
@@ -204,6 +285,29 @@ function _utexas_install_settings() {
             'weight' => 0,
             'status' => 1,
             ))
+          ->execute();
+        $enable_qualtrics_filter = db_merge('filter')
+          ->key(array('format' => $type, 'name' => 'qualtrics_filter'))
+          ->fields(array(
+            'settings' => serialize(array('height' => '500', 'title' => 'Qualtrics survey')),
+            'weight' => 3,
+            'status' => 1,
+          ))
+          ->execute();
+        $enable_video_filter = db_merge('filter')
+          ->key(array('format' => $type, 'name' => 'video_filter'))
+          ->fields(array(
+            'settings' => serialize(
+              array(
+                'video_filter_width' => '400',
+                'video_filter_height' => '400',
+                'video_filter_autoplay' => '0',
+                'video_filter_related' => '0',
+                'video_filter_html5' => '1',
+              )),
+            'weight' => 4,
+            'status' => 1,
+          ))
           ->execute();
       }
     }
@@ -234,7 +338,7 @@ function _utexas_install_settings() {
       'name' => 'Advanced',
       'settings' => array(
         'ss' => 2,
-        'toolbar' => '[[\'Source\'],[\'Cut\',\'Copy\',\'Paste\',\'PasteText\',\'PasteFromWord\',\'-\',\'SpellChecker\',\'Scayt\'],[\'Undo\',\'Redo\',\'Find\',\'Replace\',\'-\',\'SelectAll\'],[\'Media\',\'Table\',\'HorizontalRule\',\'SpecialChar\'],[\'Maximize\'],\'/\',[\'Format\'],[\'Bold\',\'Italic\',\'Underline\',\'Strike\',\'-\',\'Subscript\',\'Superscript\',\'-\',\'RemoveFormat\'],[\'NumberedList\',\'BulletedList\',\'-\',\'Outdent\',\'Indent\',\'Blockquote\'],[\'JustifyLeft\',\'JustifyCenter\',\'JustifyRight\',\'JustifyBlock\',\'-\',\'BidiLtr\',\'BidiRtl\'],[\'Link\',\'Unlink\',\'Anchor\']]',
+        'toolbar' => '[[\'Source\'],[\'Cut\',\'Copy\',\'Paste\',\'PasteText\',\'PasteFromWord\',\'-\',\'SpellChecker\',\'Scayt\'],[\'Undo\',\'Redo\',\'Find\',\'Replace\',\'-\',\'SelectAll\'],[\'Media\',\'video_filter\',\'qualtrics_filter\',\'Table\',\'HorizontalRule\',\'SpecialChar\'],[\'Maximize\'],\'/\',[\'Format\'],[\'Bold\',\'Italic\',\'Underline\',\'Strike\',\'-\',\'Subscript\',\'Superscript\',\'-\',\'RemoveFormat\'],[\'NumberedList\',\'BulletedList\',\'-\',\'Outdent\',\'Indent\',\'Blockquote\'],[\'JustifyLeft\',\'JustifyCenter\',\'JustifyRight\',\'JustifyBlock\',\'-\',\'BidiLtr\',\'BidiRtl\'],[\'Link\',\'Unlink\',\'Anchor\']]',
         'expand' => 't',
         'default' => 't',
         'show_toggle' => 't',
@@ -272,8 +376,8 @@ function _utexas_install_settings() {
         'forcePasteAsPlainText' => 'f',
         'html_entities' => 'f',
         'scayt_autoStartup' => 'f',
+        'js_conf' => '',
         'theme_config_js' => 'f',
-        'js_conf' => 'config.extraPlugins = \'lineutils\';config.extraPlugins = \'widget\';',
         'loadPlugins' => array(
           'ckeditor_link' => array(
             'name' => 'drupal_path',
@@ -284,13 +388,6 @@ function _utexas_install_settings() {
             'name' => 'lineutils',
             'desc' => 'Plugin file: lineutils',
             'path' => '%plugin_dir_extra%lineutils/',
-            'buttons' => FALSE,
-            'default' => 'f',
-          ),
-          'widget' => array(
-            'name' => 'widget',
-            'desc' => 'Plugin file: widget',
-            'path' => '%plugin_dir_extra%widget/',
             'buttons' => FALSE,
             'default' => 'f',
           ),
@@ -306,10 +403,36 @@ function _utexas_install_settings() {
             ),
             'default' => 'f',
           ),
+          'qualtrics_filter' => array(
+            'name' => 'qualtrics_filter',
+            'desc' => 'Plugin for inserting embed tags with qualtrics_filter',
+            'path' => '%plugin_dir_extra%qualtrics_filter/',
+            'buttons' => array(
+              'qualtrics_filter' => array('label' => 'qualtrics_filter', 'icon' => 'qualtrics_filter.png'),
+            ),
+            'default' => 'f',
+          ),
+          'video_filter' => array(
+            'name' => 'video_filter',
+            'desc' => 'Plugin for inserting video tags with video_filter',
+            'path' => '%plugin_dir_extra%video_filter/',
+            'buttons' => array(
+              'video_filter' => array('label' => 'video_filter', 'icon' => 'video_filter.png'),
+            ),
+            'default' => 'f',
+          ),
+          'widget' => array(
+            'name' => 'widget',
+            'desc' => 'Plugin file: widget',
+            'path' => '%plugin_dir_extra%widget/',
+            'buttons' => FALSE,
+            'default' => 'f',
+          ),
         ),
       ),
       'input_formats' => array(
-        'filtered_html' => 'Filtered HTML',
+        'filtered_html',
+        'filtered_html_for_blocks',
       ),
     ),
   );
@@ -320,6 +443,18 @@ function _utexas_install_settings() {
         'settings' => serialize($profile['settings']),
       ))
       ->execute();
+      // Define the text formats that can use the CKEditor profile.
+      if (!empty($profile['input_formats'])) {
+      foreach ($profile['input_formats'] as $format) {
+        $text_format = db_merge('ckeditor_input_format')
+          ->key(array('name' => $profile['name'], 'format' => $format))
+          ->fields(array(
+            'name' => $profile['name'],
+            'format' => $format,
+          ))
+          ->execute();
+      }
+    }
   }
 }
 

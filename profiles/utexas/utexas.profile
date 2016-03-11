@@ -18,6 +18,8 @@ function utexas_form_install_configure_form_alter(&$form, $form_state) {
   utexas_remove_message('was assigned to the invalid');
   utexas_remove_message('configuration tasks');
   utexas_remove_message('Added new Google CSE Id variable');
+  utexas_remove_message('Thank you for installing the Metatag module');
+  utexas_remove_message('Tablesaw filter was enabled');
   utexas_remove_message('To use menu blocks');
 
   hide($form['update_notifications']);
@@ -115,13 +117,16 @@ function install_utexas_preferences() {
   utexas_remove_message('clone', 'error');
   utexas_remove_message('context', 'error');
 
-  // Ensure that the administrator account has all available permissions.
+  // Ensure that the administrator account has all available permissions
+  // except for Full HTML text format.
   $admin_role = user_role_load_by_name('administrator');
   user_role_grant_permissions($admin_role->rid, array_keys(module_invoke_all('permission')));
+  user_role_revoke_permissions($admin_role->rid, array('use text format full_html'));
 
   // Reverting the features after enabling module.
   features_rebuild();
   features_revert();
+  reorder_filtered_html_text_filters();
   cache_clear_all();
 }
 
@@ -144,17 +149,22 @@ function install_utexas_page_builder() {
   if ($install_state['parameters']['default_page'] == 1) {
     include_once 'default_content/default_standard_page.inc';
     include_once 'default_content/default_landing_page.inc';
+    include_once 'default_content/default_video_filter_embed_page.inc';
+    // Install default Qualtrics page if default content is enabled.
+    if (module_exists('utexas_qualtrics_filter')) {
+      $dir = drupal_get_path('module', 'utexas_qualtrics_filter');
+      include_once $dir . '/assets/default_qualtrics_embed_page.inc';
+      _utexas_qualtrics_filter_default_page();
+    }
     variable_set('clone_menu_links', 0);
     variable_set('clone_method', 'save-edit');
     variable_set('clone_nodes_without_confirm', 1);
     variable_set('clone_omitted',
       array(
-        // 'faculty_profile' => 0,
         'landing_page' => 0,
         'standard_page' => 0,
       )
     );
-    // variable_set('clone_reset_faculty_profile', 1);
     variable_set('clone_reset_landing_page', 1);
     variable_set('clone_reset_standard_page', 1);
     variable_set('clone_use_node_type_name', 0);

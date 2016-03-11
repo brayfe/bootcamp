@@ -61,13 +61,21 @@ function utexas_admin_menu() {
     'page callback' => 'utexas_admin_403_page',
     'access callback' => TRUE,
   );
-  $items['page/403'] = array(
-    'title' => 'Access Denied',
-    'page callback' => 'utexas_admin_403_page',
-    'access callback' => TRUE,
+  $items['demo/foundation-extra-libraries'] = array(
+    'title' => 'Foundation Extra Elements',
+    'page callback' => 'utexas_foundation_demo',
+    'access arguments' => array('access content overview'),
   );
 
   return $items;
+}
+
+/**
+ * Page callback for demo/foundation-extra-libraries.
+ */
+function utexas_foundation_demo() {
+  $output = '';
+  return $output;
 }
 
 /**
@@ -167,6 +175,64 @@ function utexas_admin_library() {
   );
 
   return $libraries;
+}
+
+/**
+ * Implements hook_element_info_alter().
+ *
+ * Used to add a process function to text_format fields.
+ */
+function utexas_admin_element_info_alter(&$type) {
+  if (isset($type['form']['#action'])) {
+    // Determine whether we are on a block page.
+    $block = strpos($type['form']['#action'], 'admin/structure/block');
+    if ($block === FALSE) {
+      // Modify text formats for non Blocks.
+      $replacement = array('filter_process_format', 'utexas_admin_filter_process_format');
+      // This callback must run immediately after filter_process_format().
+      $filter_process_format_location = array_search('filter_process_format', $type['text_format']['#process']);
+      array_splice($type['text_format']['#process'], $filter_process_format_location, 1, $replacement);
+    }
+  }
+}
+
+/**
+ * Implements filter_process_format().
+ *
+ * Removes "Filtered HTML for Blocks" from filter formats for non-Blocks.
+ */
+function utexas_admin_filter_process_format($element) {
+  global $user;
+
+  // Get a list of formats that the current user has access to.
+  $formats = filter_formats($user);
+  foreach ($formats as $format) {
+    $options[$format->format] = $format->name;
+    $element['format']['guidelines'][$format->format] = array(
+      '#theme' => 'filter_guidelines',
+      '#format' => $format,
+    );
+  }
+  if (isset($options['filtered_html_for_blocks'])) {
+    // Remove 'Filtered HTML for Blocks', if present.
+    unset($options['filtered_html_for_blocks']);
+  }
+  // Set the default value to the user's Drupal-ordered text format.
+  $user_formats = array_keys($options);
+  $element['#format'] = $user_formats[0];
+
+  $element['format']['format'] = array(
+    '#type' => 'select',
+    '#title' => t('Text format'),
+    '#options' => $options,
+    '#default_value' => $element['#format'],
+    '#access' => count($formats) > 1,
+    '#weight' => 10,
+    '#attributes' => array('class' => array('filter-list')),
+    '#parents' => array_merge($element['#parents'], array('format')),
+  );
+
+  return $element;
 }
 
 /**
@@ -453,6 +519,50 @@ function utexas_admin_clone_node_complete($new, $old) {
 }
 
 /**
+ * Helper function to dynamically get the tid from the term_name.
+ */
+function _utexas_admin_get_term_from_name($term_name, $vocabulary_name) {
+  $term_arr = taxonomy_get_term_by_name($term_name, $vocabulary_name);
+  if (empty($term_arr)) {
+    $tid = '';
+  }
+  else {
+    $tid = array_pop($term_arr)->tid;
+  }
+  return $tid;
+}
+
+/**
+ * Helper function to trim teasers on word boundary + sentence.
+ */
+function _utexas_admin_token_truncate($string, $your_desired_width) {
+  $sentences = explode('. ', $string);
+  $sentence1 = isset($sentences[1]) ? $sentences[1] : '';
+  $sentence2 = isset($sentences[2]) ? $sentences[2] : '';
+  if ((strlen($sentences[0]) + strlen($sentence1)) < 60) {
+    $teaser = $sentences[0] . '. ' . $sentence1 . '. ' . $sentence2;
+  }
+  elseif (strlen($sentences[0]) < 60) {
+    $teaser = $sentences[0] . '. ' . $sentence1;
+  }
+  else {
+    $teaser = $sentences[0];
+  }
+  $parts = preg_split('/([\s\n\r]+)/', $teaser, NULL, PREG_SPLIT_DELIM_CAPTURE);
+  $parts_count = count($parts);
+
+  $length = 0;
+  $last_part = 0;
+  for (; $last_part < $parts_count; ++$last_part) {
+    $length += strlen($parts[$last_part]);
+    if ($length > $your_desired_width) {
+      break;
+    }
+  }
+  return implode(array_slice($parts, 0, $last_part));
+}
+
+/**
  * Custom function to return the region a field is placed in.
  */
 function utexas_admin_retrieve_parent_region($nid, $block_id) {
@@ -468,4 +578,31 @@ function utexas_admin_retrieve_parent_region($nid, $block_id) {
     }
   }
   return $region;
+}
+
+/**
+ * Custom function to re-weight text format filters.
+ */
+function reorder_filtered_html_text_filters() {
+  $filters = array(
+    'filter_html' => 0,
+    'ckeditor_link_filter' => 1,
+    'qualtrics_filter' => 2,
+    'video_filter' => 3,
+    'filter_url' => 4,
+    'tablesaw' => 5,
+    'media_filter' => 6,
+    'html_corrector' => 7,
+    'filter_autop' => 8,
+  );
+
+  foreach ($filters as $name => $value) {
+    $num_updated = db_update('filter')
+      ->fields(array(
+        'weight' => $value,
+      ))
+      ->condition('name', $name)
+      ->condition('status', 1)
+      ->execute();
+  }
 }
