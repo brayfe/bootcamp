@@ -127,6 +127,10 @@
     padding-left:0;
     padding-right:0;
     position: relative;
+    @include respond(large){
+      padding-left:10px;
+      padding-right:10px;
+    }
     .background-box {
       height: 110px;
       position: absolute;
@@ -153,12 +157,13 @@
       }
     }
     .callout-text{
-      padding: 0 5px;
+      padding: 0 3px;
       display: block;
       width: 100%;
       float: left;
       @include respond(large){
         width: 85%;
+        padding: 0 7px;
         .cta-link{
           display: none;
         }
@@ -166,10 +171,8 @@
     }
     .callout-cta{
       display: none;
-      width: 15%;
-      margin-top: 10px;
       @include respond(large){
-        display: inline-block;
+        display: block;
       }
     }
     .headline{
@@ -197,7 +200,7 @@
     .hero-cta{
       bottom: 5px;
       font-size: rem-calc(15);
-      float: right;
+      right: 7px;
       padding: 15px 25px;
       background-color: $burntOrange;
       color: white;

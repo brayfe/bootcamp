@@ -27,18 +27,20 @@ module.exports = {
             src: ['**'],
             dest: 'fonts'
           },
-          /* Stylesheets -- this section commented out because css is being copied by cmq command
+          /* Stylesheets -- only foundation CSS files copied, site CSS files are copied using CMQ package. */
           {
             expand: true,
             cwd: '<%= path.dist %>/css/',
-            src: ['base.css', 'forty_acres_pages.css', 'forty_acres.css'],
+            src: ['overrides.css', 'foundation.accordion.css', 'foundation.alert.css',
+            'foundation.dropdown.css', 'foundation.reveal.css', 'foundation.tab.css', 'foundation.tooltip.css'],
             dest: 'css'
-          }, */
+          },
           // Scripts
           {
             expand: true,
             cwd: '<%= path.dist %>/js/',
-            src: ['application.min.js', 'foundation.min.js', 'jquery.min.js', 'jquery.plugins.min.js', 'modernizr.min.js', 'polyfill.min.js'],
+            src: ['application.min.js', 'foundation.min.js', 'jquery.min.js', 'jquery.plugins.min.js', 'modernizr.min.js', 'polyfill.min.js',
+            'foundation.accordion.js', 'foundation.alert.js', 'foundation.dropdown.js', 'foundation.abide.js', 'foundation.reveal.js', 'foundation.tab.js', 'foundation.tooltip.js'],
             dest: 'js'
           }
         ]

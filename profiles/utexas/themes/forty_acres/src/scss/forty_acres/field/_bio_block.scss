@@ -1,32 +1,47 @@
 .field_bio_block{
 	img{
-		padding-right: 10px;
-		width: 100%;
+		padding-right: 25px;
+		padding-bottom: 10px;
+		width: 150px;
 		height: auto;
-		display: block;
-
-		@include respond(small-only){
-			display: block;
-			width: 80%;
-			margin: 0 auto 20px auto;
+		float:left;
+		@include respond(medium) {
+			width: 200px;
+		}
+		@include respond(large) {
+			width: 250px;
 		}
 	}
-
+	.field_utexas_quick_links {
+			border:none;
+			padding: 0;
+			padding-left: 150px;
+			@include respond(medium) {
+				padding-left: 200px;
+			}
+			@include respond(large) {
+				padding-left: 250px;
+			}
+	}
+	.field_utexas_member_bio {
+		// border-top: 2px solid #d6d6d6;
+		padding-top: 20px;
+		margin-top: 10px;
+	}
 	.bio-top{
 		padding: 0 5px 10px 5px;
-		@include respond(medium){
+		@include respond(medium) {
 			padding: 0 0 10px 0;
 		}
 	}
 
 	.bio-bottom{
 		padding: 0 5px 10px 5px;
-		display: block;
+		display: inline;
 		overflow: hidden;
 		height: auto;
-		border-top: 2px solid #D6D6D6;
 
-		@include respond(medium){
+		@include respond(medium) {
 			margin-top: 20px;
 			padding: 0 0 20px 0;
 		}
@@ -71,7 +86,7 @@
 		}
 
 		.small-12{
-			@include respond(small-only){
+			@include respond(small-only) {
 				margin-bottom: 15px;
 			}
 		}
@@ -80,10 +95,31 @@
 	.field_wysiwyg_a{
 		margin-top: 20px;
 	}
+
+	&.links-present {
+		.field_utexas_member_bio {
+			border-top: 2px solid $sidebar-divider;
+		}
+	}&.no-links {
+
+	}
+	hr {
+		background-color: $sidebar-divider;
+		margin: 25px 0 0 0;
+	}
 }
 
 .related-links-override{
-	@include respond(small-only){
+	@include respond(small-only) {
 		padding: 10px 10px 0 10px !important;
+	}
+}
+.container-team-member {
+	padding-bottom: 25px;
+	@include respond(large) {
+		padding-bottom: 40px;
+	}
+	.team-member-content {
+		padding-top: 20px;
 	}
 }

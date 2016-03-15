@@ -1,5 +1,8 @@
 // featured highlight field relies on highlight.scss styles
 .field_utexas_featured_highlight{
+	.highlight-text p a {
+		text-decoration: underline;
+	}
 	// Color Themes
 	.dark{
 		background-color: #6a6361;
@@ -19,6 +22,9 @@
 			color: inherit;
 		}
 		.cta-link{
+			color: $burntGrey;
+		}
+		.highlight-text p a {
 			color: $burntGrey;
 		}
 	}
@@ -49,7 +55,7 @@
   .no_image {
     .featured-highlight-content {
       max-width: 90%;
-      margin: auto;     
+      margin: auto;
       @include respond(medium) {
         max-width: 80%;
 
@@ -107,5 +113,5 @@
     @include respond(medium){
       display:table-row;
     }
-  }   
+  }
 }

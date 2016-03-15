@@ -13,7 +13,6 @@
  * - $is_front: TRUE if the current page is the front page.
  * - $logged_in: TRUE if the user is registered and signed in.
  * - $is_admin: TRUE if the user has permission to access administration pages.
- * - $partials_dir: The directory where partials are found.
  *
  * Site identity:
  * - $front_page: The URL of the front page. Use this instead of $base_path,
@@ -41,10 +40,10 @@
  */
 ?>
 <?php global $base_root; ?>
-<?php require_once $partials_dir . 'header.tpl.php'; ?>
+<?php if (file_exists($partial_header)): require_once $partial_header; endif;  ?>
 
 <div class="UT-page page-404" id="ut-page-content" role="main">
-  <?php require_once $partials_dir . 'page-top.tpl.php'; ?>
+  <?php if (file_exists($partial_page_top)) : require_once $partial_page_top; endif; ?>
 
   <div class="container container-top">
     <div class="row">
@@ -75,6 +74,5 @@
       </div>
     </div>
   </div>
-
-  <?php require_once $partials_dir . 'footer.tpl.php'; ?>
+  <?php if (file_exists($partial_footer)): require_once $partial_footer; endif;  ?>
 </div>

@@ -2247,7 +2247,11 @@ span.form-required {
 	border-bottom: none;
 }
 
+/****************************************************************/
+
 /************ accessibility related overrides *******************/
+
+/****************************************************************/
 
 .edit-links a {
 	color: #A04400;
@@ -2258,6 +2262,79 @@ span.form-required {
 	left: 0;
 	right: 0;
 	top: 0;
+}
+
+.button {
+	background-color: #005F86;
+}
+
+.button:hover {
+	background-color: #003d64;
+}
+
+button.secondary,
+.button.secondary {
+	background-color: #ebe8e2;
+	border-color: #b9b9b9;
+	color: #000000;
+}
+
+.close-reveal-modal {
+	color: #333f48 !important;
+}
+
+.alert-box {
+	font-size: 1.25rem;
+	font-weight: 600;
+}
+
+.alert-box .close {
+	color: #ffffff;
+	opacity: 1;
+	font-size: 2.25rem;
+	font-weight: 900;
+}
+
+.alert-box .close:hover {
+	color: #fff;
+	opacity: 1;
+}
+
+.alert-box.radius {
+	background-color: #005F86 !important;
+}
+
+.alert-box.success {
+	background-color: #3a945b !important;
+}
+
+.alert-box.secondary {
+	background-color: #6a6361 !important;
+	color: white;
+}
+
+.button.success {
+	background-color: #3a945b !important;
+}
+
+.button.alert {
+	background-color: #cf280e !important;
+}
+
+.button.tiny,
+.button.small,
+.button.alert,
+.button.large {
+	font-weight: 600;
+}
+
+.tabs li.tab-title a {
+	font-size: 1rem;
+	padding: 10px 15px;
+}
+
+.tabs li.tab-title a:hover {
+	background-color: #9c9796 !important;
 }
 
 a {

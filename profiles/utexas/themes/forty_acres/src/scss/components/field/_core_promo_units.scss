@@ -6,6 +6,12 @@
 		margin-top: 0px;
     color: $burntOrangeAccent;
 	}
+	.post-headline {
+    border-bottom: 2px solid #3c87a3;
+    font-weight: 700;
+    margin: 0 0 20px;
+    padding-bottom: 7px;
+	}
 }
 .utexas-promo-field.utexas-promo-unit {
   background-color:#f8f8f8;
@@ -90,6 +96,9 @@
   margin:0 0 10px;
   font-size:inherit;
   line-height:inherit;
+}
+.utexas-promo-field .promo-copy a {
+	color: $burntOrangeAccent;
 }
 .utexas-promo-field.utexas-promo-unit .promo-copy,
 .utexas-promo-field.utexas-promo-unit .cta-wrapper {

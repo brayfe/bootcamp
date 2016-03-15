@@ -13,7 +13,6 @@
  * - $is_front: TRUE if the current page is the front page.
  * - $logged_in: TRUE if the user is registered and signed in.
  * - $is_admin: TRUE if the user has permission to access administration pages.
- * - $partials_dir: The directory where partials are found.
  *
  * Site identity:
  * - $front_page: The URL of the front page. Use this instead of $base_path,
@@ -39,23 +38,14 @@
  *
  * @ingroup themeable.
  */
+
 ?>
-<?php require_once $partials_dir . 'header.tpl.php'; ?>
+<?php if (file_exists($partial_header)): require_once $partial_header; endif;  ?>
 
 <div class="UT-page default-page" id="ut-page-content" role="main">
   <div class="container container-top">
-    <?php
-    if (file_exists($partials_dir . 'breadcrumbs.tpl.php')) :
-      require_once $partials_dir . 'breadcrumbs.tpl.php';
-    else :
-      require_once '../partials/breadcrumbs.tpl.php';
-    endif;
-    if (file_exists($partials_dir . 'page-top.tpl.php')) :
-      require_once $partials_dir . 'page-top.tpl.php';
-    else :
-      require_once '../partials/page-top.tpl.php';
-    endif;
-    ?>
+    <?php if (file_exists($partial_breadcrumbs)) : require_once $partial_breadcrumbs; endif; ?>
+    <?php if (file_exists($partial_page_top)) : require_once $partial_page_top; endif; ?>
     <div class="row">
       <div class="column small-12">
         <h1 class="page-title"><?php print $title; ?></h1>
@@ -70,7 +60,7 @@
         </div>
       </div>
     <?php endif; ?>
-  
+
   <div class="middle_content row">
 
     <?php if($page['content']):?>
@@ -94,5 +84,5 @@
       </div>
     <?php endif; ?>
   </div>
-    <?php require_once $partials_dir . 'footer.tpl.php'; ?>
+  <?php if (file_exists($partial_footer)): require_once $partial_footer; endif;  ?>
 </div>

@@ -43,7 +43,7 @@
           <div class="footer-tertiary">
             <?php if (($newsletter_exists == 1) && ($newsletter_url)) : ?>
               <div class="newsletter">
-                 <a href="<?php print render($newsletter_url); ?>" target="_blank" class="cta sidebar-cta">Subscribe to our newsletter</a>
+                 <a href="<?php print render($newsletter_url); ?>" target="_blank" class="cta sidebar-cta"><span>Subscribe to our newsletter</span></a>
               </div>
             <?php endif; ?>
             <ul class="helpful-links <?php print $related_links_block_grid_class; ?>">
