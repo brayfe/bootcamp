@@ -49,7 +49,7 @@ function utexas_google_cse_theme() {
 function utexas_google_cse_permission() {
   return array(
     'access utexas_google_cse_searchpage content' => array(
-      'title' => t('Use google custom search'),
+      'title' => t('Configure Google Custom Search'),
     ),
   );
 }
