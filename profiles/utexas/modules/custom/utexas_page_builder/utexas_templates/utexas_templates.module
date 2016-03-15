@@ -642,12 +642,6 @@ function utexas_templates_preprocess_page(&$variables) {
     // If the node type has the field_template field, add extra theme wrappers.
     if (isset($node->field_template['und'][0]['target_id'])) {
 
-      // Set a partials directory for use on the template tpl pages.
-      $variables['partials_dir'] = drupal_get_path('theme', $GLOBALS['theme']) . '/templates/partials/';
-
-      // The UTexas Templates module has backup breadcrumbs & page_top partials.
-      $variables['utexas_templates_dir'] = drupal_get_path('module', 'utexas_templates') . '/page_builder_layouts/partials/';
-
       // Grab a taxonomy term for this page node.
       if ($template = field_get_items('node', $node, 'field_template')) {
         $template = entity_load('template', array($template[0]['target_id']));

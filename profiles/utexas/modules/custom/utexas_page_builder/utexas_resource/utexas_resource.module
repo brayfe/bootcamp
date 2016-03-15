@@ -122,7 +122,6 @@ function utexas_resource_field_widget_form(&$form, &$form_state, $field, $instan
         '#media_options' => array(
           'global' => array(
             'file_extensions' => 'gif png jpg jpeg',
-            'max_filesize' => '5 MB',
             'file_directory' => 'resource-images',
             'types' => array('image'),
           ),

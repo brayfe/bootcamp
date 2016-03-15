@@ -95,7 +95,6 @@ function utexas_featured_highlight_field_widget_form(&$form, &$form_state, $fiel
         '#media_options' => array(
           'global' => array(
             'file_extensions' => 'gif png jpg jpeg',
-            'max_filesize' => '5 MB',
             'file_directory' => 'featured-highlights',
             'types' => array('image', 'video'),
           ),
