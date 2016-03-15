@@ -1,6 +1,7 @@
 name = STARTERKIT
 description = subtheme starter kit based off of the Forty Acres UT theme
 core = 7.x
+version = 1.1
 base theme = forty_acres
 
 stylesheets[all][] = css/custom.css
@@ -43,8 +44,3 @@ features[] = slogan
 features[] = favicon
 features[] = main_menu
 features[] = secondary_menu
-
-settings[secondary_menu] = 'social_accounts'
-settings[display_social_icons] = '1'
-settings[newsletter_exists] = '0'
-settings[logo_height] = 'short_logo'

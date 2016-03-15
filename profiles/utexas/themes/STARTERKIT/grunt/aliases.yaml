@@ -6,7 +6,6 @@ dist:
 - 'concurrent:copy-dist'
 - 'sass:dist'
 - 'autoprefixer:dist'
-- 'concat'
 
 build:
 - 'dist'
