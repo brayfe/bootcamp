@@ -18,7 +18,7 @@ Scenario: Enable the starterkit to make some theme-settings changes
 Scenario: Test theme-settings and verify starterkit is default theme
   Given I am logged in as a user with the "administrator" role
   Then I go to "admin/appearance"
-  And I should see "STARTERKIT (default theme)" in the "theme_default" region
+  And I should see "STARTERKIT" in the "theme_default" region
   Then I go to "admin/appearance/settings/STARTERKIT"
   And I select the radio button "Header menu: Configure header menu here."
   And I enter "this is a behat test of the STARTERKIT subtheme" for "OPTIONAL - Enter text to be displayed in a block in the left-most region of the footer."

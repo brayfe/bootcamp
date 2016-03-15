@@ -10,6 +10,7 @@ Feature: Responsive Tablesaw behavior
 Scenario: A Drupal Views table is responsive with aggregation on and off
 Given I am logged in as a user with the "administrator" role on this site
 And I set browser window size to "1200" x "900"
+And I run drush "en views_ui -y"
 When I visit "/admin/structure/views/add"
 And I fill in "Tablesaw Test" for "human_name"
 And I fill in "Tablesaw Test" for "page[title]"

@@ -22,7 +22,6 @@ Scenario: User with correct permissions can add fields
   And I fill in "http://www.google.com" for "edit-field-utexas-quick-links-und-0-links-0-link-url"
   And I press the "Save" button
   Then I should see the message "Standard Page test form has been created."
-
   Then I should see the text "test form" in the "page_title" region
   And I click "Layout Editor" in the "primary_tabs" region
   And I click "Edit" in the "context_editor" region
@@ -73,10 +72,28 @@ Scenario: User can enter more than 5 quick links
   And I wait for css element ".field.field_utexas_quick_links" to "appear"
   Then I should see the link "behat test link title6" in the "quick_links_block" region
 
-
-
-
-
-
-
+@javascript
+Scenario: When a link is entered without a title, an absolute URL displays
+  Given I am logged in as a user with the "administrator" role on this site
+  When I go to "node/add/standard-page"
+  And I fill in "Quick Links Test" for "edit-title" in the "form_item_title" region
+  And I click "Quick Links" in the "vertical_tabs" region
+  And I fill in "Quick Link Test" for "edit-field-utexas-quick-links-und-0-headline"
+  And I fill in "http://google.com" for "edit-field-utexas-quick-links-und-0-links-0-link-url"
+  And I fill in "<front>" for "edit-field-utexas-quick-links-und-0-links-1-link-url"
+  And I fill in "node/1" for "edit-field-utexas-quick-links-und-0-links-2-link-url"
+  And I click on the element "#edit-submit"
+  Then I should see the message "Standard Page Quick Links Test has been created."
+  And I wait for css element ".tabs.primary" to "appear"
+  And I click "Layout Editor" in the "primary_tabs" region
+  And I click "Edit" in the "context_editor" region
+  And I wait for css element ".main-content" to "appear"
+  Then I should see the text "Add a block here." in the "context_layout" region
+  And I should see the text "Content" in the "context_layout" region
+  And I click on the element ".context-ui-add-link.context-ui-processed"
+  And I click on the element "#context-block-addable-fieldblock-669a6a1f32566fa73ea7974696027184"
+  And I wait for css element ".field.field_utexas_quick_links" to "appear"
+  And I click "Done" in the "context_editor" region
+  And I wait for css element ".field.field_utexas_quick_links" to "appear"
+  Then I should see the link "http://google.com" in the "quick_links_block" region
 
