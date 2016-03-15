@@ -5,6 +5,71 @@
  */
 
 /**
+ * System variable to toggle responsives tables on Drupal Views.
+ */
+define('UTEXAS_TABLESAW_FILTER_VIEWS', 'utexas_tablesaw_filter_views');
+
+/**
+ * System variable to apply table-layout:fixed to all tables.
+ */
+define('UTEXAS_TABLESAW_FILTER_FIXED', 'utexas_tablesaw_filter_fixed');
+
+/**
+ * Path to module configuration.
+ */
+define('UTEXAS_TABLESAW_FILTER_ADMIN_PATH', 'admin/config/content/utexas_tablesaw_filter');
+
+/**
+ * Implements hook_menu().
+ *
+ * Defines the menu routing for the administration path.
+ */
+function utexas_tablesaw_filter_menu() {
+  return array(
+    UTEXAS_TABLESAW_FILTER_ADMIN_PATH => array(
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('utexas_tablesaw_filter_admin_form'),
+      'access arguments' => array(UTEXAS_ADMIN_ADMINISTER_UTEXAS_SETTINGS),
+      'title' => 'Responsive Tables',
+      'description' => 'Configure which tables should be responsive',
+    ),
+  );
+}
+
+/**
+ * Form callback to control module settings.
+ *
+ * Allows on/off for responsiveness on Drupal Views.
+ */
+function utexas_tablesaw_filter_admin_form($form, &$form_state) {
+
+  $form['introductory_text'] = array(
+    '#markup' => '<p>' . t('Enable responsive tables in WYSIWYG fields by going to !text_formats and checking "Make tables responsive" for the desired text format(s).', array('!text_formats' => l(t('Text Formats'), '/admin/config/content/formats'))) . '</p><hr />',
+  );
+
+  // Add a checkbox to indicate if GTM should be included on admin paths.
+  $form[UTEXAS_TABLESAW_FILTER_VIEWS] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Make Drupal Views responsive'),
+    '#description' => t('When checked, CSS classes will be added to Drupal Views to make them mobile-responsive.'),
+    '#default_value' => variable_get(UTEXAS_TABLESAW_FILTER_VIEWS, TRUE),
+  );
+
+  // Toggle table-layout:fixed CSS property.
+  $form[UTEXAS_TABLESAW_FILTER_FIXED] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Apply "table-layout:fixed" CSS property.'),
+    '#description' => t('This may improve cell spacing and potential overlap in certain scenarios.
+      Checking this box applies this property globally. To apply it to individual WYSIWYG tables,
+      set your table markup to @code_example.', array('@code_example' => '<table class="fixed">')),
+    '#default_value' => variable_get(UTEXAS_TABLESAW_FILTER_FIXED, FALSE),
+  );
+
+  // Use the system_settings_form() to add submit handlers to the button.
+  return system_settings_form($form);
+}
+
+/**
  * Implements hook_init().
  */
 function utexas_tablesaw_filter_init() {
@@ -99,16 +164,18 @@ function utexas_tablesaw_filter_preprocess_page(&$variables) {
  * Adds tablesaw JS when tables present and CSS/JS aggregation is off to table.
  */
 function utexas_tablesaw_filter_preprocess_views_view_table(&$variables) {
-  // Add tablesaw classes & attribute.
-  $variables['classes_array'][] = 'tablesaw';
-  $variables['classes_array'][] = 'tablesaw-stack';
-  $variables['attributes_array']['data-tablesaw-mode'] = 'stack';
-  // Add the required Tablesaw library if aggregationg is disabled. (If enabled)
-  // it will already be added via utexas_tablesaw_filter_init().
-  if (variable_get('preprocess_css', 0) == 0 || variable_get('preprocess_js', 0) == 0) {
-    _responsive_tables_filter_add_js_css(TRUE);
+  // Check if this has been enabled in the config page.
+  if (variable_get(UTEXAS_TABLESAW_FILTER_VIEWS, TRUE)) {
+    // Add tablesaw classes & attribute.
+    $variables['classes_array'][] = 'tablesaw';
+    $variables['classes_array'][] = 'tablesaw-stack';
+    $variables['attributes_array']['data-tablesaw-mode'] = 'stack';
+    // Add the required Tablesaw library if aggregation is disabled.
+    // it will already be added via utexas_tablesaw_filter_init().
+    if (variable_get('preprocess_css', 0) == 0 || variable_get('preprocess_js', 0) == 0) {
+      _responsive_tables_filter_add_js_css(TRUE);
+    }
   }
-
 }
 
 /**
@@ -119,24 +186,28 @@ function utexas_tablesaw_filter_preprocess_views_view_table(&$variables) {
  */
 function _responsive_tables_filter_add_js_css($every_page) {
   $tablesaw_path = libraries_get_path('tablesaw');
-  $module_path = drupal_get_path('module', 'utexas_tablesaw_filter');
   if (file_exists($tablesaw_path . '/dist/stackonly/tablesaw.stackonly.js') and file_exists($tablesaw_path . '/dist/stackonly/tablesaw.stackonly.css')) {
     drupal_add_js($tablesaw_path . '/dist/stackonly/tablesaw.stackonly.js', array(
       'every_page' => $every_page,
-      'scope' => 'footer',
-      'weight' => 30,
+      'scope' => 'foot_scripts',
+      'weight' => 10,
       )
     );
+    $module_path = drupal_get_path('module', 'utexas_tablesaw_filter');
     drupal_add_css($module_path . '/theme/utexas_tablesaw_filter.css', array('every_page' => $every_page));
     drupal_add_css($tablesaw_path . '/dist/stackonly/tablesaw.stackonly.css', array('every_page' => $every_page));
     if (file_exists($tablesaw_path . '/dist/tablesaw-init.js')) {
       // Tablesaw 2.x includes tablesaw-init.js
       drupal_add_js($tablesaw_path . '/dist/tablesaw-init.js', array(
         'every_page' => $every_page,
-        'scope' => 'footer',
-        'weight' => 31,
+        'scope' => 'foot_scripts',
+        'weight' => 10,
         )
       );
+    }
+    if (variable_get(UTEXAS_TABLESAW_FILTER_FIXED, FALSE)) {
+      // Add table-layout:fixed to tables if user has enabled on config page.
+      drupal_add_css('@media (min-width: 40em) {table.tablesaw {table-layout: fixed;}}', array('type' => 'inline'));
     }
   }
   else {
