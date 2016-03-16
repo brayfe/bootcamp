@@ -158,13 +158,3 @@ function utexas_utdk_deploy_update_7105() {
     ->execute();
   }
 }
-
-/**
- * Implements hook_update_N().
- *
- * Reorders text format filters to desired order.
- */
-function utexas_utdk_deploy_update_7106() {
-  reorder_filtered_html_text_filters();
-}
-
