@@ -173,6 +173,7 @@ function utexas_quick_links_field_validate($entity_type, $entity, $field,
         // Bypass if data is coming from a migration.
         $link_array = $item['links'];
         foreach ($link_array as $delta => $link) {
+          // Validate URL.
           $target = drupal_get_normal_path($link['link_url']);
           if (!empty($link['link_url']) and !drupal_valid_path($target)) {
             $errors[$field['field_name']][$langcode][0][] = array(
@@ -181,6 +182,7 @@ function utexas_quick_links_field_validate($entity_type, $entity, $field,
               array('%field' => $instance['label'])),
             );
           }
+          // A title cannot be submitted without a URL.
           if (!empty($link['link_title']) and empty($link['link_url'])) {
             $errors[$field['field_name']][$langcode][0][] = array(
               'error' => 'title_no_link',
@@ -193,7 +195,7 @@ function utexas_quick_links_field_validate($entity_type, $entity, $field,
           }
         }
 
-        // Check if tags are included in the headline.
+        // Check if HTML is included in the headline.
         if (strcmp($item['headline'], strip_tags($item['headline'])) !== 0) {
           $errors[$field['field_name']][$langcode][0][] = array(
             'error' => 'headline_tags',
@@ -274,7 +276,7 @@ function utexas_quick_links_field_presave($entity_type, $entity, $field, $instan
     $tmp_links = array();
     $tmp_delta = -10;
     foreach ($item['links'] as $key => &$link) {
-      if (!empty($link['link_title']) and !empty($link['link_url'])) {
+      if (!empty($link['link_url'])) {
         // Store Drupal path aliases as internal paths, if they exist.
         $target = drupal_get_normal_path($link['link_url']);
         $tmp_links[] = array(
@@ -414,10 +416,10 @@ function template_preprocess_utexas_quick_links(&$variables) {
     );
   }
 
-  // Sanitize and offer default headline.
+  // Sanitize headline.
   $output = array();
   $headline = (!empty($variables['item']['headline'])) ?
-  check_plain($variables['item']['headline']) : t('Other Resources');
+  check_plain($variables['item']['headline']) : FALSE;
 
   // Grab the copy.
   $copy_value = $variables['item']['copy_value'];
@@ -428,7 +430,11 @@ function template_preprocess_utexas_quick_links(&$variables) {
   $links = !empty($variables['item']['links']) ? unserialize($variables['item']['links']) : array();
   $tmp_links = array();
   foreach ($links as $link) {
-    $tmp_links[] = l('<span>' . $link['link_title'] . '</span>', $link['link_url'], array(
+    // In the case of a link without a title, create an absolute URL to display.
+    $link_url = url($link['link_url'], array('absolute' => TRUE));
+    $title =  (!empty($link['link_title'])) ? $link['link_title'] : $link_url;
+
+    $tmp_links[] = l('<span>' . $title . '</span>', $link['link_url'], array(
       'attributes' => array(
         'class' => array(
           'cta-link',

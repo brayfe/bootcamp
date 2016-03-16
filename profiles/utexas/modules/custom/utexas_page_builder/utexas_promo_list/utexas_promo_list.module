@@ -82,7 +82,6 @@ function utexas_promo_list_field_widget_form(&$form, &$form_state, $field, $inst
         '#media_options' => array(
           'global' => array(
             'file_extensions' => 'gif png jpg jpeg',
-            'max_filesize' => '5 MB',
             'file_directory' => 'promo-lists',
             'types' => array('image'),
           ),

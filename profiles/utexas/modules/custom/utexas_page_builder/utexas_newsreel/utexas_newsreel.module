@@ -297,7 +297,7 @@ function template_preprocess_utexas_newsreel(&$variables) {
           $items[] = array(
             'date' => utexas_admin_ap_style_date(strtotime($item['pubDate'])),
             'headline' => $item['title'],
-            'description' => token_truncate($item['description'], 270) . ' ',
+            'description' => _utexas_admin_token_truncate($item['description'], 270) . ' ',
             'link' => $item['link'],
           );
         }
@@ -344,35 +344,4 @@ function utexas_newsreel_field_is_empty($item, $field) {
 
   }
   return FALSE;
-}
-
-/**
- * Helper function to trim teasers on word boundary + sentence.
- */
-function token_truncate($string, $your_desired_width) {
-  $sentences = explode('. ', $string);
-  $sentence1 = isset($sentences[1]) ? $sentences[1] : '';
-  $sentence2 = isset($sentences[2]) ? $sentences[2] : '';
-  if ((strlen($sentences[0]) + strlen($sentence1)) < 60) {
-    $teaser = $sentences[0] . '. ' . $sentence1 . '. ' . $sentence2;
-  }
-  elseif (strlen($sentences[0]) < 60) {
-    $teaser = $sentences[0] . '. ' . $sentence1;
-  }
-  else {
-    $teaser = $sentences[0];
-  }
-  $parts = preg_split('/([\s\n\r]+)/', $teaser, NULL, PREG_SPLIT_DELIM_CAPTURE);
-  $parts_count = count($parts);
-
-  $length = 0;
-  $last_part = 0;
-  for (; $last_part < $parts_count; ++$last_part) {
-    $length += strlen($parts[$last_part]);
-    if ($length > $your_desired_width) {
-      break;
-    }
-  }
-
-  return implode(array_slice($parts, 0, $last_part));
 }

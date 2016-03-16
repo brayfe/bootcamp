@@ -664,8 +664,56 @@ function forty_acres_preprocess_page(&$variables, $hook) {
     'core_helpful_links' => menu_tree('menu-core-helpful-links'),
   );
 
-  // Set a partials directory for use on the template tpl pages.
-  $variables['partials_dir'] = drupal_get_path('theme', $GLOBALS['theme']) . '/templates/partials/';
+  // Sets partial variables for use on the template.tpl.php pages.
+  $partials_list = array(
+    'breadcrumbs' => 'breadcrumbs.tpl.php',
+    'footer' => 'footer.tpl.php',
+    'header' => 'header.tpl.php',
+    'page_top' => 'page-top.tpl.php',
+    'search_result'=> 'search-result.tpl.php',
+    'search_results' => 'search-results.tpl.php',
+  );
+  $current_theme_path = drupal_get_path('theme', $GLOBALS['theme']);
+  $current_templates = array();
+  if ($GLOBALS['theme'] != 'forty_acres') {
+    // Returns array of the tpl.php files in the subtheme's templates directory.
+    $current_templates = file_scan_directory($current_theme_path . '/templates', '/\.tpl.php/', $options = array('key' => 'filename'));
+  }
+  foreach ($partials_list as $name => $file_name) {
+    // If we are using a subtheme and a partial is defined anywhere in the templates directory, set the partial variable to that template.
+    $variables['partial_' . $name] = (($GLOBALS['theme'] != 'forty_acres') && (isset($current_templates[$file_name]))) ? $current_templates[$file_name]->uri : drupal_get_path('theme', 'forty_acres') . '/templates/partials/' . $file_name;
+  }
+
+  // Load foundation js files selected in theme settings.
+  $forty_acres_path = drupal_get_path('theme', 'forty_acres');
+  $extra_libraries = theme_get_setting('foundation_files') ? theme_get_setting('foundation_files') : array();
+  foreach ($extra_libraries as $library => $value) {
+    if ($library === $value) {
+      if (file_exists($forty_acres_path . '/js/foundation.' . $library . '.js')) {
+        drupal_add_js($forty_acres_path . '/js/foundation.' . $library . '.js', array(
+          'scope' => 'foot_scripts',
+          'weight' => 4,
+        ));
+      }
+      if (file_exists($forty_acres_path . '/css/foundation.' . $library . '.css')) {
+        drupal_add_css($forty_acres_path . '/css/foundation.' . $library . '.css');
+      }
+    }
+  }
+  $foundation_libraries = array('abide', 'accordion', 'alert', 'dropdown', 'reveal', 'tab', 'tooltip');
+  if (arg(0) == 'demo' && arg(1) == 'foundation-extra-libraries' && drupal_valid_path('demo/foundation-extra-libraries')) {
+    foreach ($foundation_libraries as $library) {
+      if (file_exists($forty_acres_path . '/js/foundation.' . $library . '.js')) {
+        drupal_add_js($forty_acres_path . '/js/foundation.' . $library . '.js', array(
+          'scope' => 'foot_scripts',
+          'weight' => 4,
+        ));
+      }
+      if (file_exists($forty_acres_path . '/css/foundation.' . $library . '.css')) {
+        drupal_add_css($forty_acres_path . '/css/foundation.' . $library . '.css');
+      }
+    }
+  }
 
   // Figure out if we're on a 403 or 404 page.
   if ($header = drupal_get_http_header('status')) {
@@ -758,7 +806,11 @@ function forty_acres_preprocess_page(&$variables, $hook) {
     $variables['related_links_block_grid_class'] = 'small-block-grid-3';
     drupal_add_css('.footer-theme2 .footer-primary {border-right: 1px solid #cbcbcb!important;}', 'inline');
   }
-
+  $variables['display_search'] = TRUE;
+  if (theme_get_setting('utexas_searchbar_theme_settings') == 'no') {
+    $variables['display_search'] = FALSE;
+    drupal_add_css('#main-nav {margin: 0;}.container-nav-phase2 .nav-item:first-child{border-top: none!important;}', 'inline');
+  }
 }
 
 /**

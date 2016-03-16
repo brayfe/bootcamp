@@ -513,9 +513,16 @@ function utexas_page_builder_form_alter(&$form, &$form_state, $form_id) {
 
       // Loop through each field, creating the sub wrapper.
       foreach ($fields as $field_name => $field) {
+
         switch ($field_name) {
           case 'field_template':
           case 'page_layout':
+          case 'field_utexas_member_designation':
+          case 'field_utexas_member_group':
+          case 'field_utexas_member_given_name':
+          case 'field_utexas_member_surname':
+          case 'field_utexas_eid':
+          case 'field_link_to_profile_page':
             break;
 
           default:
@@ -916,6 +923,16 @@ function utexas_page_builder_preprocess_context_block_browser(&$variables) {
  *   Twitter feed module.
  */
 function utexas_page_builder_preprocess_block(&$variables) {
+  // Determine whether the current block is a "node" type.
+  if (isset($variables['elements']['nodes'])) {
+    $node = $variables['elements']['nodes'];
+    reset($node);
+    $nid = key($node);
+    if (isset($variables['elements']['nodes'][$nid]['#node']->field_page_layout)) {
+      // This is a node that uses page builder. Send a flag to block.tpl.php.
+      $variables['page_builder_node'] = TRUE;
+    }
+  }
   // Attach a theme hook suggestions for fieldblocks based on the content in
   // the field.
   if (isset($variables['block']) and $variables['block']->module == 'fieldblock' and isset($variables['elements']['#field_name'])) {

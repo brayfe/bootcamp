@@ -15,7 +15,6 @@ module.exports = {
             '<%= path.src %>/bower_components/fastclick/lib/fastclick.js',
             '<%= path.src %>/bower_components/foundation/js/foundation/foundation.js',
             '<%= path.src %>/bower_components/foundation/js/foundation/foundation.equalizer.js',
-            '<%= path.src %>/bower_components/foundation/js/foundation/foundation.tab.js',
             '<%= path.src %>/bower_components/foundation/js/foundation/foundation.magellan.js',
           ]
         }
@@ -51,6 +50,31 @@ module.exports = {
             '<%= path.src %>/bower_components/selectivizr/selectivizr.js',
             '<%= path.src %>/bower_components/respond/dest/respond.src.js',
             '<%= path.src %>/bower_components/REM-unit-polyfill/js/rem.js'
+          ]
+        }
+    },
+    foundation_options: {
+        files : {
+          '<%= path.dist %>/js/foundation.accordion.js': [
+            '<%= path.src %>/bower_components/foundation/js/foundation/foundation.accordion.js'
+          ],
+          '<%= path.dist %>/js/foundation.alert.js': [
+            '<%= path.src %>/bower_components/foundation/js/foundation/foundation.alert.js'
+          ],
+          '<%= path.dist %>/js/foundation.dropdown.js': [
+            '<%= path.src %>/bower_components/foundation/js/foundation/foundation.dropdown.js'
+          ],
+          '<%= path.dist %>/js/foundation.abide.js': [
+            '<%= path.src %>/bower_components/foundation/js/foundation/foundation.abide.js'
+          ],
+          '<%= path.dist %>/js/foundation.reveal.js': [
+            '<%= path.src %>/bower_components/foundation/js/foundation/foundation.reveal.js'
+          ],
+          '<%= path.dist %>/js/foundation.tab.js': [
+            '<%= path.src %>/bower_components/foundation/js/foundation/foundation.tab.js'
+          ],
+          '<%= path.dist %>/js/foundation.tooltip.js': [
+            '<%= path.src %>/bower_components/foundation/js/foundation/foundation.tooltip.js'
           ]
         }
     }

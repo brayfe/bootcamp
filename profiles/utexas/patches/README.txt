@@ -23,3 +23,11 @@ Context Reaction Block requires the "administer contexts" permission to use the
 layout editor. Since we don't want generic Site Builder roles to have access to
 Context UI, we redefine the permission requirement relative to page builder.
 https://utexas-digx.atlassian.net/browse/MC-192
+
+5. video-filter-modal-autoplay-fix.patch
+There are 3 big issues with the latest version of the video_filter module. The
+first one is that the "autoplay" option does not work. The second one is that
+the logic of the modal window that opens when you want to paste a new video URL
+is deprecated on Chrome, so this patch fix both issues. The last one is removing
+a php warning appearing when you add a youtube URL by using the modal on a
+WYSIWYG.

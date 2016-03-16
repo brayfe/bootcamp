@@ -1255,7 +1255,7 @@ header {
 .footer-theme2 .footer-contact a {
 	font-size: 0.875rem;
 	font-style: normal;
-	color: #BF5700;
+	color: #A04400;
 }
 
 .footer-theme2 .copyright {
@@ -1985,10 +1985,22 @@ textarea {
 }
 
 .field_bio_block img {
-	padding-right: 10px;
-	width: 100%;
+	padding-right: 25px;
+	padding-bottom: 10px;
+	width: 150px;
 	height: auto;
-	display: block; /* Landscape phones and down */
+	float: left; /* Landscape phones and down */ /* Landscape phones and down */
+}
+
+.field_bio_block .field_utexas_quick_links {
+	border: none;
+	padding: 0;
+	padding-left: 150px; /* Landscape phones and down */ /* Landscape phones and down */
+}
+
+.field_bio_block .field_utexas_member_bio {
+	padding-top: 20px;
+	margin-top: 10px;
 }
 
 .field_bio_block .bio-top {
@@ -1997,10 +2009,9 @@ textarea {
 
 .field_bio_block .bio-bottom {
 	padding: 0 5px 10px 5px;
-	display: block;
+	display: inline;
 	overflow: hidden;
-	height: auto;
-	border-top: 2px solid #D6D6D6; /* Landscape phones and down */
+	height: auto; /* Landscape phones and down */
 }
 
 .field_bio_block .name {
@@ -2052,7 +2063,24 @@ textarea {
 	margin-top: 20px;
 }
 
+.field_bio_block.links-present .field_utexas_member_bio {
+	border-top: 2px solid #d6d6d6;
+}
+
+.field_bio_block hr {
+	background-color: #d6d6d6;
+	margin: 25px 0 0 0;
+}
+
 .related-links-override { /* Landscape phones and down */
+}
+
+.container-team-member {
+	padding-bottom: 25px; /* Landscape phones and down */
+}
+
+.container-team-member .team-member-content {
+	padding-top: 20px;
 }
 
 .subnav {
@@ -2566,6 +2594,14 @@ hr {
 
 .form-example {
 	margin-bottom: 60px;
+}
+
+.field_bio_block img {
+	width: 200px;
+}
+
+.field_bio_block .field_utexas_quick_links {
+	padding-left: 200px;
 }
 
 .field_bio_block .bio-top {
@@ -3133,6 +3169,18 @@ body #toolbar {
 	padding: 0;
 }
 
+.field_bio_block img {
+	width: 250px;
+}
+
+.field_bio_block .field_utexas_quick_links {
+	padding-left: 250px;
+}
+
+.container-team-member {
+	padding-bottom: 40px;
+}
+
 .tweet {
 	padding: 15px 15px;
 }
@@ -3294,12 +3342,6 @@ body #toolbar {
 
 .theme2 header .connect-link span:hover {
 	color: #fff;
-}
-
-.field_bio_block img {
-	display: block;
-	width: 80%;
-	margin: 0 auto 20px auto;
 }
 
 .field_bio_block .additional-info .small-12 {

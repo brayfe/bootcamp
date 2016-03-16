@@ -72,18 +72,18 @@ function forty_acres_form_system_theme_settings_alter(&$form, &$form_state) {
     $form['utexas_main_nav_theme_settings']['secondary_menu']['#default_value'] = (theme_get_setting('secondary_menu') == 'social_accounts') ? 'header_menu' : theme_get_setting('secondary_menu');
   }
 
-  $form['utexas_searchbar_theme_settings'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Search Bar'),
+  $form['utexas_main_nav_theme_settings']['utexas_searchbar_theme_settings'] = array(
+    '#type' => 'radios',
+    '#title' => t('Search bar display options'),
+    '#options' => array(
+      'yes' => t('Display search bar'),
+      'no' => t('Hide search bar'),
+    ),
+    '#default_value' => theme_get_setting('utexas_searchbar_theme_settings') ? theme_get_setting('utexas_searchbar_theme_settings') : 'yes',
   );
-  if (module_exists('utexas_google_cse')) {
-    $form['utexas_searchbar_theme_settings']['display_search'] = array(
-      '#markup' => t("Site search uses Google CSE, which yields better results than standard Drupal search.  If you would like to hide the search bar simply disable the <a href='/admin/modules'>Google CSE module.</a>"),
-    );
-  }
-  else {
-    $form['utexas_searchbar_theme_settings']['display_search'] = array(
-      '#markup' => t("<div class='messages warning'>Currently, the search bar will not display since the Google CSE module is not enabled. Check your <a href='/admin/modules'>enabled modules.</a></div>"),
+  if (!module_exists('utexas_google_cse')) {
+    $form['utexas_main_nav_theme_settings']['utexas_searchbar_theme_settings']['display_search'] = array(
+      '#markup' => t("<div class='messages warning'>The UTexas Google CSE module is currently disabled which prevents the search bar from being displayed on your site.  Please contact a site administrator to resolve this.</div>"),
     );
   }
 
@@ -126,5 +126,30 @@ function forty_acres_form_system_theme_settings_alter(&$form, &$form_state) {
     '#default_value' => theme_get_setting('newsletter_url'),
     '#maxlength' => 256,
   );
-
+  // Option to load supplemental foundation javascript files.
+  $form['utexas_extra_foundation_js'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Supplemental Foundation Elements'),
+  );
+  $base_url = $GLOBALS['base_url'];
+  $form['utexas_extra_foundation_js']['display_demo_page'] = array(
+    '#type' => 'item',
+    '#title' => t('Visit a <a href="/demo/foundation-extra-libraries">demonstration page</a> to see the foundation extra libraries in action.'),
+    '#description' => t('Note: this page is only visible to authenticated users.'),
+  );
+  $form['utexas_extra_foundation_js']['foundation_files'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Select additional Foundation elements to load their CSS and JavaScript files.'),
+    '#description' => t('Note: this is an experimental feature.  We do not guarantee these elements will work correctly with Drupal.'),
+    '#options' => array(
+      'abide' => 'Abide Form Validation (<a href="http://foundation.zurb.com/sites/docs/v/5.5.3/components/abide.html" target="_blank">see here for more information</a>)',
+      'accordion' => 'Accordions (<a href="http://foundation.zurb.com/sites/docs/v/5.5.3/components/accordion.html" target="_blank">see here for more information</a>)',
+      'alert' => 'Alert Boxes (<a href="http://foundation.zurb.com/sites/docs/v/5.5.3/components/alert_boxes.html" target="_blank">see here for more information</a>)',
+      'dropdown' => 'Dropdown Buttons (<a href="http://foundation.zurb.com/sites/docs/v/5.5.3/components/dropdown_buttons.html" target="_blank">see here for more information</a>)',
+      'reveal' => 'Reveal Modals (<a href="http://foundation.zurb.com/sites/docs/v/5.5.3/components/reveal.html" target="_blank">see here for more information</a>)',
+      'tab' => 'Horizontal and Vertical Tabs (<a href="http://foundation.zurb.com/sites/docs/v/5.5.3/components/tabs.html" target="_blank">see here for more information</a>)',
+      'tooltip' => 'Tooltips (<a href="http://foundation.zurb.com/sites/docs/v/5.5.3/components/tooltips.html" target="_blank">see here for more information</a>)',
+    ),
+    '#default_value' => theme_get_setting('foundation_files') ? theme_get_setting('foundation_files') : array(),
+  );
 }

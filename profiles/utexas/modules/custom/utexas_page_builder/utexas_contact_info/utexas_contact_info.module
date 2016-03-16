@@ -177,15 +177,21 @@ function utexas_contact_info_permission() {
  * Access callback for entities.
  */
 function utexas_contact_info_access_callback($op, $contact_form = NULL, $account = NULL) {
-  if ($op == 'view' && user_access(UTEXAS_CONTACT_INFO_VIEW_PERMISSION)) {
-    return TRUE;
+  $url = current_path();
+  $access = FALSE;
+  if ($url == UTEXAS_CONTACT_INFO_CALLBACK &&  user_access(UTEXAS_CONTACT_INFO_EDIT_PERMISSION)) {
+    // Allow users with permission to view entity overview page.
+    $access = TRUE;
+  }
+  if ($op == 'view' && user_access(UTEXAS_CONTACT_INFO_VIEW_PERMISSION) && $url !== UTEXAS_CONTACT_INFO_CALLBACK) {
+    // Allow users with permission to view rendered entities.
+    $access = TRUE;
   }
   elseif (($op == 'update' || $op == 'create' || $op == 'delete') && user_access(UTEXAS_CONTACT_INFO_EDIT_PERMISSION)) {
-    return TRUE;
+    // Allow users with permission to modify entities.
+    $access = TRUE;
   }
-  else {
-    return FALSE;
-  }
+  return $access;
 }
 
 /**

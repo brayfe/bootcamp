@@ -14,11 +14,12 @@
  *
  * @ingroup themeable.
  */
-?>
-<h3 class="sidebar-headline"><?php print $headline; ?></h3>
-<?php
+
+if ($headline != FALSE) :
+echo '<h3 class="sidebar-headline">' . $headline . '</h3>';
+endif;
 if ($copy != FALSE) :
-  echo '<div class="body-copy"><p>' . $copy . '</p></div>';
+  echo '<div class="body-copy">' . $copy . '</div>';
 endif;
 if ($links != FALSE) :
   if ($page_template == 'Landing Page Template 2') :

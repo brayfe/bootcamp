@@ -10,7 +10,8 @@ Feature: Site Builder
 Scenario: Perform actions with site-builder permissions
 
   # Validate login
-  Given I am logged in as a user with the "site builder, standard page editor, landing page editor" role
+  Given I am logged in as a user with the "site builder, standard page editor" role
+  And I set browser window size to "1200" x "900"
   When I go to "node/add/standard-page"
   Then I should see the css element ".toolbar-menu"
   And I set browser window size to "1200" x "900"
@@ -27,79 +28,54 @@ Scenario: Perform actions with site-builder permissions
   And I attach the file "placeholder.jpg" to "files[upload]"
   And I press the "Next" button
   And I press the "Save" button
+  # Add WYSIWYG A #
+  And I click on the link "WYSIWYG A" in the ".vertical-tabs-list" region
+  And I the set the iframe located in element with an id of "cke_edit-field-wysiwyg-a-und-0-value" to "wysiwyg_a"
+  And I fill in "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." in WYSIWYG editor "wysiwyg_a"
+  # Save #
   And I press the "Save" button
   Then I should see the message "Standard Page Standard Page Test has been created."
-
-  # Create block
-  When I go to "/admin/structure/block/add"
-  And I fill in "Test Block" for "Block title"
-  And I fill in "Test Block" for "Block description"
-  And I select "Plain text" from "Text format"
-  And I fill in "Cat ipsum dolor sit amet, give attitude for spread kitty litter all over house. Hack up furballs stare at the wall, play with food and get confused by dust and mew attack feet run in circles. Caticus cuteicus paw at your fat belly yet missing until dinner time, or sit by the fire." for "Block body"
-  And I click on the element "#edit-submit"
-  And I click "Home"
 
   # Use the layout editor to place a block
   And I click "Layout Editor" in the "primary_tabs" region
   And I click "Edit" in the "context_editor" region
   And I wait for css element ".main-content" to "appear"
-  And I click on the element ".context-ui-add-link.context-ui-processed" in the "#context-block-region-main_content_top_left" region
-  And I click on the element "#context-block-addable-block-1"
-  And I wait for css element "#block-block-1" to "appear"
+  And I click on the element ".context-ui-add-link.context-ui-processed" in the "#context-block-region-content_top_right" region
+  And I click on the element "#context-block-addable-fieldblock-fda604d130a57f15015895c8268f20d2"
+  # Save #
+  And I wait for css element ".field.field_wysiwyg_a" to "appear"
   And I click "Done" in the "context_editor" region
   And I press the "Save" button
-  # test for custom block prescence on page
-  Then I should see the text "Cat ipsum dolor sit amet, give attitude for spread kitty litter all over house. Hack up furballs stare at the wall, play with food and get confused by dust and mew attack feet run in circles. Caticus cuteicus paw at your fat belly yet missing until dinner time, or sit by the fire." in the "top_left_region" region
+  # Verify themed output #
+  Then I should see the heading "Standard Page Test"
+  And I should see "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." in the "wysiwyg_a_block" region
 
-  # Administer theme settings
-  When I go to "/admin/appearance/settings/forty_acres"
-  When I select the radio button "Tall"
-  And I fill in "School of Hard Knocks" for "Parent Entity Name"
-  And I fill in "http://www.google.com" for "Parent Entity Website"
-  And I fill in "Cat ipsum dolor sit amet, give attitude for spread kitty litter all over house. Hack up furballs stare at the wall, play with food and get confused by dust and mew attack feet run in circles. Caticus cuteicus paw at your fat belly yet missing until dinner time, or sit by the fire." for "OPTIONAL - Enter text to be displayed in a block in the left-most region of the footer."
-  And I check the box "newsletter_exists"
-  And I fill in "http://www.google.com" for "Enter the URL of your newsletter subscription form."
-  And I press the "Save configuration" button
-  Then I should see the message "The configuration options have been saved."
-  And I click "Home"
-  Then I should see "School of Hard Knocks" in the "header" region
-  Then I should see "Cat ipsum dolor sit amet, give attitude for spread kitty litter all over house. Hack up furballs stare at the wall, play with food and get confused by dust and mew attack feet run in circles. Caticus cuteicus paw at your fat belly yet missing until dinner time, or sit by the fire." in the "full_page_content" region
-  Then I should see "Subscribe to our newsletter" in the "full_page_content" region
-
-  # Verify Site Builder can access designated configuration pages
+  # Verify Site Builder cannot access designated configuration pages
   When I go to "/admin/config/utexas/google_cse"
-  Then I should see "The Google Custom Search Engine ID sets which domains the site searches. Create a targeted search criteria at https://cse.google.com/." in the "page" region
+  Then I should see "You are not authorized to access this page." in the "page" region
   When I go to "/admin/config/utexas/twitter"
-  Then I should see "Assign the Twitter App for this site. To register a new App, go to the Twitter App page." in the "page" region
+  Then I should see "You are not authorized to access this page." in the "page" region
   When I go to "/admin/config/system/utexas_google_tag_manager"
-  Then I should see "What is your Google Tag Manager account code? It usually is a six digit code, prefixed with GTM." in the "page" region
-
-  # Verify Site Builder can not access designated configuration pages
+  Then I should see "You are not authorized to access this page." in the "page" region
   When I go to "/admin/config/system/cron"
   Then I should see "You are not authorized to access this page." in the "page" region
-  When I go to "/admin/structure/views"
-  Then I should see "You are not authorized to access this page." in the "page" region
-  When I go to "/admin/people/permissions"
+  When I go to "/admin/structure"
+  Then I should see "Add new menus" in the "page" region
+  And I should not see "Views" in the "page" region
+  And I should not see "Context" in the "page" region
+  When I go to "/admin/people"
   Then I should see "You are not authorized to access this page." in the "page" region
   When I go to "/admin/modules"
   Then I should see "You are not authorized to access this page." in the "page" region
+  When I go to "/admin/templates/manage/1"
+  Then I should see "You are not authorized to access this page." in the "page" region
   When I go to "/admin/appearance/settings/bartik"
   Then I should see "You are not authorized to access this page." in the "page" region
-
-  # Switch themes and edit theme-settings with 'access all themes' permission
-  Given I am logged in as a user with the "access all themes,view the administration theme" permission on this site
-  When I go to "/admin/appearance/settings/starterkit"
-  When I select the radio button "Tall"
-  And I fill in "School of Hard Knocks" for "Parent Entity Name"
-  And I fill in "http://www.google.com" for "Parent Entity Website"
-  And I fill in "Cat ipsum dolor sit amet, give attitude for spread kitty litter all over house. Hack up furballs stare at the wall, play with food and get confused by dust and mew attack feet run in circles. Caticus cuteicus paw at your fat belly yet missing until dinner time, or sit by the fire." for "OPTIONAL - Enter text to be displayed in a block in the left-most region of the footer."
-  And I check the box "newsletter_exists"
-  And I fill in "http://www.google.com" for "Enter the URL of your newsletter subscription form."
-  And I press the "Save configuration" button
-  Then I should see the message "The configuration options have been saved."
-  And I click "Home"
-  Then I should see "School of Hard Knocks" in the "header" region
-  Then I should see "Cat ipsum dolor sit amet, give attitude for spread kitty litter all over house. Hack up furballs stare at the wall, play with food and get confused by dust and mew attack feet run in circles. Caticus cuteicus paw at your fat belly yet missing until dinner time, or sit by the fire." in the "full_page_content" region
-  Then I should see "Subscribe to our newsletter" in the "full_page_content" region
-  When I go to "/admin/appearance/settings/bartik"
-  Then I should see "These options control the display settings for the Bartik theme. When your site is displayed using this theme, these settings will be used." in the "page" region
+  When I go to "/admin/appearance/settings/forty_acres"
+  Then I should see "You are not authorized to access this page." in the "page" region
+  When I go to "/node/add"
+  Then I should not see "Landing Page" in the "page" region
+  And I should not see "Team Member" in the "page" region
+  And I should not see "Faculty Profile" in the "page" region
+  And I should see "Standard Page" in the "page" region
+  And I should see "Basic page" in the "page" region

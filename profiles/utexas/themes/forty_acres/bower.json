@@ -2,7 +2,7 @@
   "name": "foundation-libsass-template",
   "dependencies": {
     "foundation": "5.4.7",
-    "Accessible-Mega-Menu": "https://github.com/ithinkdancan/Accessible-Mega-Menu.git",
+    "Accessible-Mega-Menu": "https://github.com/mikemarsello/Accessible-Mega-Menu.git",
     "REM-unit-polyfill": "~1.2.5",
     "respond": "~1.4.2",
     "selectivizr": "~1.0.2",

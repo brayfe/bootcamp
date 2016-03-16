@@ -288,6 +288,23 @@
         }
     }
 }
+.region.region-content-top-right .block-fieldblock {
+	&.fieldblock_field_utexas_flex_content_area_a, .fieldblock_field_utexas_flex_content_area_b {
+			margin-bottom: 25px!important;
+			@include respond(medium) {
+					margin-bottom: 40px!important;
+			}
+			.utexas-flex-content-cta {
+				margin-bottom: 0;
+			}
+	}
+	.utexas-flex-content {
+		margin-bottom: 15px;
+		@include respond(medium) {
+			margin-bottom: 25px;
+		}
+	}
+}
 .region.region-content-top-four-pillars {
     .block-fieldblock {
         &.fieldblock_field_utexas_flex_content_area_a, .fieldblock_field_utexas_flex_content_area_b {

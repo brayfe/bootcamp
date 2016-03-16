@@ -7,7 +7,7 @@ Feature: UTexas Twitter Widget
   I need to be able to add customizable twitter feeds
 
 Scenario: Validate required fields
-  Given I am logged in as a user with the "view the administration theme,access content overview,access content,administer nodes,view twitter widgets,administer twitter widgets" permission on this site
+  Given I am logged in as a user with the "administrator" role on this site
   And I set browser window size to "1200" x "900"
   When I go to "admin/content"
   And I click "Twitter Widgets"
@@ -17,7 +17,7 @@ Scenario: Validate required fields
   And I should see the error message "Twitter Account field is required."
 
 Scenario: Add Twitter configuration
-  Given I am logged in as a user with the "view the administration theme,access content overview,access content,administer nodes,view twitter widgets,administer twitter widgets" permission on this site
+  Given I am logged in as a user with the "administrator" role on this site
   When I go to "admin/content"
   And I click "Twitter Widgets"
   And I click "Twitter Configuration"
@@ -28,7 +28,7 @@ Scenario: Add Twitter configuration
   Then I should see the error message "Could not authenticate you. The form has not been updated; any previously valid data you entered will remain active."
 
 Scenario: Add Twitter configuration
-  Given I am logged in as a user with the "view the administration theme,access content overview,access content,administer nodes,view twitter widgets,administer twitter widgets" permission on this site
+  Given I am logged in as a user with the "administrator" role on this site
   When I go to "admin/content"
   And I click "Twitter Widgets"
   And I click "Twitter Configuration"
@@ -40,7 +40,7 @@ Scenario: Add Twitter configuration
   Then I should see the message "The configuration options have been saved."
 
 Scenario: Validate account name
-  Given I am logged in as a user with the "view the administration theme,access content overview,access content,administer nodes,view twitter widgets,administer twitter widgets" permission on this site
+  Given I am logged in as a user with the "administrator" role on this site
   When I go to "admin/content"
   And I click "Twitter Widgets"
   And I click "Add twitter widget"
@@ -51,7 +51,7 @@ Scenario: Validate account name
   Then I should see the error message "The Twitter username invalid_twitter_handle does not appear to be valid."
 
 Scenario: Validate timeline list
-  Given I am logged in as a user with the "view the administration theme,access content overview,access content,administer nodes,view twitter widgets,administer twitter widgets" permission on this site
+  Given I am logged in as a user with the "administrator" role on this site
   When I go to "admin/content"
   And I click "Twitter Widgets"
   And I click "Add twitter widget"
@@ -63,7 +63,7 @@ Scenario: Validate timeline list
   Then I should see the error message "The Twitter timeline list invalid_timeline_list does not appear to be valid."
 
 Scenario: Add Twitter widget data
-  Given I am logged in as a user with the "view the administration theme,access content overview,access content,administer nodes,view twitter widgets,administer twitter widgets" permission on this site
+  Given I am logged in as a user with the "administrator" role on this site
   When I go to "admin/content"
   And I click "Twitter Widgets"
   And I click "Add twitter widget"
@@ -77,7 +77,7 @@ Scenario: Add Twitter widget data
   Then I should see the message "The widget: Test Twitter Widget has been saved."
 
 Scenario: Prevent duplicate Twitter widget names
-  Given I am logged in as a user with the "view the administration theme,access content overview,access content,view twitter widgets,administer twitter widgets" permission on this site
+  Given I am logged in as a user with the "administrator" role on this site
   When I go to "admin/content"
   And I click "Twitter Widgets"
   And I click "Add twitter widget"
@@ -105,11 +105,18 @@ Scenario: Assign widget to page
   And I click on the element "#context-block-addable-fieldblock-5e45b57e2023b0d28f5a9dc785ea12fa"
   And I wait for css element ".field.field_utexas_twitter_widget" to "appear"
   And I click "Done" in the "context_editor" region
+  And I press "Save" in the "ui_dialog_buttonset" region
   Then I should see "Test Headline" in the "twitter_widget_block" region
   And I should see the css element "#tweet-5"
+  # Verify anonymous user access level
+  Given I am an anonymous user
+  When I visit "admin/content/twitter"
+  Then I should see the text "Access Denied" in the "page_title" region
+  When I visit "test-page"
+  Then I should see "Test Headline" in the "twitter_widget_block" region
 
 Scenario: Delete a twitter widget
-  Given I am logged in as a user with the "view the administration theme,access content overview,access content,administer nodes,view twitter widgets,administer twitter widgets" permission on this site
+  Given I am logged in as a user with the "administrator" role on this site
   When I go to "admin/content/twitter"
   And I click "delete"
   And I press the "Confirm" button

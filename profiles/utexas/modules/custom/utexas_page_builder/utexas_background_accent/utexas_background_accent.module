@@ -87,7 +87,6 @@ function utexas_background_accent_field_widget_form(&$form, &$form_state, $field
         '#media_options' => array(
           'global' => array(
             'file_extensions' => 'gif png jpg jpeg',
-            'max_filesize' => '5 MB',
             'file_directory' => 'background-accents',
             'types' => array('image'),
           ),

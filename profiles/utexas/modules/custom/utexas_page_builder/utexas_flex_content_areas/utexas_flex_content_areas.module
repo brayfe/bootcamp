@@ -88,7 +88,6 @@ function utexas_flex_content_areas_field_widget_form(&$form, &$form_state, $fiel
         '#media_options' => array(
           'global' => array(
             'file_extensions' => 'gif png jpg jpeg',
-            'max_filesize' => '5 MB',
             'file_directory' => 'flex-content-areas',
             'types' => array('image'),
           ),

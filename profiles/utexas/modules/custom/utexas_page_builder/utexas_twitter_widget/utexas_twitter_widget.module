@@ -18,6 +18,11 @@ define('UTEXAS_TWITTER_WIDGET_VIEW_PERMISSION', 'view twitter widgets');
 define('UTEXAS_TWITTER_WIDGET_EDIT_PERMISSION', 'administer twitter widgets');
 
 /**
+ * Permission for editing widgets.
+ */
+define('UTEXAS_TWITTER_WIDGET_CONFIGURE_PERMISSION', 'configure twitter widgets');
+
+/**
  * Internal path to twitter entities.
  */
 define('UTEXAS_TWITTER_WIDGET_CALLBACK', 'admin/content/twitter');
@@ -130,6 +135,10 @@ function utexas_twitter_widget_permission() {
       'title' => t('Edit & Delete Widgets'),
       'description' => t('Allow users to edit & delete widgets'),
     ),
+    UTEXAS_TWITTER_WIDGET_CONFIGURE_PERMISSION => array(
+      'title' => t('Configure Twitter widget account'),
+      'description' => t('Allow users to enter Twitter credentials.'),
+    ),
   );
 }
 
@@ -137,15 +146,21 @@ function utexas_twitter_widget_permission() {
  * Access callback for entities.
  */
 function utexas_twitter_widget_access_callback($op, $widget = NULL, $account = NULL) {
-  if ($op == 'view' && user_access('view twitter widgets')) {
-    return TRUE;
+  $url = current_path();
+  $access = FALSE;
+  if ($url == UTEXAS_TWITTER_WIDGET_CALLBACK && user_access(UTEXAS_TWITTER_WIDGET_EDIT_PERMISSION)) {
+    // Allow users with permission to view entity overview page.
+    $access = TRUE;
   }
-  elseif (($op == 'update' || $op == 'create' || $op == 'delete') && user_access('administer twitter widgets')) {
-    return TRUE;
+  elseif ($op == 'view' && user_access(UTEXAS_TWITTER_WIDGET_VIEW_PERMISSION) && $url !== UTEXAS_TWITTER_WIDGET_CALLBACK) {
+    // Allow users with permission to view rendered entities.
+    $access = TRUE;
   }
-  else {
-    return FALSE;
+  elseif (($op == 'update' || $op == 'create' || $op == 'delete') && user_access(UTEXAS_TWITTER_WIDGET_EDIT_PERMISSION)) {
+    // Allow users with permission to modify entities.
+    $access = TRUE;
   }
+  return $access;
 }
 
 /**
@@ -167,7 +182,7 @@ function utexas_twitter_widget_menu() {
     'description' => 'Set Twitter app credentials and refresh rate.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('utexas_twitter_widget_config_form'),
-    'access arguments' => array('administer twitter widgets'),
+    'access arguments' => array(UTEXAS_TWITTER_WIDGET_CONFIGURE_PERMISSION),
     'type' => MENU_NORMAL_ITEM,
   );
 

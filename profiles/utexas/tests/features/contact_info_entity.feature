@@ -83,6 +83,13 @@ Scenario: Assign contact info to a page
   And I click on the element "#context-block-addable-fieldblock-38205d43426b33bd0fe595ff8ca61ffd"
   And I wait for css element ".field.field_utexas_contact_info" to "appear"
   And I click "Done" in the "context_editor" region
+  And I press "Save" in the "ui_dialog_buttonset" region
+  Then I should see "Contact Info" in the "field_contact_info" region
+  # Verify anonymous user access level
+  Given I am an anonymous user
+  When I visit "admin/content/contact_info"
+  Then I should see the text "Access Denied" in the "page_title" region
+  When I visit "test-page"
   Then I should see "Contact Info" in the "field_contact_info" region
 
 Scenario: Delete a Contact Info Form

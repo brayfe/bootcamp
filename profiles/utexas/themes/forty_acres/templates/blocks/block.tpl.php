@@ -35,6 +35,7 @@
  * - $logged_in: Flags true when the current user is a logged-in member.
  * - $is_admin: Flags true when the current user is an administrator.
  * - $block_html_id: A valid HTML ID and guaranteed unique.
+ * - $page_builder_node: Boolean; TRUE if this is a Page Builder node block.
  *
  * @see template_preprocess()
  * @see template_preprocess_block()
@@ -43,18 +44,20 @@
  * @ingroup themeable
  */
 ?>
-<?php if (!empty($block->edit_links)): ?>
-  <div class="edit-links">
-    <?php print $block->edit_links; ?>
+<?php if (!isset($page_builder_node)): ?>
+  <?php if (!empty($block->edit_links)): ?>
+    <div class="edit-links">
+      <?php print $block->edit_links; ?>
+    </div>
+  <?php endif; ?>
+  <div id="<?php print $block_html_id; ?>"  class="<?php print $classes; ?>"<?php print $attributes; ?>>
+    <?php print render($title_prefix); ?>
+    <?php if ($block->subject): ?>
+      <h2<?php print $title_attributes; ?>><?php print $block->subject ?></h2>
+    <?php endif;?>
+    <?php print render($title_suffix); ?>
+    <div class="content"<?php print $content_attributes; ?>>
+      <?php print $content ?>
+    </div>
   </div>
 <?php endif; ?>
-<div id="<?php print $block_html_id; ?>"  class="<?php print $classes; ?>"<?php print $attributes; ?>>
-  <?php print render($title_prefix); ?>
-  <?php if ($block->subject): ?>
-    <h2<?php print $title_attributes; ?>><?php print $block->subject ?></h2>
-  <?php endif;?>
-  <?php print render($title_suffix); ?>
-  <div class="content"<?php print $content_attributes; ?>>
-    <?php print $content ?>
-  </div>
-</div>

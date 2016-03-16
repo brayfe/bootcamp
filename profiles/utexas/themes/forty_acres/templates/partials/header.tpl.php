@@ -13,8 +13,8 @@
           <div class="column small-12">
             <div class="topnav knockout_logo">
               <div class="parent-banner-links">
-                <a href="http://www.utexas.edu" class="logo-link"><span class="hiddenText">UTexas Home</span>
-                  <h2 class="UT-knockout-logo"></h2>
+                <a href="http://www.utexas.edu" class="logo-link">
+                  <h2 class="UT-knockout-logo"><span class="hiddenText">UTexas Home</span></h2>
                 </a>
               </div>
             </div>
@@ -77,13 +77,13 @@
                   $output = $render_array['utexas_social_accounts_social_accounts_block']["content"]["#markup"];
                    print $output;
                 endif; ?>
-                <?php if (isset($header_search_cse)) :
+                <?php if (isset($header_search_cse) && ($display_search == TRUE)) :
                   print render($header_search_cse);
                 endif; ?>
               </div>
               <ul class="topnav-links hide-for-large-up">
                 <li class="nav-item nav-item-search">
-                  <?php if (isset($header_search_cse)) :
+                  <?php if (isset($header_search_cse) && ($display_search == TRUE)) :
                     print render($header_search_cse);
                   endif; ?>
                 </li>

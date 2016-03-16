@@ -64,7 +64,6 @@ function utexas_hero_photo_field_widget_form(&$form, &$form_state, $field,
         '#media_options' => array(
           'global' => array(
             'file_extensions' => 'gif png jpg jpeg',
-            'max_filesize' => '5 MB',
             'file_directory' => 'hero-photos',
             'types' => array('image'),
           ),
@@ -132,7 +131,6 @@ function utexas_hero_photo_field_widget_form(&$form, &$form_state, $field,
         '#media_options' => array(
           'global' => array(
             'file_extensions' => 'gif png jpg jpeg',
-            'max_filesize' => '5 MB',
             'file_directory' => 'hero-photos-full',
             'types' => array('image'),
           ),

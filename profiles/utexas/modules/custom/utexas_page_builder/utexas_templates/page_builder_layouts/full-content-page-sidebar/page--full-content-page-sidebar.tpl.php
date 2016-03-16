@@ -13,7 +13,6 @@
  * - $is_front: TRUE if the current page is the front page.
  * - $logged_in: TRUE if the user is registered and signed in.
  * - $is_admin: TRUE if the user has permission to access administration pages.
- * - $partials_dir: The directory where partials are found.
  * - $locked_fields: Any fields locked to this page template.
  *
  * Site identity:
@@ -41,22 +40,11 @@
  * @ingroup themeable.
  */
 ?>
-<?php if (file_exists($partials_dir . 'header.tpl.php')): require_once $partials_dir . 'header.tpl.php'; endif;  ?>
-
+<?php if (file_exists($partial_header)): require_once $partial_header; endif;  ?>
 <div class="UT-page" id="ut-page-content" role="main">
   <div class="container container-top top-theme-2">
-    <?php
-      if (file_exists($partials_dir . 'breadcrumbs.tpl.php')) :
-        require_once $partials_dir . 'breadcrumbs.tpl.php';
-      else :
-        require_once $utexas_templates_dir . '/breadcrumbs.tpl.php';
-      endif;
-      if (file_exists($partials_dir . 'page-top.tpl.php')) :
-        require_once $partials_dir . 'page-top.tpl.php';
-      else :
-        require_once $utexas_templates_dir . '/page-top.tpl.php';
-      endif;
-    ?>
+    <?php if (file_exists($partial_breadcrumbs)) : require_once $partial_breadcrumbs; endif; ?>
+    <?php if (file_exists($partial_page_top)) : require_once $partial_page_top; endif; ?>
     <div class="row">
       <div class="column small-12">
         <h1 class="page-title"><?php print $title; ?></h1>
@@ -95,6 +83,5 @@
       </div>
     </div>
   </div>
-
-  <?php if (file_exists($partials_dir . 'footer.tpl.php')): require_once $partials_dir . 'footer.tpl.php'; endif;  ?>
+  <?php if (file_exists($partial_footer)): require_once $partial_footer; endif;  ?>
 </div>
