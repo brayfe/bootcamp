@@ -1,3 +1,53 @@
+UT Drupal Kit 7.x-2.2, 2016-03-16
+---------------------------------
+[MC-262] - Properly Handle DomDocument for HTML5 tags in CKEditor Link File
+[MC-264] - Increase space between multiple Flex Content Areas in sidebar
+[MC-266] - Increase space after an <ol> element
+[MC-267] - Change link color in promo units to burnt orange
+[MC-269] - Change inline link color in featured highlight to white
+[MC-271] - Resolve empty array error when enabling STARTERKIT
+[MC-274] - Fix broken L1 menu links on Android 
+[MC-276] - Fix landing page template 1 hero image title alignment on tablet view
+[MC-279] - Make Quick Links validate/display properly on Team Member
+[MC-280] - Update custom entity admin page permissions
+[MC-288] - Fix starterkit grunt configuration error
+[MC-291] - Increase color contrast of links in the footer area
+[MC-292] - Make search presence module-enable independent
+[MC-293] - Update file upload limit on custom media/file fields to default value
+[MC-301] - Underline Subscribe to Newsletter on hover
+[MC-303] - Remediate "too much recursion/Stack Overflow" error with CKEditor
+[MC-324] - Remove some Foundation elements 
+[MC-296] - Add informative message about PHP 5.4 minimum
+[MC-297] - Fix text format filter ordering
+[MC-298] - Enable Metatag module in installation
+[MC-230] - Consider more permissive WYSIWYG  styling
+[MC-277] - Remove permission for Full HTML text format from administrator role
+[MC-283] - Implement secure Qualtrics solution
+[MC-284] - Finalize role for elevated site privileges (script insertion)
+[MC-290] - Create Site Manager role
+[MC-295] - Update to Drupal 7.42
+[MC-299] - Implement new fix for Tablesaw-fixed approach
+[MC-300] - Enable and configure Video Filter Module
+[MC-302] - Create demo page for Foundation extra libraries
+[MC-304] - Cleanup debugging code 
+[MC-305] - Update utexas_deploy installed schema version (7104)
+[MC-307] - Create default video_filter content and behat feature
+[MC-308] - Fix color-contrast issues with foundation extra libraries 
+[MC-309] - Update to Drops 7.43
+[MC-311] - Hide Metatag installation message
+[MC-312] - Allow Team Member default content independent of installation
+[MC-313] - Fix excess spacing error with WYSIWYG + Promo Units
+[MC-317] - Improve Qualtrics Regex 
+[MC-318] - Revert .gitignore file
+[MC-320] - Make Tablesaw library & CSS part of "foot_scripts"
+[MC-321] - Allow Site Manager to use Filtered HTML for Blocks
+[MC-326] - Fix minimum PHP version typo in utexas.info
+[MC-328] - Revisit "Too Much Recursion" in CKEditor
+[MC-270] - Update Behat test(s) to work with new code
+[MC-272] - Add behat test for Team Member content type
+[MC-282] - Remove "content/" from default pathauto URL patterns
+[MC-314] - Build Qualtrics CKEditor plugin
+
 UT Drupal Kit 7.x-2.1, 2016-01-22
 ---------------------------------
 - [MC-20] - Implement new "Resources" field

@@ -1,7 +1,7 @@
 name        = Forty Acres theme
 description = Theme for the University of Texas at Austin site.
 core        = 7.x
-version     = 1.1
+version     = 1.2
 php         = DRUPAL_MINIMUM_PHP
 
 
