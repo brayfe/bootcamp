@@ -51,7 +51,7 @@ function utexas_utdk_deploy_update_7103() {
  *
  * Adds "Filtered HTML for Blocks" text format.
  */
-function utexas_mcms_deploy_update_7104() {
+function utexas_utdk_deploy_update_7104() {
   $formats['filtered_html_for_blocks'] = array(
     'format' => 'filtered_html_for_blocks',
     'name' => 'Filtered HTML for Blocks',
@@ -143,7 +143,7 @@ function utexas_mcms_deploy_update_7104() {
  *
  * Remove duplicative reference to the widget/lineutils plugins.
  */
-function utexas_mcms_deploy_update_7105() {
+function utexas_utdk_deploy_update_7105() {
   $result = db_query('SELECT n.settings FROM {ckeditor_settings} n WHERE n.name = :name', array(':name' => 'Advanced'));
   foreach ($result as $record) {
     $settings = unserialize($record->settings);
