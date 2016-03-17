@@ -1,7 +1,7 @@
 name = STARTERKIT
 description = subtheme starter kit based off of the Forty Acres UT theme
 core = 7.x
-version = 1.2
+version = 2.0
 base theme = forty_acres
 
 stylesheets[all][] = css/custom.css
