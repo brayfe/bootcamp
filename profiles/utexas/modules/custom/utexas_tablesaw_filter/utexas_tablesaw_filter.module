@@ -111,18 +111,22 @@ function _tablesaw_filter($text, $filter, $format, $langcode, $cache, $cache_id)
     else {
       $tables = $dom->getElementsByTagName('table');
     }
-    // Find all tables in text.
-    foreach ($tables as $table) {
-      // Find existing class attributes, if any, and append tablesaw class.
-      $existing_classes = $table->getAttribute('class');
-      $new_classes = !empty($existing_classes) ? $existing_classes . ' tablesaw tablesaw-stack' : 'tablesaw tablesaw-stack';
-      $table->setAttribute('class', $new_classes);
+    // Check if the text contains <table> tags.
+    if ($tables->length !== 0) {
+      // Find all tables in text.
+      foreach ($tables as $table) {
+        // Find existing class attributes, if any, and append tablesaw class.
+        $existing_classes = $table->getAttribute('class');
+        $new_classes = !empty($existing_classes) ? $existing_classes . ' tablesaw tablesaw-stack' : 'tablesaw tablesaw-stack';
+        $table->setAttribute('class', $new_classes);
 
-      // Force data-tablesaw-mode attribute to be "stack".
-      $table->setAttribute('data-tablesaw-mode', 'stack');
+        // Force data-tablesaw-mode attribute to be "stack".
+        $table->setAttribute('data-tablesaw-mode', 'stack');
+      }
+      return $dom->saveHTML();
     }
-    return $dom->saveHTML();
   }
+  return $text;
 }
 
 /**
