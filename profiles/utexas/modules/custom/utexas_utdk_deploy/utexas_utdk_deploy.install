@@ -158,3 +158,16 @@ function utexas_utdk_deploy_update_7105() {
     ->execute();
   }
 }
+
+/**
+ * Implements hook_update_N().
+ *
+ * Update menu_block_menu_order.
+ */
+function utexas_utdk_deploy_update_7106() {
+  $menu_block_menu_order = variable_get('menu_block_menu_order', NULL);
+  if ($menu_block_menu_order === '') {
+    variable_set('menu_block_menu_order', array('main-menu' => ''));
+  }
+}
+
