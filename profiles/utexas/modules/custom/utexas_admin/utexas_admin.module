@@ -587,13 +587,13 @@ function reorder_filtered_html_text_filters() {
   $filters = array(
     'filter_html' => 0,
     'ckeditor_link_filter' => 1,
-    'qualtrics_filter' => 2,
-    'video_filter' => 3,
-    'filter_url' => 4,
-    'tablesaw' => 5,
-    'media_filter' => 6,
-    'html_corrector' => 7,
-    'filter_autop' => 8,
+    'filter_autop' => 2,
+    'qualtrics_filter' => 3,
+    'video_filter' => 4,
+    'filter_url' => 5,
+    'tablesaw' => 6,
+    'media_filter' => 7,
+    'html_corrector' => 8,
   );
 
   foreach ($filters as $name => $value) {
