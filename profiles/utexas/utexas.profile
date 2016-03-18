@@ -69,9 +69,6 @@ function utexas_configure() {
   // Enable clean URLs.
   variable_set('clean_url', 1);
 
-  // Menu block variables taken from feature.
-  variable_set('menu_block_menu_order', '');
-  variable_set('menu_block_suppress_core', 1);
 }
 
 /**
