@@ -410,6 +410,42 @@ JS;
   }
 
   /**
+   * @Then I should see HTML :arg1 in the :arg2 region
+   */
+  public function iShouldSeeHTMLInTheRegion($html, $region) {
+    $session = $this->getSession();
+    $found_region = $session->getPage()->find('css', $region);
+    // Errors must not pass silently.
+    if (NULL === $found_region) {
+      throw new \InvalidArgumentException(sprintf('Could not find region: "%s"', $region));
+    }
+    $cleaned_html = str_replace('\\', '', $html);
+    $found_html = $found_region->getHtml();
+    $pos = strpos($found_html, $cleaned_html);
+    if ($pos === FALSE) {
+      throw new \InvalidArgumentException(sprintf('Could not find HTML: "%s"', $cleaned_html));
+    }
+  }
+
+  /**
+   * @Then I should not see HTML :arg1 in the :arg2 region
+   */
+  public function iShouldNotSeeHTMLInTheRegion($html, $region) {
+    $session = $this->getSession();
+    $found_region = $session->getPage()->find('css', $region);
+    // Errors must not pass silently.
+    if (NULL === $found_region) {
+      throw new \InvalidArgumentException(sprintf('Could not find region: "%s"', $region));
+    }
+    $cleaned_html = str_replace('\\', '', $html);
+    $found_html = $found_region->getHtml();
+    $pos = strpos($found_html, $cleaned_html);
+    if ($pos !== FALSE) {
+      throw new \InvalidArgumentException(sprintf('Found HTML: "%s"', $cleaned_html));
+    }
+  }
+
+  /**
    * @Then I should see today's AP style date in the css element :arg1
    */
   public function iShouldSeeTodaySApStyleDateInTheCssElement($region) {
