@@ -176,10 +176,10 @@ function utexas_utdk_deploy_update_7106() {
  *
  * Update adminstrator role to ensure they have new utexas_twitter_widget permission.
  */
-function utexas_utdk_deploy_update_7107() {
+function utexas_utdk_deploy_update_7108() {
   if (module_exists('utexas_twitter_widget')) {
     if ($admin_role = user_role_load_by_name('administrator')) {
-      $permissions = array('administer twitter widgets');
+      $permissions = array('configure twitter widgets');
       user_role_grant_permissions($admin_role->rid, $permissions);
     }
   }
