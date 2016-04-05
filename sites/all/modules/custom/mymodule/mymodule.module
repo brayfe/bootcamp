@@ -40,21 +40,7 @@ function mymodule_unsubscribe() {
     '#type' => 'submit',
     '#value' => t('Remove me!'),
   );
-
   return $form;
-}
-
-/**
- * Implements hook_theme().
- */
-function mymodule_theme() {
-  return array(
-    'mymodule_unsubscribe' => array(
-      'render element' => 'form',
-      //'path' => drupal_get_path('module', 'mymodule') . '/templates',
-      //'template' => 'mymodule-form',
-    ),
-  );
 }
 
 /**
@@ -64,12 +50,29 @@ function mymodule_theme() {
  */
 function mymodule_preprocess_mymodule_unsubscribe(&$variables) {
   global $user;
+  // $variables['form']['mymodule_email']['#required'] = TRUE;
+  // $variables['form']['mymodule_email']['#size'] = 50;
+  // $variables['form']['mymodule_email']['#theme'] = 'random_name';
   if ($user->uid != 0) {
-    //$variables['message'] = t('Hello') . ', ' . $user->name . '!';
-    //$variables['email_address'] = $user->mail;
-    //$variables['form']['mymodule_email']['#required'] = TRUE;
-    //$variables['form']['mymodule_email']['#size'] = 50;
+    // $variables['message'] = t('Hello') . ', ' . $user->name . '!';
+    // $variables['email_address'] = $user->mail;
   }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function mymodule_theme() {
+  return array(
+    'mymodule_unsubscribe' => array(
+      'render element' => 'form',
+      // 'path' => drupal_get_path('module', 'mymodule') . '/templates',
+      // 'template' => 'mymodule-form',
+    ),
+    // 'random_name' => array(
+    //   'render element' => 'random_name',
+    // ),
+  );
 }
 
 /**
@@ -79,13 +82,13 @@ function mymodule_preprocess_mymodule_unsubscribe(&$variables) {
  */
 function forty_acres_mymodule_unsubscribe($variables) {
   $output = '';
-  //hide($variables['form']['submit']);
-  //$output = '<div class="something">';
-  //$output .= '<h3>Unsubscribe me!</h3>';
-  //$output .= '</div>';
-  //$variables['form']['mymodule_email']['#description'] = 'A valid email address';
-  //$variables['form']['mymodule_email']['#value'] = $variables['email_address'];
-  //print_r($variables['message']);
+  // hide($variables['form']['submit']);
+  // $output = '<div class="something">';
+  // $output .= '<h3>Unsubscribe me!</h3>';
+  // $output .= '</div>';
+  // $output .= '<h3>' . $variables['message']) . '</h3>';
+  // $variables['form']['mymodule_email']['#description'] = 'A valid email address';
+  // $variables['form']['mymodule_email']['#value'] = $variables['email_address'];
   $output .= drupal_render_children($variables['form']);
   return $output;
 }
@@ -135,15 +138,66 @@ function mymodule_unsubscribe_submit($form, &$form_state) {
   );
 */
 
+/**
+ * Implements theme_hook(). See mymodule_theme().
+ */
+function forty_acres_random_name($element) {
+  return '<input type="text" aria-label="email" class="form-text" maxlength="128" size="60" value="" name="' . $element['random_name']['#id'] . '" id="' . $element['random_name']['#id'] . '">';
+}
+
+/**
+ * Custom validate function. See mymodule_unsubscribe().
+ */
 function random_submit($form, &$form_state) {
   drupal_set_message('You will never be contacted again.');
 }
 
-//    '#element_validate' => array('random_validate'),
+// '#element_validate' => array('random_validate'),
 
+/**
+ * Custom validate function. See mymodule_unsubscribe().
+ */
 function random_validate($form, &$form_state) {
   $email = $form_state['values']['mymodule_email'];
   if ($email == '') {
     form_set_error('mymodule_email', t('Please enter an email address'));
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function mymodule_form_alter(&$form, &$form_state, $form_id) {
+  // $form['mymodule_email']['#required'] = TRUE;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function mymodule_form_mymodule_unsubscribe_alter(&$form, &$form_state, $form_id) {
+  // $form['mymodule_email']['#required'] = TRUE;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function mymodule_form_standard_page_node_form_alter(&$form, &$form_state, $form_id) {
+  $form['field_utexas_hero_photo'][LANGUAGE_NONE][0]['#after_build'][] = '_custom_utexas_hero_alter';
+}
+
+/**
+ * Custom callback. See mymodule_form_standard_page_node_form_alter().
+ */
+function _custom_utexas_hero_alter($element, &$form_state) {
+  $element['caption']['#description'] = 'A new description for the caption field.';
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function mymodule_field_widget_form_alter(&$element, &$form_state, $context) {
+  if ($context['instance']['widget']['type'] == 'utexas_hero_photo') {
+    // Do something to the $element array.
   }
 }
