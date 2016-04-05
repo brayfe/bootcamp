@@ -1,0 +1,149 @@
+<?php
+/**
+ * @file
+ * The UT Drupal Bootcamp module
+ *
+ * Demonstrates various elements of building a form.
+ */
+
+/**
+ * Internal path to page.
+ */
+define('MYMODULE_FORM', 'unsubscribe');
+
+/**
+ * Implements hook_menu().
+ */
+function mymodule_menu() {
+  $items = array();
+  $items[MYMODULE_FORM] = array(
+    'title' => 'Unsubscribe',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('mymodule_unsubscribe'),
+    'access arguments' => array('view published content'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/**
+ * Page argument function drupal_get_form.
+ */
+function mymodule_unsubscribe() {
+  $form = array();
+
+  $form['mymodule_email'] = array(
+    '#type' => 'textfield',
+    '#title' => t('E-mail address'),
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Remove me!'),
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function mymodule_theme() {
+  return array(
+    'mymodule_unsubscribe' => array(
+      'render element' => 'form',
+      //'path' => drupal_get_path('module', 'mymodule') . '/templates',
+      //'template' => 'mymodule-form',
+    ),
+  );
+}
+
+/**
+ * Implements hook_preprocess_FORM_ELEMENT().
+ *
+ * This preprocess function is available for use, defined in mymodule_theme().
+ */
+function mymodule_preprocess_mymodule_unsubscribe(&$variables) {
+  global $user;
+  if ($user->uid != 0) {
+    //$variables['message'] = t('Hello') . ', ' . $user->name . '!';
+    //$variables['email_address'] = $user->mail;
+    //$variables['form']['mymodule_email']['#required'] = TRUE;
+    //$variables['form']['mymodule_email']['#size'] = 50;
+  }
+}
+
+/**
+ * Implements theme_FORM_ELEMENT().
+ *
+ * This theme render function is available for use, defined in mymodule_theme().
+ */
+function forty_acres_mymodule_unsubscribe($variables) {
+  $output = '';
+  //hide($variables['form']['submit']);
+  //$output = '<div class="something">';
+  //$output .= '<h3>Unsubscribe me!</h3>';
+  //$output .= '</div>';
+  //$variables['form']['mymodule_email']['#description'] = 'A valid email address';
+  //$variables['form']['mymodule_email']['#value'] = $variables['email_address'];
+  //print_r($variables['message']);
+  $output .= drupal_render_children($variables['form']);
+  return $output;
+}
+
+
+/* Validation */
+
+/**
+ * Notice the name of the function. It is simply the name of the form
+ * followed by '_validate'. This is always the name of the default validation
+ * function. An alternate list of validation functions could have been provided
+ * in $form['#validate'].
+ *
+ * @ingroup form_example
+ */
+function mymodule_unsubscribe_validate($form, &$form_state) {
+  $email = $form_state['values']['mymodule_email'];
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    form_set_error('mymodule_email', t('@email is not valid. Please provide a valid email address.', array('@email' => check_plain($email))));
+  }
+}
+
+/* Submission */
+
+/**
+ * Implements hook_submit().
+ *
+ * Adds a submit handler/function to our form to send a successful
+ * completion message to the screen.
+ *
+ * @ingroup form_example
+ */
+function mymodule_unsubscribe_submit($form, &$form_state) {
+  $email = $form_state['values']['mymodule_email'];
+  drupal_set_message(t('The email address, @email, has been unsubscribed.',
+    array(
+      '@email' => check_plain($email),
+    )
+  ));
+}
+
+/*  $form['actions']['delete'] = array(
+    '#type' => 'submit',
+    '#value' => t('Unsubscribe and never contact me again'),
+    '#weight' => 15,
+    '#submit' => array('random_submit'),
+  );
+*/
+
+function random_submit($form, &$form_state) {
+  drupal_set_message('You will never be contacted again.');
+}
+
+//    '#element_validate' => array('random_validate'),
+
+function random_validate($form, &$form_state) {
+  $email = $form_state['values']['mymodule_email'];
+  if ($email == '') {
+    form_set_error('mymodule_email', t('Please enter an email address'));
+  }
+}
