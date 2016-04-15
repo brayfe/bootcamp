@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * The UT Drupal Bootcamp module
+ * The UT Drupal Bootcamp module.
  *
  * Francine demonstrates various elements of building a form.
  */
@@ -19,7 +19,7 @@ function mymodule_form_alter(&$form, &$form_state, $form_id) {
     if (!in_array(MYMODULE_ALLOWED_ROLE, $user->roles)) {
       // Disable entire photo field.
       $form['field_utexas_hero_photo'][LANGUAGE_NONE][0]['#disabled'] = TRUE;
-      $form['field_utexas_hero_photo'][LANGUAGE_NONE][0]['utexas_hero_photo_image']['#process'] = array ('mymodule_image_upload_process');
+      $form['field_utexas_hero_photo'][LANGUAGE_NONE][0]['utexas_hero_photo_image']['#process'] = array('mymodule_image_upload_process');
       $form['field_utexas_hero_photo']['#prefix'] = "<H2>Hero images may only be added by site administrators.</H2>";
     }
   }
@@ -28,12 +28,12 @@ function mymodule_form_alter(&$form, &$form_state, $form_id) {
 /**
  * Custom function callback to disable the image upload button.
  */
- function mymodule_image_upload_process($element, &$form_state, $form) {
-   if (!isset($element['#progress_message'])) {
-     $element['#progress_message'] = NULL;
-   }
-   $element = file_managed_file_process($element, $form_state, $form);
-   $element['upload_button']['#disbled'] = TRUE;
+function mymodule_image_upload_process($element, &$form_state, $form) {
+  if (!isset($element['#progress_message'])) {
+    $element['#progress_message'] = NULL;
+  }
+  $element = file_managed_file_process($element, $form_state, $form);
+  $element['upload_button']['#disbled'] = TRUE;
 
-   return $element;
- }
+  return $element;
+}
