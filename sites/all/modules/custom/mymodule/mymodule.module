@@ -1,8 +1,36 @@
 <?php
 /**
  * @file
- * The UT Drupal Bootcamp module
+ * The UT Drupal Bootcamp module.
  *
  * Francine demonstrates various elements of building a form.
  */
- 
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function mymodule_form_file_entity_add_upload_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'file_entity_add_upload' && isset($form['field_file_image_alt_text'])) {
+    // dpm($form_state);
+    $form['field_file_image_alt_text'][LANGUAGE_NONE][0]['#required'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ *
+ * Add a callback to the credit widget element so we can perform validation.
+ */
+function mymodule_field_widget_utexas_hero_photo_form_alter(&$element, &$form_state, $context) {
+  $element['credit']['#element_validate'][] = '_credit_validation';
+}
+
+/**
+ * Custom validation function callback.
+ */
+function _credit_validation(&$element, &$form_state) {
+  $image = $form_state['input']['field_utexas_hero_photo'][LANGUAGE_NONE][0]['utexas_hero_photo_image']['fid'];
+  if ($image) {
+    form_set_error('credit', t('Credit is required when a photo is uploaded.'));
+  }
+}
