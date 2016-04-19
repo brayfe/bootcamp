@@ -33,7 +33,7 @@ function mymodule_image_upload_process($element, &$form_state, $form) {
     $element['#progress_message'] = NULL;
   }
   $element = file_managed_file_process($element, $form_state, $form);
-  $element['upload_button']['#disbled'] = TRUE;
+  $element['upload_button']['#disabled'] = TRUE;
 
   return $element;
 }
