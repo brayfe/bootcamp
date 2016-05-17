@@ -5,3 +5,223 @@
  *
  * Francine demonstrates various elements of building a form.
  */
+
+/**
+ * Implements hook_menu().
+ *
+ * @see hook_menu()
+ * @see menu_example
+ */
+function mymodule_menu() {
+  $items['dashboard'] = array(
+    'title' => 'Quick Dashboard',
+    'page callback' => 'mymodule_dashboard',
+    'access arguments' => array('access dashboard'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission().
+ *
+ */
+function mymodule_permission() {
+  return array(
+    'access dashboard' => array(
+      'title' => t('Access Admin Dashboard'),
+      'description' => t('Allow users to access the administrator dashboard quick links.'),
+    ),
+  );
+}
+
+/**
+ * Constructs a simple dashboard page.
+ *
+ * The page callback, mapped to the path 'dashboard'.
+ *
+ * Page callbacks return a renderable array with the content area of the page.
+ * The theme system will later render and surround the content in the
+ * appropriate blocks, navigation, and styling.
+ *
+ */
+function mymodule_dashboard() {
+  $form = drupal_get_form('mymodule_form');
+
+  return $form;
+
+  //drupal_render($form);
+  // $render_array = array(
+  //   'type' => 'fieldset',
+  //   '#title' => t('Options'),
+  //   //'#theme' => 'table',
+  //   //'#prefix' => '<div id="francine">',
+  //   //'#suffix' => '<div>',
+  //   //'#markup' => '<p>' . t('Simple page.') . '</p>',
+  //
+  // );
+  // to answer your above question very narrowly, you can scope a #submit callback to the individual fields
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * Defines the theming capabilities provided by this module.
+ */
+function mymodule_theme() {
+  return array(
+    'mymodule_form' => array(
+      'render element' => 'form',
+    ),
+  );
+}
+
+/**
+ * A simple form that displays a select box and submit button.
+ *
+ * This form will be be themed by the 'theming_example_select_form' theme
+ * handler.
+ */
+//  $form['send_email']['submit'] = array(
+//   '#type' => 'submit',
+//   '#value' => 'Send ticket',
+// );
+// With this, any field elements within the 'send_email' parent array are submitted via that submit button
+function mymodule_form($form, &$form_state) {
+  $form['cc_all'] = array(
+    '#type' => 'submit',
+    '#value' => t('Clear All Caches'),
+    '#submit' => array('_clear_cache'),
+    '#prefix' => '<div id="cache_clear" class="container-inline">',
+    '#suffix' => '</div>',
+  );
+
+  $form['maint'] = array(
+    '#type' => 'submit',
+    '#value' => t('Turn on Maintenance Mode'),
+    '#submit' => array('_maintenance'),
+    '#prefix' => '<div id="maintenance" class="container-inline">',
+    '#suffix' => '</div>',
+  );
+
+  $form['email'] = array(
+    '#type' => 'link',
+    '#title' => t('Submit Ticket Email'),
+    '#href' => 'mailto:jfullmer@austin.utexas.edu',
+    '#prefix' => '<div class="container-inline">',
+    '#suffix' => '</div>',
+  );
+
+  $form['page_front'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Front Page Config'),
+  );
+
+  $form['page_front']['location'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Enter new front page location',
+  );
+
+  $form['page_front']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Set Front Page'),
+    '#submit' => array('_set_front'), //variable_set('site_frontpage', $form_state['values']['page_front']);
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler for the cache clear.
+ *
+ * @param array $form
+ * @param array $form_state
+ */
+function _clear_cache($form, &$form_state) {
+  drupal_flush_all_caches();
+  drupal_set_message(t('All caches cleared succcessfully'));
+}
+
+/**
+ * Submit handler for the front page set.
+ *
+ * @param array $form
+ * @param array $form_state
+ */
+function _maintenance($form, &$form_state) {
+  $offline = variable_get('site_offline');
+  if(!$offline){
+    variable_set('site_offline', '1');
+    $form_state['values']['op'] = "Turn off Maintenance Mode";
+    // show link to update.php
+    drupal_set_message('Entered Maintenance mode.');
+  }
+  else {
+    variable_set('site_offline', '0');
+    drupal_set_message('Maintenance Mode disabled.');
+  }
+}
+
+/**
+ * Submit handler for the front page set.
+ *
+ * @param array $form
+ * @param array $form_state
+ */
+function _set_front($form, &$form_state) {
+  $myform = $form_state['values'];
+  $front = $form_state['values']['location'];
+  // TODO: run validation for $location to ensure it is a valid node.
+  variable_set('site_frontpage', $front);
+  drupal_set_message(t('Front Page set to ' . $front));
+}
+
+/**
+ * Theming a simple form.
+ *
+ * Since our form is named mymodule_form(), the default
+ * #theme function applied to it will be 'theme_mymodule_form'
+ * if it exists.
+ *
+ * Here we collect the title, theme it manually and
+ * empty the form title. We also wrap the form in a div.
+ */
+function theme_mymodule_form($variables) {
+  $form = $variables['form'];
+  $output = drupal_render_children($form);
+
+  //$test = drush_invoke('watchdog-show', array('count'=>10));
+  $test = db_query_range('SELECT * FROM {watchdog}', 0,9);
+  //$test = $test->extend('TableSort')->orderByHeader('wid');
+  $headers = array(
+    'WID',
+    'UID',
+    'Type',
+    'Message',
+    'Severity',
+    'Link',
+    'Location',
+    'Referer',
+    'Hostname',
+    'Timestamp',
+  );
+  $rows = array();
+  while($row = $test->fetchAssoc()){
+    $row['variables'] = unserialize($row['variables']);
+    foreach($row['variables'] as $key => $val) {
+      $row['message'] = str_replace($key, $val, $row['message']);
+      unset($row['variables']);
+    }
+
+    $rows[$row['wid']] = $row;
+  }
+
+  $output .= '<h3>Watchdog Messages</h3><div id="table">';
+  $output .= theme('table', array (
+    'header' => $headers,
+    'rows' => $rows,
+  ));
+  $output .= '</div>';
+
+  return $output;
+}
