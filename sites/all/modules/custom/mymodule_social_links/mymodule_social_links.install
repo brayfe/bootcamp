@@ -28,6 +28,13 @@ function mymodule_social_links_field_schema($field) {
         'not null' => FALSE,
         'description' => 'Stores serialized array of links for the social links compound field.',
       );
+      // Add this column to the field for storage in the db.
+      $columns['display_type'] = array(
+        'type' => 'varchar',
+        'length' => 10,
+        'not null' => FALSE,
+        'description' => 'Stores the way to display links.',
+      );
       break;
   }
 

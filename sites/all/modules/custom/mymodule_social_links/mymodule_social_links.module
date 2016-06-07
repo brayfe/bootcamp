@@ -85,6 +85,17 @@ function mymodule_social_links_field_widget_form(&$form, &$form_state, $field,
         '#title' => t('Links'),
       );
 
+      // Adding field to custom compound field form.
+      $element['display_type'] = array(
+        '#type' => 'select',
+        '#title' => t('Display As:'),
+        '#options' => array(
+          'icons' => 'Icons',
+          'text' => 'Text',
+        ),
+        '#default_value' => (isset($items[$delta]['display_type'])) ? $items[$delta]['display_type'] : 'text',
+      );
+
       // Unserialize links blob to populate the link #default_value.
       $stored_links = (isset($items[$delta]['links'])) ?
       unserialize($items[$delta]['links']) : FALSE;
@@ -319,7 +330,8 @@ function mymodule_social_links_field_formatter_settings_form($field, $instance, 
 /**
  * Implements hook_field_formatter_settings_summary().
  *
- * Allows the gear icon to be rendered so that the settings can be edited.
+ * Allows the gear icon to be rendered so that the settings
+ * can be edited for this field on any CT of this type.
  */
 function mymodule_social_links_field_formatter_settings_summary($field, $instance, $view_mode) {
   $display = $instance['display'][$view_mode];
@@ -344,7 +356,7 @@ function mymodule_social_links_theme($existing, $type, $theme, $path) {
     'mymodule_social_links' => array(
       'variables' => array(
         'item' => NULL,
-        'display' => 'icons',
+        'display' => '',  // Is this necessary? Not sure where this applies.
       ),
       'template' => 'theme/mymodule-social-links',
     ),
@@ -364,7 +376,7 @@ function template_preprocess_mymodule_social_links(&$variables) {
   $headline = (!empty($variables['item']['headline'])) ?
   check_plain($variables['item']['headline']) : 'Connect';
   $links = !empty($variables['item']['links']) ? unserialize($variables['item']['links']) : array();
-  //$display = $variables['display'];
+  $variables['display'] = $variables['item']['display_type'];
 
   // Filter out links without values.
   foreach ($links as $key => $link) {
@@ -379,6 +391,5 @@ function template_preprocess_mymodule_social_links(&$variables) {
   $variables += array(
     'headline' => $headline,
     'links' => $output,
-    //'display' => $display,
   );
 }

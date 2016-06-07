@@ -13,20 +13,21 @@
  * @ingroup themeable.
  */
 ?>
-<h4><?php echo $headline; ?></h4>
-<p>Icons</p>
-<ul class="connect-links">
-<?php
-  foreach ($links as $name => $link) :
-    echo '<li><a href="' . $link . '" class="connect-link" title="' . $name . '">';
-    if(isset($display) && $display == 'icons'){
-      echo '<span class="icon-' . strtolower($name) . '"><span class="hiddenText">' . $name . '</span></span>';
-    }
-    else{
-      echo $name;
-    }
-    echo '</a></li>';
+<div class="field_utexas_social_links">
+  <h4><?php echo $headline; ?></h4>
+  <ul class="connect-links">
+  <?php
+    foreach ($links as $name => $link) :
+      echo '<li><a href="' . $link . '" class="connect-link" title="' . $name . '">';
+      if(isset($display) && $display == 'icons'){
+        echo '<span class="icon-' . strtolower($name) . '"><span class="hiddenText">' . $name . '</span></span>';
+      }
+      else{
+        echo $name . '<br/>';
+      }
+      echo '</a></li>';
 
-  endforeach;
-?>
-</ul>
+    endforeach;
+  ?>
+  </ul>
+</div>
