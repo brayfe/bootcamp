@@ -161,7 +161,7 @@ function utexas_social_links_field_validate($entity_type, $entity, $field,
       $link_array = is_array($item['links']) ? $item['links'] : unserialize($item['links']);
       foreach ($link_array as $link) {
         if (!empty($link) and !filter_var($link, FILTER_VALIDATE_URL)) {
-          $errors[$field['field_name']][$langcode][0][] = array(
+          $errors[$field['field_name']][$langcode][$delta][] = array(
             'error' => 'link_invalid',
             'message' => t('%field: A valid URL is required for social links.',
             array('%field' => $instance['label'])),
@@ -174,7 +174,7 @@ function utexas_social_links_field_validate($entity_type, $entity, $field,
 
       // Check to see if tags are included in the headline.
       if (strcmp($item['headline'], strip_tags($item['headline'])) !== 0) {
-        $errors[$field['field_name']][$langcode][0][] = array(
+        $errors[$field['field_name']][$langcode][$delta][] = array(
           'error' => 'headline_tags',
           'message' => t('%field: The headline may not contain HTML.',
             array('%field' => $instance['label'])),
@@ -183,7 +183,7 @@ function utexas_social_links_field_validate($entity_type, $entity, $field,
 
       // Make sure there is at least one link if a headline is present.
       if (isset($item['headline']) and $haslink == 0) {
-        $errors[$field['field_name']][$langcode][0][] = array(
+        $errors[$field['field_name']][$langcode][$delta][] = array(
           'error' => 'link_missing',
           'message' => t('%field: A headline is present without any links. Either remove the headline or add links.',
             array('%field' => $instance['label'])),
@@ -231,7 +231,6 @@ function utexas_social_links_field_widget_error($element, $error, $form, &$form_
  */
 function utexas_social_links_field_presave($entity_type, $entity, $field,
   $instance, $langcode, &$items) {
-
   foreach ($items as $delta => &$item) {
     // Serialize links to save into links column.
     $tmp_links = array();
@@ -241,7 +240,7 @@ function utexas_social_links_field_presave($entity_type, $entity, $field,
     }
     $item['links'] = serialize($link_array);
 
-    break;
+//    break;  // removed to serialize remaining deltas.
   }
 }
 /**
