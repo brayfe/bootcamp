@@ -5,3 +5,187 @@
  *
  * Francine demonstrates various elements of building a form.
  */
+ /**
+  * Implements hook_field_info().
+  *
+  * Defines the field within the system.
+  */
+function mymodule_field_info() {
+  return array(
+    'accordion_field' => array(
+      'label' => t('Accordion Field'),
+      'description' => t('Defines an Accordion field.'),
+      'settings' => array(),
+      'instance_settings' => array(),
+      'default_widget' => 'accordion_field_widget',
+      'default_formatter' => 'accordion_field_formatter',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_info().
+ *
+ * Defines the default widget.
+ */
+function mymodule_field_widget_info() {
+  return array(
+    'accordion_field_widget' => array(
+      'label' => t('Accordion Field Widget'),
+      'field types' => array('accordion_field'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_form().
+ *
+ * Form definition for the field widget.
+ */
+function mymodule_field_widget_form(&$form, &$form_state, $field,
+  $instance, $langcode, $items, $delta, $element) {
+  switch ($instance['widget']['type']) {
+    case 'accordion_field_widget':
+    // Title.
+    $element['title'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Title'),
+      '#size' => 60,
+      '#maxlength' => 100,
+      '#default_value' => (isset($items[$delta]['title'])) ? $items[$delta]['title'] : '',
+    );
+    // Copy.
+    $element['body'] = array(
+      '#type' => 'text_format',
+      '#title' => t('Body'),
+      '#wysiwyg' => TRUE,
+      '#default_value' => (isset($items[$delta]['body_value'])) ? $items[$delta]['body_value'] : '',
+      '#format' => (isset($items[$delta]['body_format'])) ? $items[$delta]['body_format'] : NULL,
+    );
+    // Expanded.
+    $element['expanded'] = array(
+      '#type' => 'checkbox',
+      '#default_value' => (isset($items[$delta]['expanded'])) ? $items[$delta]['expanded'] : 0,
+      '#title' => 'Expand text by default?',
+      '#description' => t('The random description text.'),
+    );
+    break;
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function mymodule_field_is_empty($item, $field) {
+  switch ($field['type']) {
+    case 'accordion_field':
+      return empty($item['title']) and empty($item['body_value']);
+  }
+
+  return FALSE;
+}
+
+/**
+ * Implements hook_field_validate().
+ *
+ * Used to make sure all fields have valid data in them.
+ */
+function mymodule_field_validate($entity_type, $entity, $field,
+  $instance, $langcode, $items, &$errors) {
+  // Loop through the values, making sure all check out.
+  foreach ($items as $delta => $item) {
+    if (!empty($item) and !mymodule_field_is_empty($item, $field)) {
+      // throw error if there is one.
+      continue;
+    }
+  }
+}
+
+/**
+ * Implements hook_field_presave().
+ *
+ * Adjust copy format+value and handle images.
+ */
+function mymodule_field_presave($entity_type, $entity, $field,
+  $instance, $langcode, &$items) {
+  // Throw body format & body value into separate columns.
+  dpm($items);
+  foreach ($items as $delta => &$item) {
+    if(!empty($item)){
+      // Split body into two columns, 'body_format' and 'body_value'.
+      $item['body_format'] = isset($item['body']['format']) ? $item['body']['format'] : $item['body_format'];
+      $item['body_value'] = isset($item['body']['value']) ? $item['body']['value'] : $item['body_value'];
+      unset($item['body']);
+    }
+  }
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ *
+ * Defines one formatter for the promo list
+ * Field.
+ */
+function mymodule_field_formatter_info() {
+  return array(
+    'accordion_field_formatter' => array(
+      'label' => t('Promo List'),
+      'field types' => array('accordion_field'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ *
+ * Builds the formatter view for the Accordion field.
+ */
+function mymodule_field_formatter_view($entity_type, $entity,
+  $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'accordion_field_formatter':
+      foreach ($items as $delta => $item) {
+        $element[] = array(
+          '#type' => 'markup',
+          '#markup' => theme('accordion_field', $item),
+        );
+      }
+
+      break;
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * Register the Accordion Field.
+ */
+function mymodule_theme($existing, $type, $theme, $path) {
+  return array(
+    'accordion_field' => array(
+      'variables' => array(
+        'title' => NULL,
+        'body' => NULL,
+        'expanded' => NULL,
+        'id' => NULL,
+      ),
+      'template' => 'theme/accordion-field',
+    ),
+  );
+}
+
+/**
+ * Theme preprocess function for promo lists.
+ *
+ * @see accordion-field.tpl.php
+ */
+function template_preprocess_accordion_field(&$variables) {
+  // Replace the body variables with the formatted copy.
+  $variables['body'] = (!empty($variables['body_value'])) ? check_markup($variables['body_value'], $variables['body_format']) : FALSE;
+}

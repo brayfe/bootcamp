@@ -1,0 +1,55 @@
+<?php
+/**
+ * @file
+ * Install file for bootcamp demo module. Used to install a field schema
+ * for the accordion compound field.
+ */
+
+/**
+ * Implements hook_field_schema().
+ *
+ * Defines the schema for accordion compound fields.
+ */
+function mymodule_field_schema($field) {
+  $columns = array();
+  $foreign_keys = array();
+
+  switch ($field['type']) {
+    case 'accordion_field':
+      $columns['title'] = array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Stores title for the accordion compound field.',
+      );
+      $columns['body_value'] = array(
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'Stores body text for the accordion compound field.',
+      );
+      $columns['body_format'] = array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'description' => 'Stores body text format for the accordion compound field.',
+      );
+      $foreign_keys['body_format'] = array(
+        'table' => 'filter_format',
+        'columns' => array('body_format' => 'format'),
+      );
+      $columns['expanded'] = array(
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Stores option choice for expanding content by default. 1 = yes, 0 = no',
+      );
+      break;
+  }
+
+  return array(
+    'columns' => $columns,
+    'foreign keys' => $foreign_keys,
+  );
+}
