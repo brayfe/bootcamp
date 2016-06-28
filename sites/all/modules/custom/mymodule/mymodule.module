@@ -12,7 +12,33 @@ define('MYMODULE_UTEXAS_DIRECTORY_LINK', 'https://directory.utexas.edu/index.php
  * Implements hook_filter_info().
  */
 function mymodule_filter_info() {
+  $filters = array();
+  $filters['mymodule_eid_filter'] = array(
+    'title' => t('Replace [@eid] with linked name.'),
+    'process callback' => '_eid_filter',
+  );
+  return $filters;
+}
 
+/**
+ * Filter callback for our eid filter.
+ */
+function _eid_filter($text, $filter, $format, $langcode, $cache, $cache_id) {
+  if (strpos($text, '[@') !== FALSE) {
+
+    // We have an @symbol. Look further.
+    preg_match_all("/\[@(.*)\]/iU", $text, $output_array);
+    if (isset($output_array[1])) {
+      foreach ($output_array[1] as $key => $value) {
+        drupal_set_message($value);
+        if ($name = get_name_from_eid($value)) {
+          $url = str_replace('@EID', $value, MYMODULE_UTEXAS_DIRECTORY_LINK);
+          $text = str_replace('[@' . $value . ']', l($name, $url), $text);
+        }
+      }
+    }
+  }
+  return $text;
 }
 
 /**
@@ -22,7 +48,7 @@ function get_name_from_eid($eid) {
   if (!valid_eid($eid)) {
     return FALSE;
   }
-  $url = str_replace('@EID', $eid, MYMODULE_UTEXAS_DIRECTORY_LINK);
+  $url = 'https://directory.utexas.edu/index.php?q=' . $eid . '&scope=all&submit=Search';
   $data = get_url_data($url);
   if (strpos($data, '<h2>Directory Information for') !== FALSE) {
     preg_match("/<h2>Directory Information for (.*)<\/h2>/", $data, $output_array);
