@@ -1,0 +1,64 @@
+<?php
+/**
+ * Module file for Mymodule.
+ */
+
+/**
+ * UTexas directory link with placeholder
+ */
+define('MYMODULE_UTEXAS_DIRECTORY_LINK', 'https://directory.utexas.edu/index.php?q=@EID&scope=all&submit=Search');
+
+/**
+ * Implements hook_filter_info().
+ */
+function mymodule_filter_info() {
+
+}
+
+/**
+ * Queries the UTexas Directory and scrapes name info.
+ */
+function get_name_from_eid($eid) {
+  if (!valid_eid($eid)) {
+    return FALSE;
+  }
+  $url = str_replace('@EID', $eid, MYMODULE_UTEXAS_DIRECTORY_LINK);
+  $data = get_url_data($url);
+  if (strpos($data, '<h2>Directory Information for') !== FALSE) {
+    preg_match("/<h2>Directory Information for (.*)<\/h2>/", $data, $output_array);
+    if (isset($output_array[1])) {
+      return $output_array[1];
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Returns data from a cURL request.
+ */
+function get_url_data($url) {
+  $ch = curl_init();
+  $timeout = 5;
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+  $data = curl_exec($ch);
+  curl_close($ch);
+  return $data;
+}
+
+/**
+ * Checks if the string is a valid eid pattern.
+ */
+function valid_eid($eid) {
+  // Check that the name matches the UT EID regular pattern.
+  if (!preg_match('/^[a-z0-9][a-z0-9._-]{1,7}$/', $eid)) {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+
+
+
+
