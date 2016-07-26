@@ -10,6 +10,33 @@ function mymodule_entity_info() {
 
   $info = array();
 
+  $info['paver_participant'] = array(
+    'label' => t('Paver Participant'),
+    'base table' => 'mymodule_paver_participant',
+    'entity keys' => array(
+      'id' => 'id',
+      'label' => 'name',
+    ),
+    'module' => 'mymodule',
+    'entity class' => 'PaverParticipantEntity',
+    'controller class' => 'EntityAPIController',
+    'access callback' => 'pavers_access_callback',
+    'fieldable' => TRUE,
+    'bundles' => array(
+      'paver_participant' => array(
+        'label' => t('Paver Participant'),
+        'admin' => array(
+          'path' => 'admin/paver-participants',
+        ),
+      ),
+    ),
+    'uri callback' => 'entity_class_uri',
+    'admin ui' => array(
+      'path' => 'admin/paver-participants',
+      'controller class' => 'EntityDefaultUIController',
+    ),
+  );
+
   $info['paver'] = array(
     'label' => t('Paver'),
     'base table' => 'mymodule_paver', // Must match hook_schema
@@ -22,8 +49,52 @@ function mymodule_entity_info() {
     'controller class' => 'EntityAPIController', // The default controller. Can be extended.
     'access callback' => 'pavers_access_callback', // Required in order to define who can see the entity content.
   );
-
   return $info;
+}
+
+/**
+ * Form definition for adding / editing a project.
+ */
+function paver_participant_form($form, &$form_state, $participant = NULL) {
+  $form['name'] = array(
+    '#title' => t('Participant name'),
+    '#type' => 'textfield',
+    '#default_value' => isset($participant->name) ? $participant->name : '',
+    '#required' => TRUE,
+  );
+
+  field_attach_form('paver_participant', $participant, $form, $form_state);
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => isset($participant->id) ? t('Update participant') : t('Save participant'),
+    '#weight' => 50,
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler for the project add/edit form.
+ */
+function paver_participant_form_submit($form, &$form_state) {
+  $participant = entity_ui_form_submit_build_entity($form, $form_state);
+  $participant->save();
+  drupal_set_message(t('The participant: @name has been saved.', array('@name' => $participant->name)));
+  $form_state['redirect'] = 'admin/paver-participants';
+}
+
+/**
+ * PaverParticipant entity class extending the Entity class
+ */
+class PaverParticipantEntity extends Entity {
+  /**
+   * Change the default URI from default/id to project/id
+   */
+  protected function defaultUri() {
+    return array('path' => 'paver-participant/' . $this->identifier());
+  }
+
 }
 
 function pavers_access_callback() {
@@ -39,6 +110,20 @@ function pavers_access_callback() {
 function mymodule_entity_property_info() {
 
   $info = array();
+
+  $info['paver_participant']['properties']['id'] = array(
+    'label' => t('Event ID'),
+    'description' => t('The system ID of the event.'),
+    'type' => 'integer',
+    'schema field' => 'id',
+  );
+  $info['paver_participant']['properties']['name'] = array(
+    'label' => t('Participant Name'),
+    'description' => t('The participant'),
+    'type' => 'text',
+    'schema field' => 'name',
+    'setter callback' => 'entity_property_verbatim_set',
+  );
 
   $info['paver']['properties']['id'] = array(
     'label' => t('Event ID'),

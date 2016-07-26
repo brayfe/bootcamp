@@ -7,6 +7,24 @@ function mymodule_schema() {
 
   $schema = array();
 
+  $schema['mymodule_paver_participant'] = array(
+    'description' => 'The base table for the Paver Participant entity',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary key of the Paver Participant entity',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'description' => 'Participant name',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
   $schema['mymodule_paver'] = array(
     'description' => 'The base table for the Paver entity',
     'fields' => array(
