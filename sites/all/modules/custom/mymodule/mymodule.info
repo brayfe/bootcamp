@@ -6,3 +6,4 @@ package = Custom
 configure = admin/config/content/example
 
 files[] = paver_participant.entity.inc
+files[] = views/paver_participant_handler_styled.inc

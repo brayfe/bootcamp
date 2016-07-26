@@ -26,3 +26,27 @@ class PaverParticipantEntityController extends EntityAPIController {
     return $build;
   }
 }
+
+/**
+ * Extends the EntityDefaultViewsController class.
+ */
+class PaverParticipantViewsController extends EntityDefaultViewsController {
+  /**
+   * Edit or add extra fields to views_data().
+   */
+  public function views_data() {
+    $data = parent::views_data();
+    // Define custom views handlers for various entity fields.
+    $data['mymodule_paver_participant']['styled_paver'] = array(
+      'title' => 'Styled Paver',
+      'help' => 'Display a styled paver',
+      'field' => array(
+        'real field' => 'id',
+        'handler' => 'paver_participant_handler_styled',
+        'click sortable' => 1,
+        'float' => '',
+      ),
+    );
+    return $data;
+  }
+}
