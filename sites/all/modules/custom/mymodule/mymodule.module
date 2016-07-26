@@ -20,6 +20,7 @@ function mymodule_entity_info() {
     'module' => 'mymodule',
     'entity class' => 'PaverParticipantEntity',
     'controller class' => 'PaverParticipantEntityController',
+    'views controller class' => 'EntityDefaultViewsController',
     'access callback' => 'pavers_access_callback',
     'fieldable' => TRUE,
     'bundles' => array(
