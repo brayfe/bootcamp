@@ -4,6 +4,11 @@
  */
 
 /**
+ * Internal path to Paver Participant entities.
+ */
+define('PAVER_PARTICIPANT_ADMIN_URL', 'admin/structure/paver-participants');
+
+/**
  * Implements hook_entity_info().
  */
 function mymodule_entity_info() {
@@ -27,13 +32,13 @@ function mymodule_entity_info() {
       'paver_participant' => array(
         'label' => t('Paver Participant'),
         'admin' => array(
-          'path' => 'admin/paver-participants',
+          'path' => PAVER_PARTICIPANT_ADMIN_URL,
         ),
       ),
     ),
     'uri callback' => 'entity_class_uri',
     'admin ui' => array(
-      'path' => 'admin/paver-participants',
+      'path' => PAVER_PARTICIPANT_ADMIN_URL,
       'controller class' => 'EntityDefaultUIController',
     ),
   );
