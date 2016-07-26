@@ -4,3 +4,5 @@ core = 7.x
 version = 7.x-1.0
 package = Custom
 configure = admin/config/content/example
+
+files[] = paver_participant.entity.inc

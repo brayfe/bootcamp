@@ -19,7 +19,7 @@ function mymodule_entity_info() {
     ),
     'module' => 'mymodule',
     'entity class' => 'PaverParticipantEntity',
-    'controller class' => 'EntityAPIController',
+    'controller class' => 'PaverParticipantEntityController',
     'access callback' => 'pavers_access_callback',
     'fieldable' => TRUE,
     'bundles' => array(
@@ -46,7 +46,7 @@ function mymodule_entity_info() {
     ),
     'module' => 'mymodule',
     'entity class' => 'Entity',
-    'controller class' => 'EntityAPIController', // The default controller. Can be extended.
+    'controller class' => 'EntityAPIController',
     'access callback' => 'pavers_access_callback', // Required in order to define who can see the entity content.
   );
   return $info;
@@ -85,16 +85,32 @@ function paver_participant_form_submit($form, &$form_state) {
 }
 
 /**
- * PaverParticipant entity class extending the Entity class
+ * Implements hook_menu().
  */
-class PaverParticipantEntity extends Entity {
-  /**
-   * Change the default URI from default/id to project/id
-   */
-  protected function defaultUri() {
-    return array('path' => 'paver-participant/' . $this->identifier());
-  }
+function mymodule_menu() {
+  $items = array();
 
+  $items['paver-participant/%'] = array(
+    'title' => 'Paver Participant',
+    'page callback' => '_paver_participant_view_page',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+  );
+  return $items;
+}
+
+/**
+ * Page callback for displaying individual paver participants.
+ */
+function _paver_participant_view_page($id) {
+  if ($participant = entity_load('paver_participant', array($id))) {
+    $participant = $participant[$id];
+    drupal_set_title($participant->name);
+    // View data is defined in buildContent().
+    $output = entity_view('paver_participant', array($participant));
+    return $output;
+  }
+  return MENU_NOT_FOUND;
 }
 
 function pavers_access_callback() {
