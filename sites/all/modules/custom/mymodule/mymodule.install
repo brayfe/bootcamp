@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function mymodule_schema() {
+
+  $schema = array();
+
+  $schema['mymodule_paver'] = array(
+    'description' => 'The base table for the Paver entity',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary key of the Paver entity',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'style' => array(
+        'description' => 'Paver style',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+      'price' => array(
+        'description' => 'Price',
+        'type' => 'int',
+        'length' => 11,
+        'not null' => TRUE,
+      ),
+      'discount_price' => array(
+        'description' => 'Discount price',
+        'type' => 'int',
+        'length' => 11,
+        'not null' => FALSE,
+      ),
+      'width' => array(
+        'description' => 'Width (in inches)',
+        'type' => 'int',
+        'length' => 2,
+        'not null' => FALSE,
+      ),
+      'height' => array(
+        'description' => 'Height (in inches)',
+        'type' => 'int',
+        'length' => 2,
+        'not null' => FALSE,
+      ),
+      'lines_of_text' => array(
+        'description' => 'Lines of text',
+        'type' => 'int',
+        'length' => 2,
+        'not null' => FALSE,
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+
+  return $schema;
+}

@@ -1,0 +1,133 @@
+<?php
+/**
+ * Module file for Mymodule.
+ */
+
+/**
+ * Implements hook_entity_info().
+ */
+function mymodule_entity_info() {
+
+  $info = array();
+
+  $info['paver'] = array(
+    'label' => t('Paver'),
+    'base table' => 'mymodule_paver', // Must match hook_schema
+    'entity keys' => array(
+      'id' => 'id',
+      'label' => 'style', // 'Label' in the generic drupal sense
+    ),
+    'module' => 'mymodule',
+    'entity class' => 'Entity',
+    'controller class' => 'EntityAPIController', // The default controller. Can be extended.
+    'access callback' => 'pavers_access_callback', // Required in order to define who can see the entity content.
+  );
+
+  return $info;
+}
+
+function pavers_access_callback() {
+  return TRUE;
+}
+
+/**
+ * Implements hook_entity_property_info().
+ *
+ * The below definitions tell the Entity API how to interact
+ * with the database columns.
+ */
+function mymodule_entity_property_info() {
+
+  $info = array();
+
+  $info['paver']['properties']['id'] = array(
+    'label' => t('Event ID'),
+    'description' => t('The system ID of the event.'),
+    'type' => 'integer', // Note that the type 'integer' not 'int'
+    'schema field' => 'id',
+  );
+  $info['paver']['properties']['style'] = array(
+    'label' => t('Paver Style'),
+    'description' => t('The type of paver'),
+    'type' => 'text',
+    'schema field' => 'style', // corresponds to column name
+    'setter callback' => 'entity_property_verbatim_set', // the default entity setter
+  );
+  $info['paver']['properties']['price'] = array(
+    'label' => t('Price'),
+    'description' => t('The regular price'),
+    'type' => 'integer',
+    'schema field' => 'price',
+    'setter callback' => 'entity_property_verbatim_set',
+  );
+  $info['paver']['properties']['discount_price'] = array(
+    'label' => t('Discount Price'),
+    'description' => t('The discount price'),
+    'type' => 'integer',
+    'schema field' => 'discount_price',
+    'setter callback' => 'entity_property_verbatim_set',
+  );
+  $info['paver']['properties']['width'] = array(
+    'label' => t('Width'),
+    'description' => t('Width (in inches)'),
+    'type' => 'integer',
+    'schema field' => 'width',
+    'setter callback' => 'entity_property_verbatim_set',
+  );
+  $info['paver']['properties']['height'] = array(
+    'label' => t('Height'),
+    'description' => t('Height (in inches)'),
+    'type' => 'integer',
+    'schema field' => 'height',
+    'setter callback' => 'entity_property_verbatim_set',
+  );
+  $info['paver']['properties']['lines_of_text'] = array(
+    'label' => t('Lines of Text'),
+    'description' => t('Numeric value of lines'),
+    'type' => 'integer',
+    'schema field' => 'lines_of_text',
+    'setter callback' => 'entity_property_verbatim_set',
+  );
+
+  return $info;
+}
+
+/**
+ * Custom function to save entities to the database.
+ */
+function _mymodule_add_content() {
+  $pavers[] = array(
+    'style' => 'Burnt Orange',
+    'price' => 250,
+    'discount_price' => 200,
+    'width' => 8,
+    'height' => 4,
+    'lines_of_text' => 3,
+    );
+  $pavers[] = array(
+    'style' => 'Bronze',
+    'price' => '500',
+    'discount_price' => '400',
+    'width' => '8',
+    'height' => '8',
+    'lines_of_text' => '5',
+    );
+  $pavers[] = array(
+    'style' => 'Silver (Brick & Plaque)',
+    'price' => '1000',
+    'discount_price' => NULL,
+    'width' => '8',
+    'height' => '8',
+    'lines_of_text' => '5',
+    );
+
+  $entity_type = 'paver';
+  foreach ($pavers as $id => $values) {
+    $e = entity_create($entity_type, array('type' => $entity_type));
+    $ew = entity_metadata_wrapper($entity_type, $e);
+    foreach ($values as $key => $value) {
+      $ew->{$key}->set($value);
+    }
+    $ew->save();
+  }
+}
