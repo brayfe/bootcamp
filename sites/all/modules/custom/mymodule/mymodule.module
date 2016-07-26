@@ -41,6 +41,12 @@ function mymodule_entity_info() {
       'path' => PAVER_PARTICIPANT_ADMIN_URL,
       'controller class' => 'EntityDefaultUIController',
     ),
+    'view modes' => array(
+      'paver_geolocator' => array(
+        'label' => t('GeoLocator'),
+        'custom settings' => TRUE,
+      ),
+    ),
   );
 
   $info['paver'] = array(
