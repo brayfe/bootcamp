@@ -82,19 +82,7 @@ function mymodule_theme_registry_alter(&$theme_registry) {
       $theme_registry[$key]['type'] = 'module';
     }
   }
-}
-
-/**
- * Adds our theme specifications to the Theme Registry.
- */
-function mymodule_event_theme($existing, $type, $theme, $path) {
-  return array(
-    'paver' => array(
-      'variables' => array('element' => NULL),
-      'template' => 'paver-participant',
-      'path' => drupal_get_path('module', 'mymodule') . '/theme',
-    ),
-  );
+  $theme_registry['paver_participant']['template'] = 'random-name';
 }
 
 /**
