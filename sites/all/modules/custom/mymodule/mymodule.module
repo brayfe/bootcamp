@@ -86,6 +86,19 @@ function mymodule_theme_registry_alter(&$theme_registry) {
 }
 
 /**
+ * Adds our theme specifications to the Theme Registry.
+ */
+function mymodule_theme($existing, $type, $theme, $path) {
+  return array(
+    'paver_participant' => array(
+      'variables' => array('element' => NULL),
+      'template' => 'random-name',
+      'path' => drupal_get_path('module', 'mymodule') . '/theme',
+    ),
+  );
+}
+
+/**
  * Form definition for adding / editing a project.
  */
 function paver_participant_form($form, &$form_state, $participant = NULL) {
@@ -114,7 +127,7 @@ function paver_participant_form_submit($form, &$form_state) {
   $participant = entity_ui_form_submit_build_entity($form, $form_state);
   $participant->save();
   drupal_set_message(t('The participant: @name has been saved.', array('@name' => $participant->name)));
-  $form_state['redirect'] = 'admin/paver-participants';
+  $form_state['redirect'] = PAVER_PARTICIPANT_ADMIN_URL;
 }
 
 /**

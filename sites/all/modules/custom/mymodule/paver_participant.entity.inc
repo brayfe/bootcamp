@@ -23,6 +23,17 @@ class PaverParticipantEntityController extends EntityAPIController {
   public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
     $build = parent::buildContent($entity, $view_mode, $langcode, $content);
     // Our additions to the $build render array
+    $paver = $entity->field_paver[LANGUAGE_NONE][0]['entity'];
+    $width = $paver->width * 30;
+    $height = $paver->height * 30;
+    $colors = array(
+      'Bronze' => '#CD7F32',
+      'Burnt Orange' => '#CF5300',
+      'Silver (Brick & Plaque)' => '#C0C0C0',
+      );
+    $build += array(
+      '#paver' => '<p style="background:' . $colors[$paver->style] . ';width:' . $width . 'px;height:' . $height . 'px;text-align:center;">Line 1<br />Line 2<br />Line 3</p>',
+    );
     return $build;
   }
 }
