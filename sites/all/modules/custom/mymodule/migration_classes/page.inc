@@ -43,7 +43,7 @@ class pageMigration extends mymoduleBaseMigration {
     ));
 
     //$query->condition('status', '0', '!=');
-    $query->range(0, 500);
+    $query->range(0, 10);
 
     $this->source = new MigrateSourceSQL($query);
     // Use the MigrateDestinationNode class to define a standard node migration.
@@ -94,6 +94,12 @@ class pageMigration extends mymoduleBaseMigration {
   public $files_map = array();
 
   /**
+   * After preImport, will contain an array of all D6 aliases, keyed by
+   * node/nid path.
+   */
+  public $alias_map = array();
+
+  /**
    * Runs once, rather than as part of each row.
    * Executes before the first row has been imported.
    */
@@ -106,6 +112,28 @@ class pageMigration extends mymoduleBaseMigration {
     foreach ($files as $file) {
       $this->file_map[$file->fid] = $file->filepath;
     }
+
+    $query = db_query('SELECT src,dst FROM {url_alias}');
+    $aliases = $query->fetchAllAssoc('src');
+    foreach ($aliases as $alias) {
+      $type = FALSE;
+      if (strpos($alias->src, 'node/') !== FALSE) {
+        $nid = str_replace('node/', '', $alias->src);
+        $type = 'node';
+      }
+      elseif (strpos($alias->src, 'user/') !== FALSE) {
+        $nid = str_replace('user/', '', $alias->src);
+        $type = 'user';
+      }
+      elseif (strpos($alias->src, 'taxonomy/term/') !== FALSE) {
+        $nid = str_replace('taxonomy/term', '', $alias->src);
+        $type = 'term';
+      }
+      if ($type) {
+        $this->alias_map[$type][$nid] = $alias->dst;
+      }
+    }
+
     db_set_active('default');
   }
 
@@ -120,7 +148,6 @@ class pageMigration extends mymoduleBaseMigration {
 
     if ($row->field_body_2_value != '') {
       $row->field_body_2_value = check_markup($row->field_body_2_value, 'filtered_html');
-      drupal_set_message($row->title);
     }
     return TRUE;
   }
@@ -144,6 +171,20 @@ class pageMigration extends mymoduleBaseMigration {
           $node->field_utexas_hero_photo[LANGUAGE_NONE][0]['image_fid'] = $file->fid;
           $node->field_utexas_hero_photo[LANGUAGE_NONE][0]['caption'] = $node->title;
         }
+      }
+    }
+  }
+
+  /**
+   * Analogous to prepare(), but is called immediately after the complete
+   * destination object is saved. Mainly used when you need the Drupal ID
+   * of the newly-created object
+   */
+  public function complete($entity, stdClass $row) {
+    $alias = drupal_get_path_alias('node/' . $entity->nid);
+    if (isset($this->alias_map['node'][$row->nid])) {
+      if ($alias != $this->alias_map['node'][$row->nid]) {
+        $this->setRedirect('node/' . $entity->nid, $this->alias_map['node'][$row->nid]);
       }
     }
   }

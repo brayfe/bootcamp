@@ -8,6 +8,9 @@
  * Implements hook_migrate_api().
  */
 function mymodule_migrate_api() {
+  /*
+  See https://www.drupal.org/node/2136601 for performance optimizations.
+  */
   $api = array(
     'api' => 2,
     'groups' => array(

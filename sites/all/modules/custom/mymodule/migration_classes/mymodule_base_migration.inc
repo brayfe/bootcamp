@@ -212,8 +212,9 @@ abstract class mymoduleBaseMigration extends Migration {
     if ($filename !== NULL) {
       $file->filename = $filename;
     }
-    file_save($file);
     */
+    file_save($file);
+
   }
 
   /**
@@ -254,26 +255,23 @@ abstract class mymoduleBaseMigration extends Migration {
   /**
    * {@inheritdoc}
    */
-  public function setRedirect($entity, stdClass $row) {
-    if ($entity->type != 'ENTITYTYPE') {
-      $redirect = new stdClass();
+  public function setRedirect($normal_path, $redirect_path) {
+    $redirect = new stdClass();
 
-      $value = $this->checkForCustomRedirect($row->alias);
-      module_invoke(
-        'redirect',
-        'object_prepare',
-          $redirect,
-        array(
-          'source' => 'index.php/' . $value['source'],
-          'source_options' => $value['source_options'],
-          'redirect' => 'node/' . $entity->nid,
-          'redirect_options' => array(),
-          'language' => LANGUAGE_NONE,
-        )
-      );
-
-      module_invoke('redirect', 'save', $redirect);
-    }
+    $value = $this->checkForCustomRedirect($redirect_path);
+    module_invoke(
+      'redirect',
+      'object_prepare',
+        $redirect,
+      array(
+        'source' => $value['source'],
+        'source_options' => $value['source_options'],
+        'redirect' => $normal_path,
+        'redirect_options' => array(),
+        'language' => LANGUAGE_NONE,
+      )
+    );
+    module_invoke('redirect', 'save', $redirect);
   }
 
   /**
@@ -281,7 +279,7 @@ abstract class mymoduleBaseMigration extends Migration {
    */
   public function checkForCustomRedirect($alias) {
     $redirects = array(
-      'some-source-alias' => array('')
+      'some-destination-alias' => 'what-should-be-the-source-alias',
     );
 
     if (isset($redirects[$alias])) {
