@@ -31,19 +31,8 @@ class pageMigration extends mymoduleBaseMigration {
       'sticky',
     ));
 
-    $query->leftjoin('content_field_body_2', 'b', 'n.vid = b.vid');
-    $query->leftjoin('content_field_header_image', 'h', 'n.vid = h.vid');
-
-    $query->fields('h', array(
-      'field_header_image_fid',
-    ));
-
-    $query->fields('b', array(
-      'field_body_2_value',
-    ));
-
     //$query->condition('status', '0', '!=');
-    $query->range(0, 10);
+    //$query->range(0, 10);
 
     $this->source = new MigrateSourceSQL($query);
     // Use the MigrateDestinationNode class to define a standard node migration.
@@ -72,32 +61,7 @@ class pageMigration extends mymoduleBaseMigration {
     $this->addFieldMapping('sticky', 'sticky');
     $this->addFieldMapping('promote', 'promote');
 
-    // For fields that include a switchable text format filter, we need to
-    // define the format that should be used.
-    $this->addFieldMapping('field_wysiwyg_b', 'field_body_2_value');
-    $this->addFieldMapping('field_wysiwyg_b:format', 'format')
-      ->defaultValue('filtered_html');
-
-    /*
-    // The following would work in most instances, assuming a relational URL
-    // alias table. Drupal 6 does not have this.
-    $this->addFieldMapping('DESTINATION', 'SOURCE');
-    $this->addFieldMapping('pathauto')
-         ->defaultValue(FALSE);
-    */
   }
-
-  /**
-   * After preImport, will contain an array of all fids & filepaths, in the form
-   * key = fid, value = filepath (relative to the docroot)
-   */
-  public $files_map = array();
-
-  /**
-   * After preImport, will contain an array of all D6 aliases, keyed by
-   * node/nid path.
-   */
-  public $alias_map = array();
 
   /**
    * Runs once, rather than as part of each row.
@@ -106,35 +70,6 @@ class pageMigration extends mymoduleBaseMigration {
   public function preImport() {
     parent::preImport();
 
-    db_set_active('legacy');
-    $query = db_query('SELECT fid,filepath FROM {files}');
-    $files = $query->fetchAllAssoc('fid');
-    foreach ($files as $file) {
-      $this->file_map[$file->fid] = $file->filepath;
-    }
-
-    $query = db_query('SELECT src,dst FROM {url_alias}');
-    $aliases = $query->fetchAllAssoc('src');
-    foreach ($aliases as $alias) {
-      $type = FALSE;
-      if (strpos($alias->src, 'node/') !== FALSE) {
-        $nid = str_replace('node/', '', $alias->src);
-        $type = 'node';
-      }
-      elseif (strpos($alias->src, 'user/') !== FALSE) {
-        $nid = str_replace('user/', '', $alias->src);
-        $type = 'user';
-      }
-      elseif (strpos($alias->src, 'taxonomy/term/') !== FALSE) {
-        $nid = str_replace('taxonomy/term', '', $alias->src);
-        $type = 'term';
-      }
-      if ($type) {
-        $this->alias_map[$type][$nid] = $alias->dst;
-      }
-    }
-
-    db_set_active('default');
   }
 
   /**
@@ -146,9 +81,6 @@ class pageMigration extends mymoduleBaseMigration {
   public function prepareRow($row) {
     parent::prepareRow($row);
 
-    if ($row->field_body_2_value != '') {
-      $row->field_body_2_value = check_markup($row->field_body_2_value, 'filtered_html');
-    }
     return TRUE;
   }
 
@@ -159,20 +91,7 @@ class pageMigration extends mymoduleBaseMigration {
    * creating a taxonomy term based on a combination of other values.
    */
   public function prepare($node, stdClass $row) {
-    // Set the hero image from the "Header Image".
-    if (isset($row->field_header_image_fid) && $row->field_header_image_fid != '') {
-      $source_fid = $row->field_header_image_fid;
-      // Retrieve the image URL.
-      if (isset($this->file_map[$source_fid])) {
-        // Save the image into the Destination's file_managed table.
-        $image_url = $this->source_base_url . '/' . $this->file_map[$source_fid];
-        if ($file = $this->fileAddImage($image_url, $node->title, $node->title, $node->title)) {
-          // Set the field_utexas_hero_image fid to the file->fid.
-          $node->field_utexas_hero_photo[LANGUAGE_NONE][0]['image_fid'] = $file->fid;
-          $node->field_utexas_hero_photo[LANGUAGE_NONE][0]['caption'] = $node->title;
-        }
-      }
-    }
+
   }
 
   /**
@@ -181,11 +100,6 @@ class pageMigration extends mymoduleBaseMigration {
    * of the newly-created object
    */
   public function complete($entity, stdClass $row) {
-    $alias = drupal_get_path_alias('node/' . $entity->nid);
-    if (isset($this->alias_map['node'][$row->nid])) {
-      if ($alias != $this->alias_map['node'][$row->nid]) {
-        $this->setRedirect('node/' . $entity->nid, $this->alias_map['node'][$row->nid]);
-      }
-    }
+
   }
 }
