@@ -1,0 +1,11 @@
+name = "Boilerplate migration"
+description = "Demonstrates migrating from Drupal 6 to 7"
+package = "Development"
+core = 7.x
+
+dependencies[] = migrate
+dependencies[] = migrate_ui
+
+files[] = migration_classes/mymodule_base_migration.inc
+files[] = migration_classes/coc_taxonomy.inc
+files[] = migration_classes/page.inc
