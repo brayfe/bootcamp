@@ -48,13 +48,17 @@ function utexas_newsreel_field_widget_form(&$form, &$form_state, $field,
       $element['headline'] = array(
         '#title' => t('Headline'),
         '#type' => 'textfield',
-        '#default_value' => (isset($items[$delta]['headline'])) ? $items[$delta]['headline'] : 'Latest from UTNews',
-        '#required' => TRUE,
+        '#default_value' => (isset($items[$delta]['headline'])) ? $items[$delta]['headline'] : '',
+        '#required' => FALSE,
         '#description' => t('The text that serves as the block header.'),
       );
 
       // Unserialize stored user-defined categories.
-      $types = (is_string($items[$delta]['type'])) ? unserialize($items[$delta]['type']) : $items[$delta]['type'];
+      $types = (isset($items[$delta]['type'])) ? unserialize($items[$delta]['type']) : array(
+          'news' => 'news',
+          'press-releases' => 'press-releases',
+          'texas-perspectives' => 'texas-perspectives',
+        );
 
       $element['type'] = array(
         '#type' => 'checkboxes',
@@ -77,8 +81,17 @@ function utexas_newsreel_field_widget_form(&$form, &$form_state, $field,
         'policy-and-law' => 'Policy and Law',
         'science-and-technology' => 'Science and Technology',
       );
+      $default_categories = array(
+        'arts-and-humanities' => 'arts-and-humanities',
+        'business-and-economy' => 'business-and-economy',
+        'campus-and-community' => 'campus-and-community',
+        'education-and-leadership' => 'education-and-leadership',
+        'health-and-wellness' => 'health-and-wellness',
+        'policy-and-law' => 'policy-and-law',
+        'science-and-technology' => 'science-and-technology',
+      );
 
-      $categories = (is_string($items[$delta]['category'])) ? unserialize($items[$delta]['category']) : $items[$delta]['category'];
+      $categories = (isset($items[$delta]['category'])) ? unserialize($items[$delta]['category']) : $default_categories;
 
       $element['category'] = array(
         '#type' => 'checkboxes',
