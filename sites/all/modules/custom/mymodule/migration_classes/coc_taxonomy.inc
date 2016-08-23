@@ -56,9 +56,19 @@ class cocTaxonomyMigration extends mymoduleBaseMigration {
       return FALSE;
     }
 
-    if ($row->name == '') {
-      return FALSE;
+    if ($row->name == 'Approved Courses') {
+      $row->name = "Hello Francine";
     }
     return TRUE;
+  }
+
+  /**
+   * Provides the ability to alter the $node before saving.
+   *
+   * Useful if you do not have a source row to migrate from, e.g., you're
+   * creating a taxonomy term based on a combination of other values.
+   */
+  public function prepare($term, stdClass $row) {
+    $term->description .= " this is a random description.";
   }
 }
